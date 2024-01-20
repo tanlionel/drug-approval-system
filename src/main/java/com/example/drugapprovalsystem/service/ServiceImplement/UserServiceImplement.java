@@ -59,6 +59,7 @@ public class UserServiceImplement implements UserService {
                 .dayOfBirth(registerUser.getDob())
                 .fullname(registerUser.getFullName())
                 .isActive(ACTIVE)
+                .username(registerUser.getUsername())
                 .build();
         userRepository.save(user);
         return user;

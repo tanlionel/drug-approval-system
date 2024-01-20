@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 @Data
 public class RegisterRequestDTO {
     private String email;
+    private String username;
     private String fullName;
     private LocalDate dob;
     private Integer gender;

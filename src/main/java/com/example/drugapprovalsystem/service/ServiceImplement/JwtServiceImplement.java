@@ -67,26 +67,38 @@ public class JwtServiceImplement implements JwtService {
 
     @Override
     public String generateRefreshToken(User user) {
-        String jwt = Jwts.builder().setClaims(new HashMap<>()).setSubject(user.getUsername())
+        String jwt = Jwts.builder()
+                .setClaims(new HashMap<>())
+                .setSubject(user.getUsername()) // Thêm subject
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
-                .signWith(getSignInKey(), SignatureAlgorithm.HS256).compact();
+                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
+                .compact();
         return jwt;
     }
 
     private Key getSignInKey() {
-        return Keys.hmacShaKeyFor(Decoders.BASE64.decode(SECRET_KEY));
-    }
-
-    public Key test_getSignInKey(){
-        return getSignInKey();
+        try {
+            byte[] decodedKey = Decoders.BASE64.decode(SECRET_KEY);
+            return Keys.hmacShaKeyFor(decodedKey);
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("Error decoding secret key", e);
+        }
     }
 
     @Override
     public boolean isValidToken(String token, UserDetails user) {
-        final String username = extractAllClaims(token).getSubject();
-        return (username.equals(user.getUsername()) && !isTokenExpired(token));
+        try {
+            Claims claims = extractAllClaims(token);
+            String usernameFromToken = claims.getSubject();
+            return (usernameFromToken.equals(user.getUsername()) && !isTokenExpired(token));
+        } catch (Exception e) {
+            // Logging lỗi nếu có vấn đề khi kiểm tra
+            e.printStackTrace();
+            return false;
+        }
     }
+
 
     private boolean isTokenExpired(String token) {
         return extractAllClaims(token).getExpiration().before(new Date());
