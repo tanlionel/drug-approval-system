@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JpaBuddyIdeaProjectConfig" isInitGenerateDdl="true">
+    <option name="defaultUnitInitialized" value="true" />
+    <option name="renamerInitialized" value="true" />
+    <option name="sourceModelValue" value="Default" />
+    <option name="targetDbValue" value="71d9c1dd-490a-455e-a610-7b0557cb713c" />
+    <option name="reverseEngineeringLastDbConnectionId" value="4cb9bd29-e143-4c01-85d7-644a3aee9926__drug_approval_system" />
+    <option name="reLastEntityCreationPackage" value="src/main/java/com/example/drugapprovalsystem/entity" />
+  </component>
+</project>
