@@ -11,5 +11,5 @@ public interface UserService {
     User getUserByEmail(String Email) throws UserDoesNotExistException, InvalidateException;
     User login(String email, String password) throws UserDoesNotExistException, AccountSuspendedException, InvalidateException;
     User registerUser(RegisterRequestDTO registerUser) throws RoleDoesNotExistException, UserAlreadyExistsException;
-    Page<UserResponseDTO> getUserPageable(Integer pageNo,Integer pageSize);
+    Page<UserResponseDTO> getUserPageable(Integer pageNo,Integer pageSize,String sortField,String sortOrder);
 }
