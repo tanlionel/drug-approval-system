@@ -4,10 +4,16 @@ import com.example.drugapprovalsystem.entity.Role;
 import com.example.drugapprovalsystem.entity.User;
 import com.example.drugapprovalsystem.exception.*;
 import com.example.drugapprovalsystem.model.DTO.RegisterRequestDTO;
+import com.example.drugapprovalsystem.model.DTO.UserResponseDTO;
+import com.example.drugapprovalsystem.model.Mapper.UserMapper;
 import com.example.drugapprovalsystem.repository.RoleRepository;
 import com.example.drugapprovalsystem.repository.UserRepository;
 import com.example.drugapprovalsystem.service.ServiceInterface.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -63,5 +69,13 @@ public class UserServiceImplement implements UserService {
                 .build();
         userRepository.save(user);
         return user;
+    }
+
+    @Override
+    public Page<UserResponseDTO> getUserPageable(Integer pageNo, Integer pageSize) {
+//        Sort sort = Sort.by(Sort.Direction.valueOf(sortOrder),sortField);
+        Pageable pageable= PageRequest.of(pageNo,pageSize);
+        Page<User> usersPage = userRepository.findByIsActive(ACTIVE,pageable);
+        return usersPage.map(UserMapper::mapToUserResponseDTO);
     }
 }
