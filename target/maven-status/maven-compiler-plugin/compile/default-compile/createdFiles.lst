@@ -10,6 +10,7 @@ com\example\drugapprovalsystem\exception\GlobalExceptionHandler.class
 com\example\drugapprovalsystem\model\DTO\ResponseObjectDTO.class
 com\example\drugapprovalsystem\service\ServiceImplement\UserServiceImplement.class
 com\example\drugapprovalsystem\config\ApplicationConfiguration.class
+com\example\drugapprovalsystem\exception\UserAlreadyDeactivateException.class
 com\example\drugapprovalsystem\DrugapprovalsystemApplication.class
 com\example\drugapprovalsystem\exception\UserAlreadyExistsException.class
 com\example\drugapprovalsystem\config\SpringFoxConfig.class
@@ -21,6 +22,7 @@ com\example\drugapprovalsystem\entity\Category.class
 com\example\drugapprovalsystem\model\DTO\ResponseObjectDTO$ResponseObjectDTOBuilder.class
 com\example\drugapprovalsystem\repository\UserRepository.class
 com\example\drugapprovalsystem\service\ServiceInterface\UserService.class
+com\example\drugapprovalsystem\exception\UserAlreadyActiveException.class
 com\example\drugapprovalsystem\model\DTO\UserResponseDTO$UserResponseDTOBuilder.class
 com\example\drugapprovalsystem\entity\Labeller.class
 com\example\drugapprovalsystem\entity\Manufactor.class
@@ -43,6 +45,7 @@ com\example\drugapprovalsystem\config\SecurityConfiguration.class
 com\example\drugapprovalsystem\exception\RoleDoesNotExistException.class
 com\example\drugapprovalsystem\exception\InvalidateException.class
 com\example\drugapprovalsystem\exception\UserDoesNotExistException.class
+com\example\drugapprovalsystem\model\DTO\UpdateUserRequestDTO.class
 com\example\drugapprovalsystem\config\JwtAuthFilter.class
 com\example\drugapprovalsystem\entity\Contraindication.class
 com\example\drugapprovalsystem\entity\ProductAllergyDetail.class
