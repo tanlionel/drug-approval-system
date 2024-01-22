@@ -26,11 +26,6 @@ public class TestController {
     public String getSecure(){
         return "Hello from secure";
     }
-
-//    @GetMapping("test/product-repository")
-//    public Page<ApprovalProduct> testProductRepository()  {
-//        return approvalProductRepository.findAll(PageRequest.of(0, 10));
-//    }
     @GetMapping("/test/admin/approval-product")
     public ResponseEntity<?> getApprovalProductWithPageable(@RequestParam(defaultValue = "0") int pageNo,
                                                             @RequestParam(defaultValue = "10") int pageSize,
