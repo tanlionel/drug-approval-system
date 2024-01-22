@@ -8,11 +8,13 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="drugapprovalsystem" />
+        <module name="drug-approval-system" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="drug-approval-system" options="-parameters" />
       <module name="drugapprovalsystem" options="-parameters" />
     </option>
   </component>
