@@ -12,7 +12,7 @@ public class Contraindication {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Long id;
+    private Integer id;
 
     @Column(name = "relationship")
     private String relationship;

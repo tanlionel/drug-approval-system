@@ -1,5 +1,6 @@
 package com.example.drugapprovalsystem.entity;
 
+import io.swagger.models.auth.In;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,13 +13,13 @@ public class Drug {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "type")
     private String type;
 
     @Column(name = "drugbank_id")
-    private Long drugbankId;
+    private Integer drugbankId;
 
     @Column(name = "name")
     private String name;

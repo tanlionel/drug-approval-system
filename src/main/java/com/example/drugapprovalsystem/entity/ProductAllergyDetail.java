@@ -12,7 +12,7 @@ public class ProductAllergyDetail {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "detail")
     private String detail;
