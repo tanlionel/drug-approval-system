@@ -24,10 +24,11 @@ public class ApprovalProductServiceImplement implements ApprovalProductService {
     ApprovalProductRepository approvalProductRepository;
     @Override
     public Page<ApprovalProductResponseDTO> getPageableApprovalProduct(int pageNo, int pageSize,
-                                                                       String sortField, String sortOrder) {
+                                                                       String sortField, String sortOrder,
+                                                                       String search) {
         Pageable pageable = pageableService.getPageableWithSort(pageNo, pageSize, sortField, sortOrder);
 
-        Page<ApprovalProduct> page = approvalProductRepository.findAll(pageable);
+        Page<ApprovalProduct> page = approvalProductRepository.findAllByNameContaining(pageable, search);
 
         return page.map(ProductMapper::mapToApprovalProductResponseDTO);
     }

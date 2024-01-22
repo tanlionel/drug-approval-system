@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 
 public interface ApprovalProductService {
     public Page<ApprovalProductResponseDTO> getPageableApprovalProduct(int pageNo, int pageSize,
-                                                                       String sortField, String sortOrder);
+                                                                       String sortField, String sortOrder,
+                                                                       String search);
 
 }

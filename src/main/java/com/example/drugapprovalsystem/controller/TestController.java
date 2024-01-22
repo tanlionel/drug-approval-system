@@ -31,11 +31,12 @@ public class TestController {
 //        return approvalProductRepository.findAll(PageRequest.of(0, 10));
 //    }
     @GetMapping("/test/admin/approval-product")
-    public ResponseEntity<?> getApprovalProductWithPageable(@RequestParam(value = "pageNo", defaultValue = "0") int pageNo,
-                                                            @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
-                                                            @RequestParam(value = "sortField", defaultValue = "id") String sortField,
-                                                            @RequestParam(value = "sortOrder", defaultValue = "DESC") String sortOrder) {
+    public ResponseEntity<?> getApprovalProductWithPageable(@RequestParam(defaultValue = "0") int pageNo,
+                                                            @RequestParam(defaultValue = "10") int pageSize,
+                                                            @RequestParam(defaultValue = "id") String sortField,
+                                                            @RequestParam(defaultValue = "DESC") String sortOrder,
+                                                            @RequestParam(defaultValue = "") String search) {
 
-        return ResponseEntity.ok(approvalProductService.getPageableApprovalProduct(pageNo, pageSize, sortField, sortOrder));
+        return ResponseEntity.ok(approvalProductService.getPageableApprovalProduct(pageNo, pageSize, sortField, sortOrder, search));
     }
 }
