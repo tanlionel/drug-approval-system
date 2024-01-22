@@ -35,6 +35,6 @@ public class UserController {
                                               @RequestParam(required = false,defaultValue = "10") Integer pageSize,
                                               @RequestParam(required = false,defaultValue = "id") String sortField,
                                               @RequestParam(required = false,defaultValue = "asc") String sortOrder){
-        return ResponseEntity.ok(userService.getUserPageable(pageNo,pageSize));
+        return ResponseEntity.ok(userService.getUserPageable(pageNo,pageSize,sortField,sortOrder));
     }
 }

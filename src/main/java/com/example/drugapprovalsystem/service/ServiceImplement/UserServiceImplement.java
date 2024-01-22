@@ -27,6 +27,7 @@ public class UserServiceImplement implements UserService {
     private final RoleRepository roleRepository;
     private static final String DEFAULT_PASSWORD = "123456";
     private static final String ACTIVE = "Active";
+    private static final String SORT_ASC = "asc";
 
     @Override
     public User getUserByEmail(String Email) throws UserDoesNotExistException, InvalidateException {
@@ -72,9 +73,13 @@ public class UserServiceImplement implements UserService {
     }
 
     @Override
-    public Page<UserResponseDTO> getUserPageable(Integer pageNo, Integer pageSize) {
-//        Sort sort = Sort.by(Sort.Direction.valueOf(sortOrder),sortField);
-        Pageable pageable= PageRequest.of(pageNo,pageSize);
+    public Page<UserResponseDTO> getUserPageable(Integer pageNo, Integer pageSize,String sortField,String sortOrder) {
+        Pageable pageable;
+        if (sortOrder.equals(SORT_ASC)){
+            pageable= PageRequest.of(pageNo,pageSize,Sort.by(sortField).ascending());
+        }else {
+            pageable= PageRequest.of(pageNo,pageSize,Sort.by(sortField).descending());
+        }
         Page<User> usersPage = userRepository.findByIsActive(ACTIVE,pageable);
         return usersPage.map(UserMapper::mapToUserResponseDTO);
     }
