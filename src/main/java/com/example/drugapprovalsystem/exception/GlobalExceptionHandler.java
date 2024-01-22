@@ -35,4 +35,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<?> handleUserAlreadyExistsException(UserAlreadyExistsException ex){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
+    @ExceptionHandler(UserAlreadyActiveException.class)
+    public ResponseEntity<?> handleUserAlreadyActiveException(UserAlreadyActiveException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
+    @ExceptionHandler(UserAlreadyDeactivateException.class)
+    public ResponseEntity<?> handleUserAlreadyDeactivateException(UserAlreadyDeactivateException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
 }

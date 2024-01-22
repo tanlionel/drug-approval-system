@@ -17,4 +17,6 @@ public class Message {
     public static final String msgUserAlreadyExist = "User already exists!";
     public static final String msgUserDeleted = "User Deleted!";
     public static final String msgUserDoesNotExist = "User does not exist!";
+    public static final String msgUserAlreadyActive = "User already active!";
+    public static final String msgUserAlreadyDeactivate = "User already deactivate!";
 }

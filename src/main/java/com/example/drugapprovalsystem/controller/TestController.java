@@ -1,5 +1,6 @@
 package com.example.drugapprovalsystem.controller;
 
+import com.example.drugapprovalsystem.common.Common;
 import com.example.drugapprovalsystem.entity.ApprovalProduct;
 import com.example.drugapprovalsystem.repository.ApprovalProductRepository;
 import com.example.drugapprovalsystem.service.ServiceInterface.ApprovalProductService;
@@ -34,7 +35,7 @@ public class TestController {
     public ResponseEntity<?> getApprovalProductWithPageable(@RequestParam(defaultValue = "0") int pageNo,
                                                             @RequestParam(defaultValue = "10") int pageSize,
                                                             @RequestParam(defaultValue = "id") String sortField,
-                                                            @RequestParam(defaultValue = "DESC") String sortOrder,
+                                                            @RequestParam(defaultValue = Common.SORT_ASC) String sortOrder,
                                                             @RequestParam(defaultValue = "") String search) {
 
         return ResponseEntity.ok(approvalProductService.getPageableApprovalProduct(pageNo, pageSize, sortField, sortOrder, search));
