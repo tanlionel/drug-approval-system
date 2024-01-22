@@ -13,6 +13,7 @@ public class UserMapper {
                 .roleName(user.getRole().getName())
                 .username(user.getUsername())
                 .fullname(user.getFullname())
+                .isActive(user.getIsActive())
                 .build();
     }
 }

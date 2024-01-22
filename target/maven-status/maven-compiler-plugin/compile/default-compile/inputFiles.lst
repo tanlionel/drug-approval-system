@@ -15,6 +15,7 @@ C:\Users\X\Documents\GitHub\drug-approval-system\src\main\java\com\example\druga
 C:\Users\X\Documents\GitHub\drug-approval-system\src\main\java\com\example\drugapprovalsystem\entity\Role.java
 C:\Users\X\Documents\GitHub\drug-approval-system\src\main\java\com\example\drugapprovalsystem\entity\User.java
 C:\Users\X\Documents\GitHub\drug-approval-system\src\main\java\com\example\drugapprovalsystem\entity\Manufactor.java
+C:\Users\X\Documents\GitHub\drug-approval-system\src\main\java\com\example\drugapprovalsystem\model\DTO\UpdateUserRequestDTO.java
 C:\Users\X\Documents\GitHub\drug-approval-system\src\main\java\com\example\drugapprovalsystem\config\JwtAuthFilter.java
 C:\Users\X\Documents\GitHub\drug-approval-system\src\main\java\com\example\drugapprovalsystem\entity\Ingredient.java
 C:\Users\X\Documents\GitHub\drug-approval-system\src\main\java\com\example\drugapprovalsystem\entity\Pharmacogenomic.java
@@ -22,6 +23,7 @@ C:\Users\X\Documents\GitHub\drug-approval-system\src\main\java\com\example\druga
 C:\Users\X\Documents\GitHub\drug-approval-system\src\main\java\com\example\drugapprovalsystem\entity\Product.java
 C:\Users\X\Documents\GitHub\drug-approval-system\src\main\java\com\example\drugapprovalsystem\model\DTO\RegisterRequestDTO.java
 C:\Users\X\Documents\GitHub\drug-approval-system\src\main\java\com\example\drugapprovalsystem\service\ServiceInterface\UserService.java
+C:\Users\X\Documents\GitHub\drug-approval-system\src\main\java\com\example\drugapprovalsystem\exception\UserAlreadyActiveException.java
 C:\Users\X\Documents\GitHub\drug-approval-system\src\main\java\com\example\drugapprovalsystem\entity\ProductAllergyDetail.java
 C:\Users\X\Documents\GitHub\drug-approval-system\src\main\java\com\example\drugapprovalsystem\controller\UserController.java
 C:\Users\X\Documents\GitHub\drug-approval-system\src\main\java\com\example\drugapprovalsystem\enums\UserRole.java
@@ -38,6 +40,7 @@ C:\Users\X\Documents\GitHub\drug-approval-system\src\main\java\com\example\druga
 C:\Users\X\Documents\GitHub\drug-approval-system\src\main\java\com\example\drugapprovalsystem\controller\AuthController.java
 C:\Users\X\Documents\GitHub\drug-approval-system\src\main\java\com\example\drugapprovalsystem\exception\TokenExpiredException.java
 C:\Users\X\Documents\GitHub\drug-approval-system\src\main\java\com\example\drugapprovalsystem\entity\Authority.java
+C:\Users\X\Documents\GitHub\drug-approval-system\src\main\java\com\example\drugapprovalsystem\exception\UserAlreadyDeactivateException.java
 C:\Users\X\Documents\GitHub\drug-approval-system\src\main\java\com\example\drugapprovalsystem\service\ServiceInterface\JwtService.java
 C:\Users\X\Documents\GitHub\drug-approval-system\src\main\java\com\example\drugapprovalsystem\service\ServiceImplement\UserServiceImplement.java
 C:\Users\X\Documents\GitHub\drug-approval-system\src\main\java\com\example\drugapprovalsystem\model\DTO\UserResponseDTO.java

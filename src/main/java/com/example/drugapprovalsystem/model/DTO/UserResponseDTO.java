@@ -20,4 +20,5 @@ public class UserResponseDTO {
     private LocalDate dayOfBirth;
     private Integer gender;
     private String roleName;
+    private String isActive;
 }
