@@ -32,7 +32,7 @@ public class SecurityConfiguration {
                                 .permitAll()
                                 .requestMatchers("/auth/**")
                                 .permitAll()
-                                .requestMatchers("/api/test")
+                                .requestMatchers("/api/test/**")
                                 .permitAll()
                                 .anyRequest()
                                 .authenticated())
