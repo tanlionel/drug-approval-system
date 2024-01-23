@@ -1,14 +1,22 @@
 package com.example.drugapprovalsystem.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "category")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Category {
+    public Category(Integer id) {
+        this.id = id;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -28,5 +36,4 @@ public class Category {
 
     @Column(name = "is_active")
     private Boolean isActive;
-
 }

@@ -11,10 +11,15 @@ import com.example.drugapprovalsystem.repository.RoleRepository;
 import com.example.drugapprovalsystem.repository.UserRepository;
 import com.example.drugapprovalsystem.service.ServiceInterface.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -120,5 +125,18 @@ public class UserServiceImplement implements UserService {
         if (updateUserRequestDTO.getFullName()!=null ) user.setFullname(updateUserRequestDTO.getFullName());
         if (updateUserRequestDTO.getDayOfBirth()!=null) user.setDayOfBirth(updateUserRequestDTO.getDayOfBirth());
         return userRepository.save(user);
+    }
+
+    @Override
+    public User getLoginUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication.isAuthenticated()) {
+            String username = authentication.getName();
+
+            return userRepository.findByEmail(username);
+        }
+
+        return null;
     }
 }
