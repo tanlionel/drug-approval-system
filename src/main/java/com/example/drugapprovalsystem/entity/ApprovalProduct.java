@@ -2,15 +2,20 @@ package com.example.drugapprovalsystem.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
 @Table(name = "approval_product")
 public class ApprovalProduct {
+    public ApprovalProduct(Integer id) {
+        this.id = id;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -30,7 +35,7 @@ public class ApprovalProduct {
     private String prescriptionName;
 
     @Column(name = "created_on")
-    private Instant createdOn;
+    private LocalDateTime createdOn;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "created_by")

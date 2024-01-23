@@ -2,14 +2,21 @@ package com.example.drugapprovalsystem.entity;
 
 import io.swagger.models.auth.In;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "drug")
 public class Drug {
+    public Drug(Integer id) {
+        this.id = id;
+    }
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)

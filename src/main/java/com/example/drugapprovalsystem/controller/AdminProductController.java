@@ -1,6 +1,8 @@
 package com.example.drugapprovalsystem.controller;
 
 import com.example.drugapprovalsystem.common.Common;
+import com.example.drugapprovalsystem.entity.ApprovalProduct;
+import com.example.drugapprovalsystem.model.DTO.product_dto.ApprovalProductRequestDTO;
 import com.example.drugapprovalsystem.service.ServiceInterface.ApprovalProductService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,4 +29,8 @@ public class AdminProductController {
                 .ok(approvalProductService.getPageableApprovalProduct(pageNo, pageSize, sortField, sortOrder, search));
     }
 
+    @PostMapping("/approval-product")
+    public void createApprovalProduct(@RequestBody ApprovalProductRequestDTO dto) {
+        approvalProductService.createApprovalProduct(dto);
+    }
 }

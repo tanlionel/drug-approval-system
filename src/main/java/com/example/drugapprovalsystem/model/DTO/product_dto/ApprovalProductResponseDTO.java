@@ -1,12 +1,16 @@
-package com.example.drugapprovalsystem.model.DTO;
+package com.example.drugapprovalsystem.model.DTO.product_dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class ApprovalProductResponseDTO {
     private Integer id;
@@ -14,8 +18,8 @@ public class ApprovalProductResponseDTO {
     private String name;
     private String route;
     private String prescriptionName;
-    //@JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "HH:mm:ss yyyy-MM-dd")
-    private Instant createdOn;
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "HH:mm:ss yyyy-MM-dd")
+    private LocalDateTime createdOn;
     private String company;
     private String category;
 }
