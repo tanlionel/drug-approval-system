@@ -35,7 +35,8 @@ public class AdminProductController {
     }
 
     @PutMapping("/approval-product")
-    public void deleteIngredientByApprovalProductId(@RequestParam("id") Integer id, @RequestBody ApprovalProductRequestDTO dto) {
-            approvalProductService.updateApprovalProduct(dto);
+    public void updateByApprovalProductId(@RequestParam("id") Integer id,
+                                          @RequestBody ApprovalProductRequestDTO dto) throws Exception{
+        approvalProductService.updateApprovalProduct(dto);
     }
 }
