@@ -23,8 +23,4 @@ public class Contraindication {
 
     @Column(name = "value")
     private String value;
-
-    @Column(name = "is_active")
-    private Boolean isActive;
-
 }

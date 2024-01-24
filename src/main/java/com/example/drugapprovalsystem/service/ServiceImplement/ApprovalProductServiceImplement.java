@@ -1,6 +1,7 @@
 package com.example.drugapprovalsystem.service.ServiceImplement;
 
 import com.example.drugapprovalsystem.entity.*;
+import com.example.drugapprovalsystem.exception.ProductDoesNotExistException;
 import com.example.drugapprovalsystem.model.DTO.product_dto.ApprovalProductRequestDTO;
 import com.example.drugapprovalsystem.model.DTO.product_dto.ApprovalProductResponseDTO;
 import com.example.drugapprovalsystem.model.DTO.product_dto.PharmacogenomicRequestDTO;
@@ -90,6 +91,78 @@ public class ApprovalProductServiceImplement implements ApprovalProductService {
                     .map(authorityRequestDTO -> AuthorityMapper.mapToAuthority(authorityRequestDTO, result.getId(), IS_APPROVAL_PRODUCT))
                     .toList();
         }
+
+        if (ingredientList != null)
+            ingredientRepository.saveAll(ingredientList);
+        if (authorityList != null)
+            authorityRepository.saveAll(authorityList);
+    }
+
+    @Override
+    public void updateApprovalProduct(ApprovalProductRequestDTO approvalProductRequestDTO) throws Exception {
+        if (approvalProductRequestDTO.getId() == null)
+            throw new ProductDoesNotExistException();
+
+        ApprovalProduct approvalProduct = ProductMapper.mapToApprovalProduct(approvalProductRequestDTO);
+
+        ApprovalProduct approvalProductInDB = approvalProductRepository.findById(approvalProductRequestDTO.getId()).get();
+
+        if (approvalProductInDB == null)
+            throw new ProductDoesNotExistException();
+
+        //Optional DETAILS
+        if (approvalProductInDB.getPharmacogenomic() != null)
+            pharmacogenomicRepository.deleteById(approvalProductInDB.getPharmacogenomic().getId());
+        if (approvalProduct.getPharmacogenomic() != null)
+            approvalProduct.setPharmacogenomic(pharmacogenomicRepository.save(approvalProduct.getPharmacogenomic()));
+
+        if (approvalProductInDB.getProductAllergyDetails() != null)
+            productAllergyDetailRepository.deleteById(approvalProductInDB.getProductAllergyDetails().getId());
+        if (approvalProduct.getProductAllergyDetails() != null)
+            approvalProduct.setProductAllergyDetails(productAllergyDetailRepository.save(approvalProduct.getProductAllergyDetails()));
+
+        if (approvalProductInDB.getContraindication() != null)
+            contraindicationRepository.deleteById(approvalProductInDB.getContraindication().getId());
+        if (approvalProduct.getContraindication() != null)
+            approvalProduct.setContraindication(contraindicationRepository.save(approvalProduct.getContraindication()));
+
+        //
+
+        //Save the manufactor first
+        if (approvalProductInDB.getManufactor() != null)
+            manufactorRepository.deleteById(approvalProductInDB.getManufactor().getId());
+        if (approvalProduct.getManufactor() != null)
+            approvalProduct.setManufactor(manufactorRepository.save(approvalProduct.getManufactor()));
+
+        //Save the labeller second
+        if (approvalProductInDB.getLabeller() != null)
+            labellerRepository.deleteById(approvalProductInDB.getLabeller().getId());
+        if (approvalProduct.getLabeller() != null)
+            approvalProduct.setLabeller(labellerRepository.save(approvalProduct.getLabeller()));
+
+        //Set Create by
+        approvalProduct.setCreatedBy(userService.getLoginUser());
+        //Save approval product
+        ApprovalProduct result = approvalProductRepository.save(approvalProduct);
+
+        List<Ingredient> ingredientList = null;
+        List<Authority> authorityList = null;
+        //SAVE INGREDIENT AND AUTHORITY LIST
+        if (result != null) {
+            ingredientList = approvalProductRequestDTO.getDrugIngredients()
+                    .stream()
+                    .map(ingredient -> IngredientMapper.mapToIngredient(ingredient, result.getId(), IS_APPROVAL_PRODUCT))
+                    .toList();
+
+            authorityList = approvalProductRequestDTO.getAuthorities()
+                    .stream()
+                    .map(authorityRequestDTO -> AuthorityMapper.mapToAuthority(authorityRequestDTO, result.getId(), IS_APPROVAL_PRODUCT))
+                    .toList();
+        }
+
+        //DELETE BEFORE SAVE
+        ingredientRepository.deleteByApprovalProductId(approvalProduct.getId());
+        authorityRepository.deleteByApprovalProductId(approvalProduct.getId());
 
         if (ingredientList != null)
             ingredientRepository.saveAll(ingredientList);

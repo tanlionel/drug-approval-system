@@ -22,37 +22,32 @@ public class ProductMapper {
 
     public final static ApprovalProduct mapToApprovalProduct(ApprovalProductRequestDTO a) {
         ApprovalProduct approvalProduct = new ApprovalProduct();
+
+        approvalProduct.setId(a.getId());
         approvalProduct.setName(a.getName());
         approvalProduct.setRoute(a.getRoute());
         approvalProduct.setPrescriptionName(a.getPrescriptionName());
         approvalProduct.setCreatedOn(LocalDateTime.now());
         approvalProduct.setCategory(new Category(a.getCategoryId()));
-
         approvalProduct.setLabeller(new Labeller(null, a.getLabeller(), true));
 
         if (a.getManufactor() != null)
-        approvalProduct.setManufactor(new Manufactor(null, a.getManufactor().getName(),
-                                                    a.getManufactor().getCompany(), a.getManufactor().getScore(),
-                                                    a.getManufactor().getSource(), new Country(a.getManufactor().getCountryId())));
+            approvalProduct.setManufactor( new Manufactor(null, a.getManufactor().getName(),
+                                            a.getManufactor().getCompany(), a.getManufactor().getScore(),
+                                            a.getManufactor().getSource(), new Country(a.getManufactor().getCountryId())) );
 
-        if (a.getPharmacogenomic() != null) {
-            PharmacogenomicRequestDTO p = a.getPharmacogenomic();
+        if (a.getPharmacogenomic() != null)
+            approvalProduct.setPharmacogenomic(new Pharmacogenomic(null, a.getPharmacogenomic().getIndication(),
+                    a.getPharmacogenomic().getPharmacodynamic(), a.getPharmacogenomic().getMechanismOfAction(),
+                    a.getPharmacogenomic().getAsorption(), a.getPharmacogenomic().getToxicity()));
 
-            approvalProduct.setPharmacogenomic(new Pharmacogenomic(null, p.getIndication(), p.getPharmacodynamic(),
-                                                                    p.getMechanismOfAction(), p.getAsorption(), p.getToxicity()));
-        }
+        if (a.getContraindication() != null)
+            approvalProduct.setContraindication(new Contraindication(null, a.getContraindication().getRelationship(),
+                                        a.getContraindication().getValue()));
 
-        if (a.getContraindication() != null) {
-            ContraindicationRequestDTO c = a.getContraindication();
-
-            approvalProduct.setContraindication(new Contraindication(null, c.getRelationship(), c.getValue(), Common.IS_ACTIVE));
-        }
-
-        if (a.getProductAllergyDetail() != null) {
-            ProductAllergyDetailRequestDTO p = a.getProductAllergyDetail();
-
-            approvalProduct.setProductAllergyDetails(new ProductAllergyDetail(null, p.getDetail(), p.getSummary()));
-        }
+        if (a.getProductAllergyDetail() != null)
+            approvalProduct.setProductAllergyDetails(new ProductAllergyDetail(null, a.getProductAllergyDetail().getDetail(),
+                a.getProductAllergyDetail().getSummary()));
 
         return approvalProduct;
     }

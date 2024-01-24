@@ -33,4 +33,9 @@ public class AdminProductController {
     public void createApprovalProduct(@RequestBody ApprovalProductRequestDTO dto) {
         approvalProductService.createApprovalProduct(dto);
     }
+
+    @PutMapping("/approval-product")
+    public void deleteIngredientByApprovalProductId(@RequestParam("id") Integer id, @RequestBody ApprovalProductRequestDTO dto) {
+            approvalProductService.updateApprovalProduct(dto);
+    }
 }
