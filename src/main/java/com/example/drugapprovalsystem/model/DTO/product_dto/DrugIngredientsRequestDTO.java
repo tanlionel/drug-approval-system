@@ -7,7 +7,6 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class DrugIngredientsRequestDTO {
     private Integer drugId;
     private String strength;

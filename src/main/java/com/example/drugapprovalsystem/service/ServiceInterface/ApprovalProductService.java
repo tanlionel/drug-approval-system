@@ -10,4 +10,6 @@ public interface ApprovalProductService {
                                                                        String sortField, String sortOrder,
                                                                        String search);
     public void createApprovalProduct(ApprovalProductRequestDTO approvalProductRequestDTO);
+
+    public void updateApprovalProduct(ApprovalProductRequestDTO approvalProductRequestDTO) throws Exception;
 }

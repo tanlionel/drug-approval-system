@@ -33,4 +33,10 @@ public class AdminProductController {
     public void createApprovalProduct(@RequestBody ApprovalProductRequestDTO dto) {
         approvalProductService.createApprovalProduct(dto);
     }
+
+    @PutMapping("/approval-product")
+    public void updateByApprovalProductId(@RequestParam("id") Integer id,
+                                          @RequestBody ApprovalProductRequestDTO dto) throws Exception{
+        approvalProductService.updateApprovalProduct(dto);
+    }
 }
