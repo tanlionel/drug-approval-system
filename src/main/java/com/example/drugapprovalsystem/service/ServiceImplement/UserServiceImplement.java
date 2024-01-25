@@ -11,15 +11,12 @@ import com.example.drugapprovalsystem.repository.RoleRepository;
 import com.example.drugapprovalsystem.repository.UserRepository;
 import com.example.drugapprovalsystem.service.ServiceInterface.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -62,7 +59,7 @@ public class UserServiceImplement implements UserService {
 
         User existUser = userRepository.findByEmail(registerUser.getEmail());
         Optional<Role> existRole = roleRepository.findById(registerUser.getRoleID());
-        if (!existRole.isPresent()) throw new RoleDoesNotExistException();
+        if (existRole.isEmpty()) throw new RoleDoesNotExistException();
         Role role = existRole.get();
         if (existUser != null) throw new UserAlreadyExistsException();
 
