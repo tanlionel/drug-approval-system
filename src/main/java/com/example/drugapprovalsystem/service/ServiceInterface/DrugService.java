@@ -9,4 +9,5 @@ public interface DrugService {
     Page<DrugResponseDTO> getDrugPageable(Integer pageNo,Integer pageSize,String sortField,String sortOrder, String search);
 
     public void createDrug(DrugRequestDTO drugRequestDTO);
+    public void updateDrug(DrugRequestDTO drugRequestDTO) throws Exception;
 }

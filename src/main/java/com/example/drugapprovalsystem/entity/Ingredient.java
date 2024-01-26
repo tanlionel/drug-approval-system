@@ -1,12 +1,17 @@
 package com.example.drugapprovalsystem.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "ingredients")
 public class Ingredient {
     @Id
@@ -37,5 +42,4 @@ public class Ingredient {
 
     @Column(name = "clinically_relevant")
     private String clinicallyRelevant;
-
 }

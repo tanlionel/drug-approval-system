@@ -1,12 +1,16 @@
 package com.example.drugapprovalsystem.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "product_allergy_details")
 public class ProductAllergyDetail {
     @Id

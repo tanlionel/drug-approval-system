@@ -1,13 +1,17 @@
 package com.example.drugapprovalsystem.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "manufactor")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Manufactor {
     @Id
     @Column(name = "id", nullable = false)

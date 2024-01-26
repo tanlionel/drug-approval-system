@@ -1,14 +1,23 @@
 package com.example.drugapprovalsystem.entity;
 
+import com.example.drugapprovalsystem.model.Mapper.ProductMapper;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "product")
 public class Product {
+    public Product(Integer id) {
+        this.id = id;
+    }
+
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
