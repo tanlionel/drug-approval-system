@@ -1,6 +1,7 @@
 package com.example.drugapprovalsystem.controller;
 
 import com.example.drugapprovalsystem.common.Common;
+import com.example.drugapprovalsystem.entity.Drug;
 import com.example.drugapprovalsystem.model.DTO.DrugRequestDTO;
 import com.example.drugapprovalsystem.service.ServiceInterface.DrugService;
 import lombok.AllArgsConstructor;
@@ -28,6 +29,21 @@ public class AdminDrugController {
     @PostMapping("/drug")
     public void createDrug(@RequestBody DrugRequestDTO drugRequestDTO){
         drugService.createDrug(drugRequestDTO);
+    }
+
+    @PutMapping("/drug")
+    public ResponseEntity<?> updateByDrugId(@RequestParam("id") Integer id,
+                               @RequestBody DrugRequestDTO dto) throws Exception{
+        Drug drug = drugService.updateDrug(dto);
+        return ResponseEntity.ok(DrugRequestDTO.builder()
+                .type(drug.getType())
+                .name(drug.getName())
+                .state(drug.getState())
+                .description(drug.getDescription())
+                .simpleDescription(drug.getSimpleDescription())
+                .clinicalDescription(drug.getClinicalDescription())
+                .approvalStatus(drug.getApprovalStatus())
+                .build());
     }
 
 }

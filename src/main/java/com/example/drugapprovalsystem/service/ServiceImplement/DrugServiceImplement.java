@@ -15,6 +15,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.yaml.snakeyaml.events.Event;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -47,49 +50,23 @@ public class DrugServiceImplement implements DrugService {
     }
 
     @Override
-    public void updateDrug(DrugRequestDTO drugRequestDTO) throws Exception {
-        if(drugRequestDTO.getId() == null)
-            throw new DrugDoesNotExistException();
-
-        Drug drug = DrugMapper.mapToDrug(drugRequestDTO);
-
-        Drug drugInDB = drugRepository.findById(drugRequestDTO.getId()).get();
-
-        if (drugInDB == null)
-            throw new ProductDoesNotExistException();
+    public Drug updateDrug(DrugRequestDTO drugRequestDTO) throws Exception {
+        if(drugRequestDTO.getId() == null) throw new DrugDoesNotExistException();
+        Optional<Drug> drugInDB = drugRepository.findById(drugRequestDTO.getId());
+        if (drugInDB == null) throw new ProductDoesNotExistException();
 
         //Update Drug
-        if(drugRequestDTO.getType() != null) {
-            drugInDB.setType(drugRequestDTO.getType());
-        }
+        if(drugRequestDTO.getType() != null) drugInDB.get().setType(drugRequestDTO.getType());
+        if(drugRequestDTO.getName() != null) drugInDB.get().setName(drugRequestDTO.getName());
+        if(drugRequestDTO.getState() != null) drugInDB.get().setState(drugRequestDTO.getState());
+        if(drugRequestDTO.getDescription() != null) drugInDB.get().setDescription(drugRequestDTO.getDescription());
+        if(drugRequestDTO.getSimpleDescription() != null) drugInDB.get().setSimpleDescription(drugRequestDTO.getSimpleDescription());
+        if(drugRequestDTO.getClinicalDescription() != null) drugInDB.get().setClinicalDescription(drugRequestDTO.getClinicalDescription());
+        if(drugRequestDTO.getApprovalStatus() != null) drugInDB.get().setApprovalStatus(drugRequestDTO.getApprovalStatus());
 
-        if(drugRequestDTO.getName() != null) {
-            drugInDB.setName(drugRequestDTO.getName());
-        }
+        //Save
+        return drugRepository.save(drugInDB.get());
 
-        if(drugRequestDTO.getState() != null) {
-            drugInDB.setState(drugRequestDTO.getState());
-        }
-
-        if(drugRequestDTO.getDescription() != null) {
-            drugInDB.setDescription(drugRequestDTO.getDescription());
-        }
-
-        if(drugRequestDTO.getSimpleDescription() != null) {
-            drugInDB.setSimpleDescription(drugRequestDTO.getSimpleDescription());
-        }
-
-        if(drugRequestDTO.getClinicalDescription() != null) {
-            drugInDB.setClinicalDescription(drugRequestDTO.getClinicalDescription());
-        }
-
-        if(drugRequestDTO.getApprovalStatus() != null) {
-            drugInDB.setApprovalStatus(drugRequestDTO.getApprovalStatus());
-        }
-
-            //Set created by
-            //Save
-            Drug result = drugRepository.save(drug);
 
     }
 

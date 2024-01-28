@@ -2,12 +2,10 @@ package com.example.drugapprovalsystem.entity;
 
 import io.swagger.models.auth.In;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
+@Builder
 @Setter
 @Entity
 @AllArgsConstructor
