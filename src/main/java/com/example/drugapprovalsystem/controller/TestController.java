@@ -1,5 +1,8 @@
 package com.example.drugapprovalsystem.controller;
 
+import com.example.drugapprovalsystem.model.DTO.DrugRequestDTO;
+import com.example.drugapprovalsystem.service.ServiceInterface.DrugService;
+import org.springframework.beans.factory.annotation.Autowired;
 import com.example.drugapprovalsystem.common.Common;
 import com.example.drugapprovalsystem.entity.ApprovalProduct;
 import com.example.drugapprovalsystem.entity.Ingredient;
@@ -37,6 +40,23 @@ public class TestController {
     public String getSecure(){
         return "Hello from secure";
     }
+
+    @Autowired
+    DrugService drugService;
+    @GetMapping("/test/drug")
+    public ResponseEntity<?> getDrugPageable(@RequestParam(defaultValue = "0") int pageNo,
+                                             @RequestParam(defaultValue = "10") int pageSize,
+                                             @RequestParam(defaultValue = "id") String sortField,
+                                             @RequestParam(defaultValue = Common.SORT_ASC) String sortOrder,
+                                             @RequestParam(defaultValue = "") String search) {
+        return ResponseEntity.ok(drugService.getDrugPageable(pageNo,pageSize,sortField,sortOrder, search));
+    }
+
+    @PostMapping("/test/drug")
+    public void createDrug(@RequestBody DrugRequestDTO drugRequestDTO){
+        drugService.createDrug(drugRequestDTO);
+    }
+
     @GetMapping("/test/admin/approval-product")
     public ResponseEntity<?> getApprovalProductWithPageable(@RequestParam(defaultValue = "0") int pageNo,
                                                             @RequestParam(defaultValue = "10") int pageSize,
@@ -45,6 +65,12 @@ public class TestController {
                                                             @RequestParam(defaultValue = "") String search) {
 
         return ResponseEntity.ok(approvalProductService.getPageableApprovalProduct(pageNo, pageSize, sortField, sortOrder, search));
+    }
+
+    @PutMapping("/test/drug")
+    public void updateByDrugId(@RequestParam("id") Integer id,
+                               @RequestBody DrugRequestDTO dto) throws Exception{
+        drugService.updateDrug(dto);
     }
 
     @GetMapping("/test/public/category")
