@@ -61,4 +61,6 @@ public class ApprovalProduct {
     @JoinColumn(name = "product_allergy_details_id")
     private ProductAllergyDetail productAllergyDetails;
 
+    @Column(name = "is_active")
+    private Boolean isActive;
 }

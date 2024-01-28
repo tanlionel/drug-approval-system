@@ -1,12 +1,11 @@
 package com.example.drugapprovalsystem.model.Mapper;
 
 import com.example.drugapprovalsystem.entity.*;
-import com.example.drugapprovalsystem.model.DTO.product_dto.AuthorityRequestDTO;
-import com.example.drugapprovalsystem.model.DTO.product_dto.DrugIngredientsRequestDTO;
+import com.example.drugapprovalsystem.model.DTO.product_request_dto.AuthorityDTO;
 
 public class AuthorityMapper {
 
-    public final static Authority mapToAuthority(AuthorityRequestDTO auth, Integer productId, boolean isApprovalProduct) {
+    public static Authority mapToAuthority(AuthorityDTO auth, Integer productId, boolean isApprovalProduct) {
         Authority authority = new Authority();
 
         authority.setCertificateName(auth.getCertificateName());
@@ -18,6 +17,15 @@ public class AuthorityMapper {
             authority.setProduct(new Product(productId));
 
         return authority;
+    }
+
+    public static AuthorityDTO mapToAuthorityDTO(Authority auth) {
+
+        return AuthorityDTO.builder()
+                .certificateName(auth.getCertificateName())
+                .countryId(auth.getCountry().getId())
+                .build();
+
     }
 
 }

@@ -1,4 +1,4 @@
-package com.example.drugapprovalsystem.model.DTO.product_dto;
+package com.example.drugapprovalsystem.model.DTO.product_request_dto;
 
 import lombok.*;
 
@@ -7,7 +7,8 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthorityRequestDTO {
+@Builder
+public class AuthorityDTO {
     private String certificateName;
     private Integer countryId;
 }

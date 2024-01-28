@@ -4,19 +4,14 @@ import com.example.drugapprovalsystem.model.DTO.DrugRequestDTO;
 import com.example.drugapprovalsystem.service.ServiceInterface.DrugService;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.example.drugapprovalsystem.common.Common;
-import com.example.drugapprovalsystem.entity.ApprovalProduct;
-import com.example.drugapprovalsystem.entity.Ingredient;
-import com.example.drugapprovalsystem.model.DTO.product_dto.ApprovalProductRequestDTO;
+import com.example.drugapprovalsystem.model.DTO.product_request_dto.ApprovalProductDetailDTO;
 import com.example.drugapprovalsystem.repository.ApprovalProductRepository;
 import com.example.drugapprovalsystem.repository.IngredientRepository;
 import com.example.drugapprovalsystem.service.ServiceInterface.ApprovalProductService;
 import com.example.drugapprovalsystem.service.ServiceInterface.CategoryService;
 import com.example.drugapprovalsystem.service.ServiceInterface.CountryService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController()
 @RequestMapping("/api")
@@ -84,19 +79,28 @@ public class TestController {
     }
 
     @PostMapping("/test/admin/approval-product")
-    public void createApprovalProduct(@RequestBody ApprovalProductRequestDTO dto) {
+    public ResponseEntity<?> createApprovalProduct(@RequestBody ApprovalProductDetailDTO dto) {
         System.out.println("TestController: RUN createApprovalProduct");
 
-        approvalProductService.createApprovalProduct(dto);
-
-        System.out.println("TestController: RUN Mapping successfully");
+        return ResponseEntity.ok(approvalProductService.createApprovalProduct(dto));
     }
 
-//    @PutMapping("test/admin/approval-product")
-//    public void deleteIngredientByApprovalProductId(@RequestParam("id") Integer id,
-//                                                    @RequestBody ApprovalProductRequestDTO dto) {
-//
-//        dto.setId(id);
-//        approvalProductService.updateApprovalProduct(dto);
-//    }
+    @PutMapping("test/admin/approval-product")
+    public ResponseEntity<?> updateApprovalProductById(@RequestParam("id") Integer id,
+                                                              @RequestBody ApprovalProductDetailDTO approvalProductDetailDTO) throws Exception {
+
+        return ResponseEntity.ok(approvalProductService.updateApprovalProduct(id, approvalProductDetailDTO));
+    }
+
+    @DeleteMapping("test/admin/approval-product")
+    public void deleteApprovalProductById(@RequestParam("id") Integer id) throws Exception {
+
+        approvalProductService.deleteApprovalProduct(id);
+
+    }
+
+    @GetMapping("test/admin/approval-product/{id}")
+    public ResponseEntity<ApprovalProductDetailDTO> getApprovalProductById(@PathVariable Integer id) throws Exception {
+        return ResponseEntity.ok(approvalProductService.getApprovalProductDetail(id));
+    }
 }

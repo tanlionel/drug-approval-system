@@ -1,15 +1,10 @@
 package com.example.drugapprovalsystem.model.Mapper;
 
 import com.example.drugapprovalsystem.entity.*;
-import com.example.drugapprovalsystem.model.DTO.product_dto.ApprovalProductRequestDTO;
-import com.example.drugapprovalsystem.model.DTO.product_dto.DrugIngredientsRequestDTO;
-import org.springframework.security.core.parameters.P;
-
-import java.time.Instant;
-import java.util.List;
+import com.example.drugapprovalsystem.model.DTO.DrugIngredientsDTO;
 
 public class IngredientMapper {
-    public final static Ingredient mapToIngredient(DrugIngredientsRequestDTO a, Integer productId, boolean isApprovalProduct) {
+    public static Ingredient mapToIngredient(DrugIngredientsDTO a, Integer productId, boolean isApprovalProduct) {
         Ingredient ingredient = new Ingredient();
 
         ingredient.setDrug(new Drug(a.getDrugId()));
@@ -24,5 +19,17 @@ public class IngredientMapper {
             ingredient.setProduct(new Product(productId));
 
         return ingredient;
+    }
+
+    public static DrugIngredientsDTO mapToDrugIngredientsDTO(Ingredient a) {
+
+        return DrugIngredientsDTO.builder()
+                .drugId(a.getId())
+                .strength(a.getStrength())
+                .strengthNumber(a.getStrengthNumber())
+                .strengthUnit(a.getStrengthUnit())
+                .clinicallyRelevant(a.getClinicallyRelevant())
+                .build();
+
     }
 }
