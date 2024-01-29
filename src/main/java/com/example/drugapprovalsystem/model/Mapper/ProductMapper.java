@@ -60,8 +60,8 @@ public class ProductMapper {
     public static ApprovalProductDetailResponseDTO mapToApprovalProductDetaiResponseDTO(ApprovalProduct a,
                                                                                          List<Ingredient> ingredients,
                                                                                          List<Authority> authorities) {
-        //ACTIVE COUNTRY OF MANUFACTOR
-        ApprovalProductDetailResponseDTO approvalProductDetailResponseDTO = ApprovalProductDetailResponseDTO.builder()
+
+        return ApprovalProductDetailResponseDTO.builder()
                 .id(a.getId())
                 .route(a.getRoute())
                 .name(a.getName())
@@ -99,7 +99,5 @@ public class ProductMapper {
                 .authorities((authorities == null) ? null : authorities.stream()
                                         .map(AuthorityMapper::mapToAuthorityDTO).toList())
                 .build();
-
-        return approvalProductDetailResponseDTO;
     }
 }
