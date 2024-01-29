@@ -2,11 +2,9 @@ package com.example.drugapprovalsystem.model.Mapper;
 
 import com.example.drugapprovalsystem.common.Common;
 import com.example.drugapprovalsystem.entity.*;
-import com.example.drugapprovalsystem.model.DTO.ContraindicationDTO;
-import com.example.drugapprovalsystem.model.DTO.ManufactorDTO;
-import com.example.drugapprovalsystem.model.DTO.PharmacogenomicDTO;
-import com.example.drugapprovalsystem.model.DTO.ProductAllergyDetailDTO;
+import com.example.drugapprovalsystem.model.DTO.*;
 import com.example.drugapprovalsystem.model.DTO.product_request_dto.*;
+import com.example.drugapprovalsystem.model.DTO.product_response_dto.ApprovalProductDetailResponseDTO;
 import com.example.drugapprovalsystem.model.DTO.product_response_dto.ApprovalProductResponseDTO;
 
 import java.time.LocalDateTime;
@@ -59,22 +57,27 @@ public class ProductMapper {
         return approvalProduct;
     }
 
-    public static ApprovalProductDetailDTO mapToApprovalProductDetailDTO(ApprovalProduct a,
-                                                                         List<Ingredient> ingredients,
-                                                                         List<Authority> authorities) {
-
-        ApprovalProductDetailDTO approvalProductDetailDTO = ApprovalProductDetailDTO.builder()
+    public static ApprovalProductDetailResponseDTO mapToApprovalProductDetaiResponseDTO(ApprovalProduct a,
+                                                                                         List<Ingredient> ingredients,
+                                                                                         List<Authority> authorities) {
+        //ACTIVE COUNTRY OF MANUFACTOR
+        ApprovalProductDetailResponseDTO approvalProductDetailResponseDTO = ApprovalProductDetailResponseDTO.builder()
                 .id(a.getId())
                 .route(a.getRoute())
                 .name(a.getName())
                 .prescriptionName(a.getPrescriptionName())
                 .labeller((a.getLabeller() == null) ? null : a.getLabeller().getName())
-                .categoryId((a.getCategory() == null) ? null : a.getCategory().getId())
+                .category((a.getCategory() == null) ? null : CategoryResponseDTO.builder()
+                        .title(a.getCategory().getTitle())
+                        .slug(a.getCategory().getSlug())
+                        .id(a.getCategory().getId())
+                        .build())
                 .manufactor((a.getManufactor() == null) ? null : ManufactorDTO.builder()
                         .score(a.getManufactor().getScore())
                         .company(a.getManufactor().getCompany())
                         .source(a.getManufactor().getSource())
-                        .countryId(a.getManufactor().getCountry().getId())
+                        .countryId((a.getManufactor().getCountry() == null) ? null : a.getManufactor().getCountry().getId())
+                        .countryName((a.getManufactor().getCountry() == null) ? null : a.getManufactor().getCountry().getName())
                         .build())
                 .pharmacogenomic((a.getPharmacogenomic() == null) ? null : PharmacogenomicDTO.builder()
                         .asorption(a.getPharmacogenomic().getAsorption())
@@ -92,11 +95,11 @@ public class ProductMapper {
                         .relationship(a.getContraindication().getRelationship())
                         .build())
                 .drugIngredients((ingredients == null) ? null : ingredients.stream()
-                                        .map(i -> IngredientMapper.mapToDrugIngredientsDTO(i)).toList())
+                                        .map(IngredientMapper::mapToDrugIngredientsResponseDTO).toList())
                 .authorities((authorities == null) ? null : authorities.stream()
-                                        .map(au -> AuthorityMapper.mapToAuthorityDTO(au)).toList())
+                                        .map(AuthorityMapper::mapToAuthorityDTO).toList())
                 .build();
 
-        return approvalProductDetailDTO;
+        return approvalProductDetailResponseDTO;
     }
 }

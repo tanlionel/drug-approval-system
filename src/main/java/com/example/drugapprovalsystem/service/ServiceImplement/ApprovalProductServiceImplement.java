@@ -4,6 +4,7 @@ import com.example.drugapprovalsystem.entity.*;
 import com.example.drugapprovalsystem.exception.InvalidActionException;
 import com.example.drugapprovalsystem.exception.ProductDoesNotExistException;
 import com.example.drugapprovalsystem.model.DTO.product_request_dto.ApprovalProductDetailDTO;
+import com.example.drugapprovalsystem.model.DTO.product_response_dto.ApprovalProductDetailResponseDTO;
 import com.example.drugapprovalsystem.model.DTO.product_response_dto.ApprovalProductResponseDTO;
 import com.example.drugapprovalsystem.model.Mapper.AuthorityMapper;
 import com.example.drugapprovalsystem.model.Mapper.IngredientMapper;
@@ -57,7 +58,7 @@ public class ApprovalProductServiceImplement implements ApprovalProductService {
     }
 
     @Override
-    public ApprovalProductDetailDTO createApprovalProduct(ApprovalProductDetailDTO approvalProductDetailDTO) {
+    public ApprovalProductDetailResponseDTO createApprovalProduct(ApprovalProductDetailDTO approvalProductDetailDTO) throws Exception {
         ApprovalProduct approvalProduct = ProductMapper.mapToApprovalProduct(approvalProductDetailDTO);
 
         //Optional DETAILS
@@ -95,13 +96,11 @@ public class ApprovalProductServiceImplement implements ApprovalProductService {
 
         authorityRepository.saveAll(authorityList);
 
-        approvalProductDetailDTO.setId(result.getId());
-
-        return approvalProductDetailDTO;
+        return getApprovalProductDetail(result.getId());
     }
 
     @Override
-    public ApprovalProductDetailDTO updateApprovalProduct(Integer id, ApprovalProductDetailDTO approvalProductDetailDTO) throws Exception {
+    public ApprovalProductDetailResponseDTO updateApprovalProduct(Integer id, ApprovalProductDetailDTO approvalProductDetailDTO) throws Exception {
         approvalProductDetailDTO.setId(id);
 
         if (approvalProductDetailDTO.getId() == null)
@@ -115,9 +114,6 @@ public class ApprovalProductServiceImplement implements ApprovalProductService {
             throw new ProductDoesNotExistException();
 
         ApprovalProduct approvalProductInDB = optional.get();
-
-        if (approvalProductInDB == null)
-            throw new ProductDoesNotExistException();
 
         //Optional DETAILS
         if (approvalProductInDB.getPharmacogenomic() != null)
@@ -175,7 +171,7 @@ public class ApprovalProductServiceImplement implements ApprovalProductService {
         ingredientRepository.saveAll(ingredientList);
         authorityRepository.saveAll(authorityList);
 
-        return approvalProductDetailDTO;
+        return getApprovalProductDetail(id);
     }
 
     @Override
@@ -211,7 +207,7 @@ public class ApprovalProductServiceImplement implements ApprovalProductService {
     }
 
     @Override
-    public ApprovalProductDetailDTO getApprovalProductDetail(Integer id) throws Exception {
+    public ApprovalProductDetailResponseDTO getApprovalProductDetail(Integer id) throws Exception {
         Optional<ApprovalProduct> optional = approvalProductRepository.findById(id);
 
         if (optional.isEmpty())
@@ -234,8 +230,7 @@ public class ApprovalProductServiceImplement implements ApprovalProductService {
         }
 
         return ProductMapper
-                .mapToApprovalProductDetailDTO(approvalProduct, ingredients, authorities);
-
+                .mapToApprovalProductDetaiResponseDTO(approvalProduct, ingredients, authorities);
     }
 
 }

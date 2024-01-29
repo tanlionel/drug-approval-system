@@ -28,7 +28,7 @@ public class SecretariatProductController {
     }
 
     @GetMapping("/approval-product/{id}")
-    public ResponseEntity<ApprovalProductDetailDTO> getApprovalProductById(@PathVariable Integer id) throws Exception {
+    public ResponseEntity<?> getApprovalProductById(@PathVariable Integer id) throws Exception {
         return ResponseEntity.ok(approvalProductService.getApprovalProductDetail(id));
     }
 }

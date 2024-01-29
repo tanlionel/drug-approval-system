@@ -2,6 +2,7 @@ package com.example.drugapprovalsystem.model.Mapper;
 
 import com.example.drugapprovalsystem.entity.*;
 import com.example.drugapprovalsystem.model.DTO.DrugIngredientsDTO;
+import com.example.drugapprovalsystem.model.DTO.product_response_dto.DrugIngredientsResponseDTO;
 
 public class IngredientMapper {
     public static Ingredient mapToIngredient(DrugIngredientsDTO a, Integer productId, boolean isApprovalProduct) {
@@ -22,14 +23,22 @@ public class IngredientMapper {
     }
 
     public static DrugIngredientsDTO mapToDrugIngredientsDTO(Ingredient a) {
-
         return DrugIngredientsDTO.builder()
-                .drugId(a.getId())
+                .drugId((a.getDrug() == null) ? null : a.getDrug().getId())
                 .strength(a.getStrength())
                 .strengthNumber(a.getStrengthNumber())
                 .strengthUnit(a.getStrengthUnit())
                 .clinicallyRelevant(a.getClinicallyRelevant())
                 .build();
-
+    }
+    public static DrugIngredientsResponseDTO mapToDrugIngredientsResponseDTO(Ingredient a) {
+        return DrugIngredientsResponseDTO.builder()
+                .drugId((a.getDrug() == null) ? null : a.getDrug().getId())
+                .name((a.getDrug() == null) ? null : a.getDrug().getName())
+                .strength(a.getStrength())
+                .strengthNumber(a.getStrengthNumber())
+                .strengthUnit(a.getStrengthUnit())
+                .clinicallyRelevant(a.getClinicallyRelevant())
+                .build();
     }
 }

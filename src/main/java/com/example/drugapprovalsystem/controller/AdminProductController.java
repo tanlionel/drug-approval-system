@@ -29,10 +29,11 @@ public class AdminProductController {
     }
 
     @PostMapping("/approval-product")
-    public ResponseEntity<?> createApprovalProduct(@RequestBody ApprovalProductDetailDTO dto) {
+    public ResponseEntity<?> createApprovalProduct(@RequestBody ApprovalProductDetailDTO dto) throws Exception{
         System.out.println("TestController: RUN createApprovalProduct");
 
-        return ResponseEntity.ok(approvalProductService.createApprovalProduct(dto));
+        return ResponseEntity
+                .ok(approvalProductService.createApprovalProduct(dto));
     }
 
     @PutMapping("/approval-product")
@@ -50,7 +51,8 @@ public class AdminProductController {
     }
 
     @GetMapping("/approval-product/{id}")
-    public ResponseEntity<ApprovalProductDetailDTO> getApprovalProductById(@PathVariable Integer id) throws Exception {
-        return ResponseEntity.ok(approvalProductService.getApprovalProductDetail(id));
+    public ResponseEntity<?> getApprovalProductById(@PathVariable Integer id) throws Exception {
+        return ResponseEntity
+                .ok(approvalProductService.getApprovalProductDetail(id));
     }
 }

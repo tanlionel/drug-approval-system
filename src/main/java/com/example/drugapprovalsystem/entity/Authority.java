@@ -24,12 +24,10 @@ public class Authority {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
-    @JsonIgnore
     private Product product;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "approval_product_id")
-    @JsonIgnore
     private ApprovalProduct approvalProduct;
 
 }

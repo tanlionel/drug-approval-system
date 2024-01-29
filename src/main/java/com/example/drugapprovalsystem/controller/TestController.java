@@ -79,7 +79,7 @@ public class TestController {
     }
 
     @PostMapping("/test/admin/approval-product")
-    public ResponseEntity<?> createApprovalProduct(@RequestBody ApprovalProductDetailDTO dto) {
+    public ResponseEntity<?> createApprovalProduct(@RequestBody ApprovalProductDetailDTO dto) throws Exception{
         System.out.println("TestController: RUN createApprovalProduct");
 
         return ResponseEntity.ok(approvalProductService.createApprovalProduct(dto));
@@ -100,7 +100,7 @@ public class TestController {
     }
 
     @GetMapping("test/admin/approval-product/{id}")
-    public ResponseEntity<ApprovalProductDetailDTO> getApprovalProductById(@PathVariable Integer id) throws Exception {
+    public ResponseEntity<?> getApprovalProductById(@PathVariable Integer id) throws Exception {
         return ResponseEntity.ok(approvalProductService.getApprovalProductDetail(id));
     }
 }

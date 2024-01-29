@@ -14,4 +14,5 @@ public class ManufactorDTO {
     private String score;
     private String source;
     private Integer countryId;
+    private String countryName;
 }

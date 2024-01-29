@@ -1,4 +1,4 @@
-package com.example.drugapprovalsystem.model.DTO.product_request_dto;
+package com.example.drugapprovalsystem.model.DTO;
 
 import lombok.*;
 
@@ -11,4 +11,5 @@ import lombok.*;
 public class AuthorityDTO {
     private String certificateName;
     private Integer countryId;
+    private String countryName;
 }
