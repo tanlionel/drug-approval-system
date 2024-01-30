@@ -22,16 +22,7 @@ import java.util.List;
 @RequestMapping("/api")
 @CrossOrigin
 public class TestController {
-    @Autowired
-    ApprovalProductService approvalProductService;
-    @Autowired
-    ApprovalProductRepository approvalProductRepository;
-    @Autowired
-    IngredientRepository ingredientRepository;
-    @Autowired
-    CategoryService categoryService;
-    @Autowired
-    CountryService countryService;
+
     @GetMapping("/test")
     public String getTest(){
         return "Hello from test";
@@ -41,62 +32,4 @@ public class TestController {
         return "Hello from secure";
     }
 
-    @Autowired
-    DrugService drugService;
-    @GetMapping("/test/drug")
-    public ResponseEntity<?> getDrugPageable(@RequestParam(defaultValue = "0") int pageNo,
-                                             @RequestParam(defaultValue = "10") int pageSize,
-                                             @RequestParam(defaultValue = "id") String sortField,
-                                             @RequestParam(defaultValue = Common.SORT_ASC) String sortOrder,
-                                             @RequestParam(defaultValue = "") String search) {
-        return ResponseEntity.ok(drugService.getDrugPageable(pageNo,pageSize,sortField,sortOrder, search));
-    }
-
-    @PostMapping("/test/drug")
-    public void createDrug(@RequestBody DrugRequestDTO drugRequestDTO){
-        drugService.createDrug(drugRequestDTO);
-    }
-
-    @GetMapping("/test/admin/approval-product")
-    public ResponseEntity<?> getApprovalProductWithPageable(@RequestParam(defaultValue = "0") int pageNo,
-                                                            @RequestParam(defaultValue = "10") int pageSize,
-                                                            @RequestParam(defaultValue = "id") String sortField,
-                                                            @RequestParam(defaultValue = Common.SORT_ASC) String sortOrder,
-                                                            @RequestParam(defaultValue = "") String search) {
-
-        return ResponseEntity.ok(approvalProductService.getPageableApprovalProduct(pageNo, pageSize, sortField, sortOrder, search));
-    }
-
-    @PutMapping("/test/drug")
-    public void updateByDrugId(@RequestParam("id") Integer id,
-                               @RequestBody DrugRequestDTO dto) throws Exception{
-        drugService.updateDrug(dto);
-    }
-
-    @GetMapping("/test/public/category")
-    public ResponseEntity<?> getAllCategory(@RequestParam(defaultValue = "") String search) {
-        return ResponseEntity.ok(categoryService.getAllCategoryByTitle(search));
-    }
-
-    @GetMapping("/test/public/country")
-    public ResponseEntity<?> getAllCountry(@RequestParam(defaultValue = "") String search) {
-        return ResponseEntity.ok(countryService.getAllCountryByName(search));
-    }
-
-    @PostMapping("/test/admin/approval-product")
-    public void createApprovalProduct(@RequestBody ApprovalProductRequestDTO dto) {
-        System.out.println("TestController: RUN createApprovalProduct");
-
-        approvalProductService.createApprovalProduct(dto);
-
-        System.out.println("TestController: RUN Mapping successfully");
-    }
-
-//    @PutMapping("test/admin/approval-product")
-//    public void deleteIngredientByApprovalProductId(@RequestParam("id") Integer id,
-//                                                    @RequestBody ApprovalProductRequestDTO dto) {
-//
-//        dto.setId(id);
-//        approvalProductService.updateApprovalProduct(dto);
-//    }
 }
