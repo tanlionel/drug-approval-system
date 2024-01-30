@@ -1,15 +1,13 @@
 package com.example.drugapprovalsystem.controller;
 
-import com.example.drugapprovalsystem.model.DTO.DrugRequestDTO;
-import com.example.drugapprovalsystem.service.ServiceInterface.DrugService;
-import org.springframework.beans.factory.annotation.Autowired;
 import com.example.drugapprovalsystem.common.Common;
+import com.example.drugapprovalsystem.model.DTO.DrugRequestDTO;
 import com.example.drugapprovalsystem.model.DTO.product_request_dto.ApprovalProductDetailDTO;
-import com.example.drugapprovalsystem.repository.ApprovalProductRepository;
-import com.example.drugapprovalsystem.repository.IngredientRepository;
 import com.example.drugapprovalsystem.service.ServiceInterface.ApprovalProductService;
 import com.example.drugapprovalsystem.service.ServiceInterface.CategoryService;
 import com.example.drugapprovalsystem.service.ServiceInterface.CountryService;
+import com.example.drugapprovalsystem.service.ServiceInterface.DrugService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,16 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 @CrossOrigin
 public class TestController {
-    @Autowired
-    ApprovalProductService approvalProductService;
-    @Autowired
-    ApprovalProductRepository approvalProductRepository;
-    @Autowired
-    IngredientRepository ingredientRepository;
-    @Autowired
-    CategoryService categoryService;
-    @Autowired
-    CountryService countryService;
+
     @GetMapping("/test")
     public String getTest(){
         return "Hello from test";
@@ -38,6 +27,12 @@ public class TestController {
 
     @Autowired
     DrugService drugService;
+    @Autowired
+    ApprovalProductService approvalProductService;
+    @Autowired
+    CategoryService categoryService;
+    @Autowired
+    CountryService countryService;
     @GetMapping("/test/drug")
     public ResponseEntity<?> getDrugPageable(@RequestParam(defaultValue = "0") int pageNo,
                                              @RequestParam(defaultValue = "10") int pageSize,

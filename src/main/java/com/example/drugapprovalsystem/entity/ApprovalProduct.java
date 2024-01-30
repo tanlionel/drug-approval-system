@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -40,7 +41,7 @@ public class ApprovalProduct {
     @Column(name = "created_on")
     private LocalDateTime createdOn;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.DETACH)
     @JoinColumn(name = "created_by")
     private User createdBy;
 
@@ -48,7 +49,7 @@ public class ApprovalProduct {
     @JoinColumn(name = "manufactor_id")
     private Manufactor manufactor;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.DETACH)
     @JoinColumn(name = "category_id")
     private Category category;
 
@@ -57,12 +58,12 @@ public class ApprovalProduct {
     private Pharmacogenomic pharmacogenomic;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "contraindication_id")
-    private Contraindication contraindication;
-
-    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_allergy_details_id")
     private ProductAllergyDetail productAllergyDetails;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "contraindication_id")
+    private Contraindication contraindication;
 
     @Column(name = "is_active")
     private Boolean isActive;

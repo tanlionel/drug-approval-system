@@ -11,6 +11,7 @@ import com.example.drugapprovalsystem.repository.RoleRepository;
 import com.example.drugapprovalsystem.repository.UserRepository;
 import com.example.drugapprovalsystem.service.ServiceInterface.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -73,12 +74,13 @@ public class UserServiceImplement implements UserService {
                 .isActive(ACTIVE)
                 .username(registerUser.getUsername())
                 .build();
+
         userRepository.save(user);
         return user;
     }
 
     @Override
-    public Page<UserResponseDTO> getUserPageable(Integer pageNo, Integer pageSize, String sortField, String sortOrder, String roleName, String status, Integer gender) {
+    public Page<UserResponseDTO> getUserPageable(Integer pageNo, Integer pageSize, String sortField, String sortOrder, String roleName, String status, Integer gender,String search) {
         Pageable pageable;
         if (sortOrder.equals(SORT_ASC)) {
             pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortField).ascending());
@@ -89,9 +91,9 @@ public class UserServiceImplement implements UserService {
         if (roleName == null || roleName.isEmpty()) roleName = "";
         if (status == null || status.isEmpty()) status = "";
         if (gender == null) {
-            userPageable = userRepository.findByRoleNameContainingAndIsActiveContaining(roleName, status, pageable);
+            userPageable = userRepository.findByRoleNameContainingAndIsActiveContainingAndFullnameContaining(roleName, status,search, pageable);
         } else {
-            userPageable = userRepository.findByRoleNameContainingAndIsActiveContainingAndGender(roleName, status, gender, pageable);
+            userPageable = userRepository.findByRoleNameContainingAndIsActiveContainingAndGenderAndFullnameContaining(roleName, status, gender,search, pageable);
         }
         return userPageable.map(UserMapper::mapToUserResponseDTO);
     }

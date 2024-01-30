@@ -13,6 +13,7 @@ import com.example.drugapprovalsystem.repository.*;
 import com.example.drugapprovalsystem.service.ServiceInterface.ApprovalProductService;
 import com.example.drugapprovalsystem.service.ServiceInterface.PageableService;
 import com.example.drugapprovalsystem.service.ServiceInterface.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,7 +23,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-//@RequiredArgsConstructor
+@RequiredArgsConstructor
 public class ApprovalProductServiceImplement implements ApprovalProductService {
     private final String SORT_ASC = "ASC";
     private final boolean IS_APPROVAL_PRODUCT = true;

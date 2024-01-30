@@ -45,7 +45,6 @@ public class AdminProductController {
 
     @DeleteMapping("/delete-approval-product")
     public void deleteApprovalProductById(@RequestParam("id") Integer id) throws Exception {
-
         approvalProductService.deleteApprovalProduct(id);
 
     }

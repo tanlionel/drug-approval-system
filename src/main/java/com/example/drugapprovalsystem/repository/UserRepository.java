@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Integer> {
     User findByEmail(String email);
-    Page<User> findByRoleNameContainingAndIsActiveContaining(String roleName,String status,Pageable pageable);
-    Page<User> findByRoleNameContainingAndIsActiveContainingAndGender(String roleName,String status,Integer gender,Pageable pageable);
+    Page<User> findByRoleNameContainingAndIsActiveContainingAndFullnameContaining(String roleName,String status,String search,Pageable pageable);
+    Page<User> findByRoleNameContainingAndIsActiveContainingAndGenderAndFullnameContaining(String roleName,String status,Integer gender,String search,Pageable pageable);
 }
