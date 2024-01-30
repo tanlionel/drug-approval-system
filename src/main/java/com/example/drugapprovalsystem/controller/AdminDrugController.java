@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class AdminDrugController {
     @Autowired
     DrugService drugService;
-    @GetMapping("/drug")
+    @GetMapping("/drug-management/drugs")
     public ResponseEntity<?> getDrugPageable(@RequestParam(defaultValue = "0") int pageNo,
                                              @RequestParam(defaultValue = "10") int pageSize,
                                              @RequestParam(defaultValue = "id") String sortField,
@@ -25,12 +25,12 @@ public class AdminDrugController {
         return ResponseEntity.ok(drugService.getDrugPageable(pageNo,pageSize,sortField,sortOrder, search));
     }
 
-    @PostMapping("/drug")
+    @PostMapping("/drug-management/drugs/create")
     public void createDrug(@RequestBody DrugRequestDTO drugRequestDTO){
         drugService.createDrug(drugRequestDTO);
     }
 
-    @PutMapping("/drug")
+    @PutMapping("/drug-management/drugs/update/{drugId}")
     public ResponseEntity<?> updateByDrugId(@RequestParam("id") Integer id,
                                @RequestBody DrugRequestDTO dto) throws Exception{
         Drug drug = drugService.updateDrug(dto);

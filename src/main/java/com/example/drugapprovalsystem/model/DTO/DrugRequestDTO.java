@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DrugRequestDTO {
-    private Integer id;
+
     private String type;
     private String name;
     private String state;
