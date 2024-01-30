@@ -15,5 +15,4 @@ public class DrugRequestDTO {
     private String simpleDescription;
     private String clinicalDescription;
     private Integer approvalStatus;
-
 }

@@ -115,33 +115,28 @@ public class ApprovalProductServiceImplement implements ApprovalProductService {
 
         ApprovalProduct approvalProductInDB = optional.get();
 
+        int labelId = approvalProductInDB.getLabeller() == null ? -1 : approvalProductInDB.getLabeller().getId(),
+                pharmacogenomicId = approvalProductInDB.getPharmacogenomic() == null ? -1 : approvalProductInDB.getPharmacogenomic().getId(),
+                productAllergyDetailId = approvalProductInDB.getProductAllergyDetails() == null ? -1 : approvalProductInDB.getProductAllergyDetails().getId(),
+                contraindicationId = approvalProductInDB.getContraindication() == null ? -1 : approvalProductInDB.getContraindication().getId(),
+                manufactorId = approvalProductInDB.getManufactor() == null ? -1 : approvalProductInDB.getManufactor().getId();
+
         //Optional DETAILS
-        if (approvalProductInDB.getPharmacogenomic() != null)
-            pharmacogenomicRepository.deleteById(approvalProductInDB.getPharmacogenomic().getId());
         if (approvalProduct.getPharmacogenomic() != null)
             approvalProduct.setPharmacogenomic(pharmacogenomicRepository.save(approvalProduct.getPharmacogenomic()));
 
-        if (approvalProductInDB.getProductAllergyDetails() != null)
-            productAllergyDetailRepository.deleteById(approvalProductInDB.getProductAllergyDetails().getId());
         if (approvalProduct.getProductAllergyDetails() != null)
             approvalProduct.setProductAllergyDetails(productAllergyDetailRepository.save(approvalProduct.getProductAllergyDetails()));
 
-        if (approvalProductInDB.getContraindication() != null)
-            contraindicationRepository.deleteById(approvalProductInDB.getContraindication().getId());
         if (approvalProduct.getContraindication() != null)
             approvalProduct.setContraindication(contraindicationRepository.save(approvalProduct.getContraindication()));
-
         //
 
         //Save the manufactor first
-        if (approvalProductInDB.getManufactor() != null)
-            manufactorRepository.deleteById(approvalProductInDB.getManufactor().getId());
         if (approvalProduct.getManufactor() != null)
             approvalProduct.setManufactor(manufactorRepository.save(approvalProduct.getManufactor()));
 
         //Save the labeller second
-        if (approvalProductInDB.getLabeller() != null)
-            labellerRepository.deleteById(approvalProductInDB.getLabeller().getId());
         if (approvalProduct.getLabeller() != null)
             approvalProduct.setLabeller(labellerRepository.save(approvalProduct.getLabeller()));
 
@@ -167,6 +162,17 @@ public class ApprovalProductServiceImplement implements ApprovalProductService {
         //DELETE BEFORE SAVE
         ingredientRepository.deleteByApprovalProductId(approvalProduct.getId());
         authorityRepository.deleteByApprovalProductId(approvalProduct.getId());
+
+        if (pharmacogenomicId > -1)
+            pharmacogenomicRepository.deleteById(pharmacogenomicId);
+        if (productAllergyDetailId > -1)
+            productAllergyDetailRepository.deleteById(productAllergyDetailId);
+        if (contraindicationId > -1)
+            contraindicationRepository.deleteById(contraindicationId);
+        if (manufactorId > -1)
+            manufactorRepository.deleteById(manufactorId);
+        if (labelId > -1)
+            labellerRepository.deleteById(labelId);
 
         ingredientRepository.saveAll(ingredientList);
         authorityRepository.saveAll(authorityList);

@@ -10,6 +10,7 @@ import lombok.*;
 @Table(name = "category")
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Category {
     public Category(Integer id) {
         this.id = id;

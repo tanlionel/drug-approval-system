@@ -73,7 +73,7 @@ public class TestController {
         return ResponseEntity.ok(categoryService.getAllCategoryByTitle(search));
     }
 
-    @GetMapping("/test/public/country")
+    @GetMapping("/test/public/countries")
     public ResponseEntity<?> getAllCountry(@RequestParam(defaultValue = "") String search) {
         return ResponseEntity.ok(countryService.getAllCountryByName(search));
     }
@@ -99,8 +99,9 @@ public class TestController {
 
     }
 
-    @GetMapping("test/admin/approval-product/{id}")
-    public ResponseEntity<?> getApprovalProductById(@PathVariable Integer id) throws Exception {
-        return ResponseEntity.ok(approvalProductService.getApprovalProductDetail(id));
+    @GetMapping("/test/approval-product-detail")
+    public ResponseEntity<?> getApprovalProductById(@RequestParam Integer id) throws Exception {
+        return ResponseEntity
+                .ok(approvalProductService.getApprovalProductDetail(id));
     }
 }
