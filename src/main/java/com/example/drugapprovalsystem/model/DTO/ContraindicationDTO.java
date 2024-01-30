@@ -1,4 +1,4 @@
-package com.example.drugapprovalsystem.model.DTO.product_dto;
+package com.example.drugapprovalsystem.model.DTO;
 
 import lombok.*;
 
@@ -7,7 +7,8 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ContraindicationRequestDTO {
+@Builder
+public class ContraindicationDTO {
     private String relationship;
     private String value;
 }

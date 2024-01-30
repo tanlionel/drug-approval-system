@@ -8,6 +8,8 @@ import com.example.drugapprovalsystem.exception.UserDoesNotExistException;
 import com.example.drugapprovalsystem.model.DTO.UpdateUserRequestDTO;
 import com.example.drugapprovalsystem.model.DTO.UserResponseDTO;
 import com.example.drugapprovalsystem.service.ServiceInterface.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.SwaggerDefinition;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,10 +40,11 @@ public class UserController {
                                               @RequestParam(required = false,defaultValue = "10") Integer pageSize,
                                               @RequestParam(required = false,defaultValue = "id") String sortField,
                                               @RequestParam(required = false,defaultValue = "asc") String sortOrder,
+                                              @RequestParam(required = false,defaultValue = "") String search,
                                               @RequestParam(required = false) String roleName,
                                               @RequestParam(required = false) String status,
                                               @RequestParam(required = false) Integer gender){
-        return ResponseEntity.ok(userService.getUserPageable(pageNo,pageSize,sortField,sortOrder,roleName,status,gender));
+        return ResponseEntity.ok(userService.getUserPageable(pageNo,pageSize,sortField,sortOrder,roleName,status,gender,search));
     }
 
     @PostMapping("/active-user")

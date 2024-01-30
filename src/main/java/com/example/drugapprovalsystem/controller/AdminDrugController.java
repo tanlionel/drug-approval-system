@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 @CrossOrigin
 public class AdminDrugController {
-
     @Autowired
     DrugService drugService;
     @GetMapping("/drug-management/drugs")

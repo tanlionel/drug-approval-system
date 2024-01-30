@@ -1,4 +1,4 @@
-package com.example.drugapprovalsystem.model.DTO.product_dto;
+package com.example.drugapprovalsystem.model.DTO;
 
 import lombok.*;
 
@@ -7,7 +7,8 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class DrugIngredientsRequestDTO {
+@Builder
+public class DrugIngredientsDTO {
     private Integer drugId;
     private String strength;
     private String strengthNumber;

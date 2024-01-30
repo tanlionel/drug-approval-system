@@ -1,15 +1,11 @@
 package com.example.drugapprovalsystem.model.Mapper;
 
 import com.example.drugapprovalsystem.entity.*;
-import com.example.drugapprovalsystem.model.DTO.product_dto.ApprovalProductRequestDTO;
-import com.example.drugapprovalsystem.model.DTO.product_dto.DrugIngredientsRequestDTO;
-import org.springframework.security.core.parameters.P;
-
-import java.time.Instant;
-import java.util.List;
+import com.example.drugapprovalsystem.model.DTO.DrugIngredientsDTO;
+import com.example.drugapprovalsystem.model.DTO.product_response_dto.DrugIngredientsResponseDTO;
 
 public class IngredientMapper {
-    public final static Ingredient mapToIngredient(DrugIngredientsRequestDTO a, Integer productId, boolean isApprovalProduct) {
+    public static Ingredient mapToIngredient(DrugIngredientsDTO a, Integer productId, boolean isApprovalProduct) {
         Ingredient ingredient = new Ingredient();
 
         ingredient.setDrug(new Drug(a.getDrugId()));
@@ -24,5 +20,25 @@ public class IngredientMapper {
             ingredient.setProduct(new Product(productId));
 
         return ingredient;
+    }
+
+    public static DrugIngredientsDTO mapToDrugIngredientsDTO(Ingredient a) {
+        return DrugIngredientsDTO.builder()
+                .drugId((a.getDrug() == null) ? null : a.getDrug().getId())
+                .strength(a.getStrength())
+                .strengthNumber(a.getStrengthNumber())
+                .strengthUnit(a.getStrengthUnit())
+                .clinicallyRelevant(a.getClinicallyRelevant())
+                .build();
+    }
+    public static DrugIngredientsResponseDTO mapToDrugIngredientsResponseDTO(Ingredient a) {
+        return DrugIngredientsResponseDTO.builder()
+                .drugId((a.getDrug() == null) ? null : a.getDrug().getId())
+                .name((a.getDrug() == null) ? null : a.getDrug().getName())
+                .strength(a.getStrength())
+                .strengthNumber(a.getStrengthNumber())
+                .strengthUnit(a.getStrengthUnit())
+                .clinicallyRelevant(a.getClinicallyRelevant())
+                .build();
     }
 }
