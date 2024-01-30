@@ -12,5 +12,5 @@ public class RegisterRequestDTO {
     private String fullName;
     private LocalDate dob;
     private Integer gender;
-    private Long roleID;
+    private Integer roleID;
 }

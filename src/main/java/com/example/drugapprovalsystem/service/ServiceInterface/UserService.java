@@ -12,7 +12,7 @@ public interface UserService {
     User getUserByEmail(String Email) throws UserDoesNotExistException, InvalidateException;
     User login(String email, String password) throws UserDoesNotExistException, AccountSuspendedException, InvalidateException;
     User registerUser(RegisterRequestDTO registerUser) throws RoleDoesNotExistException, UserAlreadyExistsException;
-    Page<UserResponseDTO> getUserPageable(Integer pageNo,Integer pageSize,String sortField,String sortOrder,String roleName,String status,Integer gender);
+    Page<UserResponseDTO> getUserPageable(Integer pageNo,Integer pageSize,String sortField,String sortOrder,String roleName,String status,Integer gender,String search);
     User activateUser(String email) throws UserDoesNotExistException, UserAlreadyActiveException;
     User deactivateUser(String email) throws UserDoesNotExistException, UserAlreadyDeactivateException;
     User updateUser(UpdateUserRequestDTO updateUserRequestDTO,String email) throws UserDoesNotExistException;
