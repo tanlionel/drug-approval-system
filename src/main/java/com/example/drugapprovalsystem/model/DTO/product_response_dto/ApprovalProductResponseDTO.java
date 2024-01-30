@@ -1,9 +1,8 @@
-package com.example.drugapprovalsystem.model.DTO.product_dto;
+package com.example.drugapprovalsystem.model.DTO.product_response_dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Data

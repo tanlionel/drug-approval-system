@@ -1,6 +1,7 @@
 package com.example.drugapprovalsystem.controller;
 
 import com.example.drugapprovalsystem.common.Common;
+import com.example.drugapprovalsystem.model.DTO.product_request_dto.ApprovalProductDetailDTO;
 import com.example.drugapprovalsystem.service.ServiceInterface.ApprovalProductService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,5 +25,10 @@ public class SecretariatProductController {
 
         return ResponseEntity
                 .ok(approvalProductService.getPageableApprovalProduct(pageNo, pageSize, sortField, sortOrder, search));
+    }
+
+    @GetMapping("/approval-product/{id}")
+    public ResponseEntity<?> getApprovalProductById(@PathVariable Integer id) throws Exception {
+        return ResponseEntity.ok(approvalProductService.getApprovalProductDetail(id));
     }
 }

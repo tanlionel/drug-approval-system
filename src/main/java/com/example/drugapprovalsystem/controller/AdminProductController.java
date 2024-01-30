@@ -1,8 +1,7 @@
 package com.example.drugapprovalsystem.controller;
 
 import com.example.drugapprovalsystem.common.Common;
-import com.example.drugapprovalsystem.entity.ApprovalProduct;
-import com.example.drugapprovalsystem.model.DTO.product_dto.ApprovalProductRequestDTO;
+import com.example.drugapprovalsystem.model.DTO.product_request_dto.ApprovalProductDetailDTO;
 import com.example.drugapprovalsystem.service.ServiceInterface.ApprovalProductService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,13 +29,30 @@ public class AdminProductController {
     }
 
     @PostMapping("/approval-product")
-    public void createApprovalProduct(@RequestBody ApprovalProductRequestDTO dto) {
-        approvalProductService.createApprovalProduct(dto);
+    public ResponseEntity<?> createApprovalProduct(@RequestBody ApprovalProductDetailDTO dto) throws Exception{
+        System.out.println("TestController: RUN createApprovalProduct");
+
+        return ResponseEntity
+                .ok(approvalProductService.createApprovalProduct(dto));
     }
 
     @PutMapping("/approval-product")
-    public void updateByApprovalProductId(@RequestParam("id") Integer id,
-                                          @RequestBody ApprovalProductRequestDTO dto) throws Exception{
-        approvalProductService.updateApprovalProduct(dto);
+    public ResponseEntity<?> updateApprovalProductById(@RequestParam("id") Integer id,
+                                                       @RequestBody ApprovalProductDetailDTO approvalProductDetailDTO) throws Exception {
+
+        return ResponseEntity.ok(approvalProductService.updateApprovalProduct(id, approvalProductDetailDTO));
+    }
+
+    @DeleteMapping("/approval-product")
+    public void deleteApprovalProductById(@RequestParam("id") Integer id) throws Exception {
+
+        approvalProductService.deleteApprovalProduct(id);
+
+    }
+
+    @GetMapping("/approval-product/{id}")
+    public ResponseEntity<?> getApprovalProductById(@PathVariable Integer id) throws Exception {
+        return ResponseEntity
+                .ok(approvalProductService.getApprovalProductDetail(id));
     }
 }

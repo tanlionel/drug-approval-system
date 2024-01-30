@@ -1,15 +1,16 @@
 package com.example.drugapprovalsystem.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name = "approval_product")
 public class ApprovalProduct {
     public ApprovalProduct(Integer id) {
@@ -61,4 +62,6 @@ public class ApprovalProduct {
     @JoinColumn(name = "product_allergy_details_id")
     private ProductAllergyDetail productAllergyDetails;
 
+    @Column(name = "is_active")
+    private Boolean isActive;
 }
