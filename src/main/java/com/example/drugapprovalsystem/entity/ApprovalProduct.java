@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,7 +25,7 @@ public class ApprovalProduct {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.DETACH)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "labeller_id")
     private Labeller labeller;
 
@@ -44,7 +45,7 @@ public class ApprovalProduct {
     @JoinColumn(name = "created_by")
     private User createdBy;
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.DETACH)
+    @OneToOne(fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "manufactor_id")
     private Manufactor manufactor;
 
@@ -52,17 +53,17 @@ public class ApprovalProduct {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pharmacogenomic_id")
     private Pharmacogenomic pharmacogenomic;
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.DETACH)
-    @JoinColumn(name = "contraindication_id")
-    private Contraindication contraindication;
-
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.DETACH)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_allergy_details_id")
     private ProductAllergyDetail productAllergyDetails;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "contraindication_id")
+    private Contraindication contraindication;
 
     @Column(name = "is_active")
     private Boolean isActive;

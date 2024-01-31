@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/admin/approval-product-management")
 @AllArgsConstructor
 @CrossOrigin
 public class AdminProductController {
@@ -17,7 +17,7 @@ public class AdminProductController {
     @Autowired
     ApprovalProductService approvalProductService;
 
-    @GetMapping("/approval-product")
+    @GetMapping("/approval-products")
     public ResponseEntity<?> getApprovalProductWithPageable(@RequestParam(value = "pageNo", defaultValue = "0") int pageNo,
                                                             @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
                                                             @RequestParam(value = "sortField", defaultValue = "id") String sortField,
@@ -28,7 +28,7 @@ public class AdminProductController {
                 .ok(approvalProductService.getPageableApprovalProduct(pageNo, pageSize, sortField, sortOrder, search));
     }
 
-    @PostMapping("/approval-product")
+    @PostMapping("/create-approval-product")
     public ResponseEntity<?> createApprovalProduct(@RequestBody ApprovalProductDetailDTO dto) throws Exception{
         System.out.println("TestController: RUN createApprovalProduct");
 
@@ -36,21 +36,21 @@ public class AdminProductController {
                 .ok(approvalProductService.createApprovalProduct(dto));
     }
 
-    @PutMapping("/approval-product")
+    @PutMapping("/update-approval-product")
     public ResponseEntity<?> updateApprovalProductById(@RequestParam("id") Integer id,
                                                        @RequestBody ApprovalProductDetailDTO approvalProductDetailDTO) throws Exception {
 
         return ResponseEntity.ok(approvalProductService.updateApprovalProduct(id, approvalProductDetailDTO));
     }
 
-    @DeleteMapping("/approval-product")
+    @DeleteMapping("/delete-approval-product")
     public void deleteApprovalProductById(@RequestParam("id") Integer id) throws Exception {
         approvalProductService.deleteApprovalProduct(id);
 
     }
 
-    @GetMapping("/approval-product/{id}")
-    public ResponseEntity<?> getApprovalProductById(@PathVariable Integer id) throws Exception {
+    @GetMapping("/approval-product-detail")
+    public ResponseEntity<?> getApprovalProductById(@RequestParam Integer id) throws Exception {
         return ResponseEntity
                 .ok(approvalProductService.getApprovalProductDetail(id));
     }

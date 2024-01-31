@@ -26,35 +26,61 @@ public class ProductMapper {
     public static ApprovalProduct mapToApprovalProduct(ApprovalProductDetailDTO a) {
         ApprovalProduct approvalProduct = new ApprovalProduct();
 
-        approvalProduct.setId(a.getId());
-        approvalProduct.setName(a.getName());
-        approvalProduct.setRoute(a.getRoute());
-        approvalProduct.setPrescriptionName(a.getPrescriptionName());
-        approvalProduct.setCreatedOn(LocalDateTime.now());
-        approvalProduct.setCategory(new Category(a.getCategoryId()));
-        approvalProduct.setLabeller(new Labeller(null, a.getLabeller(), true));
-
-        if (a.getManufactor() != null)
-            approvalProduct.setManufactor( new Manufactor(null, a.getManufactor().getName(),
-                                            a.getManufactor().getCompany(), a.getManufactor().getScore(),
-                                            a.getManufactor().getSource(), new Country(a.getManufactor().getCountryId())) );
-
-        if (a.getPharmacogenomic() != null)
-            approvalProduct.setPharmacogenomic(new Pharmacogenomic(null, a.getPharmacogenomic().getIndication(),
-                    a.getPharmacogenomic().getPharmacodynamic(), a.getPharmacogenomic().getMechanismOfAction(),
-                    a.getPharmacogenomic().getAsorption(), a.getPharmacogenomic().getToxicity()));
-
-        if (a.getContraindication() != null)
-            approvalProduct.setContraindication(new Contraindication(null, a.getContraindication().getRelationship(),
-                                        a.getContraindication().getValue()));
-
-        if (a.getProductAllergyDetail() != null)
-            approvalProduct.setProductAllergyDetails(new ProductAllergyDetail(null, a.getProductAllergyDetail().getDetail(),
-                a.getProductAllergyDetail().getSummary()));
-
-        approvalProduct.setIsActive(Common.IS_ACTIVE);
+        approvalProduct = ApprovalProduct.builder()
+                .id(a.getId())
+                .name(a.getName())
+                .route(a.getRoute())
+                .prescriptionName(a.getPrescriptionName())
+                .createdOn(LocalDateTime.now())
+                .category(Category.builder().id(a.getCategoryId()).build())
+                .labeller(Labeller.builder().name(a.getLabeller()).build())
+                .manufactor((a.getManufactor() == null) ? null : Manufactor.builder().name(a.getManufactor().getName())
+                        .source(a.getManufactor().getSource())
+                        .score(a.getManufactor().getScore())
+                        .company(a.getManufactor().getCompany())
+                        .country(Country.builder().id(a.getManufactor().getCountryId()).build()).build())
+                .pharmacogenomic(a.getPharmacogenomic() == null ? null : Pharmacogenomic.builder()
+                        .asorption(a.getPharmacogenomic().getAsorption())
+                        .toxicity(a.getPharmacogenomic().getToxicity())
+                        .indication(a.getPharmacogenomic().getIndication())
+                                .mechanismOfAction(a.getPharmacogenomic().getMechanismOfAction())
+                                .pharmacodynamic(a.getPharmacogenomic().getPharmacodynamic()).build())
+                .productAllergyDetails(a.getProductAllergyDetail() == null ? null : ProductAllergyDetail.builder()
+                        .detail(a.getProductAllergyDetail().getDetail())
+                                .summary(a.getProductAllergyDetail().getSummary()).build())
+                .contraindication(a.getContraindication() == null ? null : Contraindication.builder()
+                        .value(a.getContraindication().getValue())
+                        .relationship(a.getContraindication().getRelationship()).build())
+                .isActive(Common.IS_ACTIVE).build();
 
         return approvalProduct;
+//        approvalProduct.setId(a.getId());
+//        approvalProduct.setName(a.getName());
+//        approvalProduct.setRoute(a.getRoute());
+//        approvalProduct.setPrescriptionName(a.getPrescriptionName());
+//        approvalProduct.setCreatedOn(LocalDateTime.now());
+//        approvalProduct.setCategory(new Category(a.getCategoryId()));
+//        approvalProduct.setLabeller(new Labeller(null, a.getLabeller(), true));
+//
+//        if (a.getManufactor() != null)
+//            approvalProduct.setManufactor( new Manufactor(null, a.getManufactor().getName(),
+//                                            a.getManufactor().getCompany(), a.getManufactor().getScore(),
+//                                            a.getManufactor().getSource(), new Country(a.getManufactor().getCountryId())) );
+//
+//        if (a.getPharmacogenomic() != null)
+//            approvalProduct.setPharmacogenomic(new Pharmacogenomic(null, a.getPharmacogenomic().getIndication(),
+//                    a.getPharmacogenomic().getPharmacodynamic(), a.getPharmacogenomic().getMechanismOfAction(),
+//                    a.getPharmacogenomic().getAsorption(), a.getPharmacogenomic().getToxicity()));
+//
+//        if (a.getContraindication() != null)
+//            approvalProduct.setContraindication(new Contraindication(null, a.getContraindication().getRelationship(),
+//                                        a.getContraindication().getValue()));
+//
+//        if (a.getProductAllergyDetail() != null)
+//            approvalProduct.setProductAllergyDetails(new ProductAllergyDetail(null, a.getProductAllergyDetail().getDetail(),
+//                a.getProductAllergyDetail().getSummary()));
+//
+//        approvalProduct.setIsActive(Common.IS_ACTIVE);
     }
 
     public static ApprovalProductDetailResponseDTO mapToApprovalProductDetaiResponseDTO(ApprovalProduct a,
@@ -73,6 +99,7 @@ public class ProductMapper {
                         .id(a.getCategory().getId())
                         .build())
                 .manufactor((a.getManufactor() == null) ? null : ManufactorDTO.builder()
+                        .name(a.getManufactor().getName())
                         .score(a.getManufactor().getScore())
                         .company(a.getManufactor().getCompany())
                         .source(a.getManufactor().getSource())

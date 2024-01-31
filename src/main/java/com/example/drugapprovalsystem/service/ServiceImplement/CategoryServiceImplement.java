@@ -16,7 +16,6 @@ import java.util.List;
 public class CategoryServiceImplement implements CategoryService {
     @Autowired
     CategoryRepository categoryRepository;
-
     @Override
     public List<CategoryResponseDTO> getAllCategoryByTitle(String title) {
         return categoryRepository.findByTitleContainingAndIsActive(Sort.by("title").ascending(), title, Common.IS_ACTIVE)

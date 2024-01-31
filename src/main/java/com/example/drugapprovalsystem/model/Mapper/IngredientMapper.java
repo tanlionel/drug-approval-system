@@ -33,8 +33,8 @@ public class IngredientMapper {
     }
     public static DrugIngredientsResponseDTO mapToDrugIngredientsResponseDTO(Ingredient a) {
         return DrugIngredientsResponseDTO.builder()
-                .drugId((a.getDrug() == null) ? null : a.getDrug().getId())
-                .name((a.getDrug() == null) ? null : a.getDrug().getName())
+                .drugId(a.getDrug() == null ? null : a.getDrug().getId())
+                .name(a.getDrug() == null ? null : a.getDrug().getName())
                 .strength(a.getStrength())
                 .strengthNumber(a.getStrengthNumber())
                 .strengthUnit(a.getStrengthUnit())

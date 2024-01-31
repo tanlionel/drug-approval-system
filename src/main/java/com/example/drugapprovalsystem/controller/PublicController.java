@@ -2,6 +2,7 @@ package com.example.drugapprovalsystem.controller;
 
 import com.example.drugapprovalsystem.common.Common;
 import com.example.drugapprovalsystem.enums.UserRole;
+import com.example.drugapprovalsystem.model.DTO.product_request_dto.ApprovalProductDetailDTO;
 import com.example.drugapprovalsystem.service.ServiceInterface.ApprovalProductService;
 import com.example.drugapprovalsystem.service.ServiceInterface.CategoryService;
 import com.example.drugapprovalsystem.service.ServiceInterface.CountryService;
@@ -23,7 +24,7 @@ public class PublicController {
     CountryService countryService;
 
     //get all approval product api
-    @GetMapping("/approval-product")
+    @GetMapping("/approval-product-management/approval-products")
     public ResponseEntity<?> getApprovalProductWithPageable(@RequestParam(value = "pageNo", defaultValue = "0") int pageNo,
                                                             @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
                                                             @RequestParam(value = "sortField", defaultValue = "id") String sortField,
@@ -34,14 +35,20 @@ public class PublicController {
                 .ok(approvalProductService.getPageableApprovalProduct(pageNo, pageSize, sortField, sortOrder, search));
     }
 
+    @GetMapping("/approval-product-management/approval-product-detail")
+    public ResponseEntity<?> getApprovalProductById(@RequestParam Integer id) throws Exception {
+        return ResponseEntity
+                .ok(approvalProductService.getApprovalProductDetail(id));
+    }
+
     //get all category api
-    @GetMapping("/category")
+    @GetMapping("/categories")
     public ResponseEntity<?> getAllCategory(@RequestParam(defaultValue = "") String search) {
         return ResponseEntity.ok(categoryService.getAllCategoryByTitle(search));
     }
 
     //get all country
-    @GetMapping("/country")
+    @GetMapping("/countries")
     public ResponseEntity<?> getAllCountry(@RequestParam(defaultValue = "") String search) {
         return ResponseEntity.ok(countryService.getAllCountryByName(search));
     }

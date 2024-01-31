@@ -3,6 +3,7 @@ package com.example.drugapprovalsystem.model.DTO.product_response_dto;
 import com.example.drugapprovalsystem.entity.Category;
 import com.example.drugapprovalsystem.entity.Manufactor;
 import com.example.drugapprovalsystem.model.DTO.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import java.util.List;
@@ -26,4 +27,8 @@ public class ApprovalProductDetailResponseDTO {
     private PharmacogenomicDTO pharmacogenomic;
     private ProductAllergyDetailDTO productAllergyDetail;
     private ContraindicationDTO contraindication;
+    @JsonIgnore
+    public void setId(Integer id) {
+        this.id = id;
+    }
 }

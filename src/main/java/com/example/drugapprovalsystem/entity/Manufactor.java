@@ -1,10 +1,7 @@
 package com.example.drugapprovalsystem.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
@@ -12,6 +9,7 @@ import lombok.Setter;
 @Table(name = "manufactor")
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Manufactor {
     @Id
     @Column(name = "id", nullable = false)

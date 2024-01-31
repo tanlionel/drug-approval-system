@@ -23,5 +23,5 @@ public class ManufactorResponseDTO {
 
     private Integer countryId;
 
-    private Integer countryName;
+    private String countryName;
 }
