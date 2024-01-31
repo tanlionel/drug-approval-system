@@ -26,12 +26,12 @@ public class AdminDrugController {
         return ResponseEntity.ok(drugService.getDrugPageable(pageNo,pageSize,sortField,sortOrder, search));
     }
 
-    @PostMapping("/drug-management/drugs/create")
+    @PostMapping("/drug-management/drug/create")
     public void createDrug(@RequestBody DrugRequestDTO drugRequestDTO){
         drugService.createDrug(drugRequestDTO);
     }
 
-    @PutMapping("/drug-management/drugs/update/")
+    @PutMapping("/drug-management/drug/update/")
     public ResponseEntity<?> updateByDrugId(@RequestParam Integer drugId,
                                             @RequestBody UpdateDrugRequestDTO updateDrugRequestDTO) throws Exception{
         Drug drug = drugService.updateDrug(updateDrugRequestDTO, drugId);
@@ -46,7 +46,7 @@ public class AdminDrugController {
                 .build());
     }
 
-    @DeleteMapping("/drug-management/drugs/delete")
+    @DeleteMapping("/drug-management/drug/delete")
     public void deleteDrugById(@RequestParam("id") Integer drugId) throws Exception {
         drugService.deleteDrug(drugId);
 
