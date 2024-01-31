@@ -3,6 +3,7 @@ package com.example.drugapprovalsystem.controller;
 import com.example.drugapprovalsystem.common.Common;
 import com.example.drugapprovalsystem.model.DTO.DrugRequestDTO;
 import com.example.drugapprovalsystem.model.DTO.product_request_dto.ApprovalProductDetailDTO;
+import com.example.drugapprovalsystem.model.DTO.product_request_dto.ProductRequestDTO;
 import com.example.drugapprovalsystem.service.ServiceInterface.ApprovalProductService;
 import com.example.drugapprovalsystem.service.ServiceInterface.CategoryService;
 import com.example.drugapprovalsystem.service.ServiceInterface.CountryService;
@@ -74,7 +75,7 @@ public class TestController {
     }
 
     @PostMapping("/test/admin/approval-product")
-    public ResponseEntity<?> createApprovalProduct(@RequestBody ApprovalProductDetailDTO dto) throws Exception{
+    public ResponseEntity<?> createApprovalProduct(@RequestBody ProductRequestDTO dto) throws Exception{
         System.out.println("TestController: RUN createApprovalProduct");
 
         return ResponseEntity.ok(approvalProductService.createApprovalProduct(dto));
@@ -82,7 +83,7 @@ public class TestController {
 
     @PutMapping("test/admin/approval-product")
     public ResponseEntity<?> updateApprovalProductById(@RequestParam("id") Integer id,
-                                                              @RequestBody ApprovalProductDetailDTO approvalProductDetailDTO) throws Exception {
+                                                              @RequestBody ProductRequestDTO approvalProductDetailDTO) throws Exception {
 
         return ResponseEntity.ok(approvalProductService.updateApprovalProduct(id, approvalProductDetailDTO));
     }
