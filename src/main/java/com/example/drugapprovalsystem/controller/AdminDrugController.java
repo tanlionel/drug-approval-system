@@ -3,6 +3,7 @@ package com.example.drugapprovalsystem.controller;
 import com.example.drugapprovalsystem.common.Common;
 import com.example.drugapprovalsystem.entity.Drug;
 import com.example.drugapprovalsystem.model.DTO.DrugRequestDTO;
+import com.example.drugapprovalsystem.model.DTO.UpdateDrugRequestDTO;
 import com.example.drugapprovalsystem.service.ServiceInterface.DrugService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +31,11 @@ public class AdminDrugController {
         drugService.createDrug(drugRequestDTO);
     }
 
-    @PutMapping("/drug-management/drugs/update/{drugId}")
-    public ResponseEntity<?> updateByDrugId(@RequestParam("id") Integer id,
-                               @RequestBody DrugRequestDTO dto) throws Exception{
-        Drug drug = drugService.updateDrug(dto);
-        return ResponseEntity.ok(DrugRequestDTO.builder()
+    @PutMapping("/drug-management/drugs/update/")
+    public ResponseEntity<?> updateByDrugId(@RequestParam Integer drugId,
+                                            @RequestBody UpdateDrugRequestDTO updateDrugRequestDTO) throws Exception{
+        Drug drug = drugService.updateDrug(updateDrugRequestDTO, drugId);
+        return ResponseEntity.ok(UpdateDrugRequestDTO.builder()
                 .type(drug.getType())
                 .name(drug.getName())
                 .state(drug.getState())
@@ -43,6 +44,12 @@ public class AdminDrugController {
                 .clinicalDescription(drug.getClinicalDescription())
                 .approvalStatus(drug.getApprovalStatus())
                 .build());
+    }
+
+    @DeleteMapping("/drug-management/drugs/delete")
+    public void deleteDrugById(@RequestParam("id") Integer drugId) throws Exception {
+        drugService.deleteDrug(drugId);
+
     }
 
 }
