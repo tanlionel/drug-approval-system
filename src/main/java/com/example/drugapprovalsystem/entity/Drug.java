@@ -44,4 +44,7 @@ public class Drug {
     @Column(name = "approval_status")
     private Integer approvalStatus;
 
+    @Column(name = "is_active")
+    private Boolean isActive;
+
 }

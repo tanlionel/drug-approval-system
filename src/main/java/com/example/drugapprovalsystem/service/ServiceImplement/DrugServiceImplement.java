@@ -2,9 +2,10 @@ package com.example.drugapprovalsystem.service.ServiceImplement;
 
 import com.example.drugapprovalsystem.entity.Drug;
 import com.example.drugapprovalsystem.exception.DrugDoesNotExistException;
-import com.example.drugapprovalsystem.exception.ProductDoesNotExistException;
+import com.example.drugapprovalsystem.exception.InvalidActionException;
 import com.example.drugapprovalsystem.model.DTO.DrugRequestDTO;
 import com.example.drugapprovalsystem.model.DTO.DrugResponseDTO;
+import com.example.drugapprovalsystem.model.DTO.UpdateDrugRequestDTO;
 import com.example.drugapprovalsystem.model.Mapper.DrugMapper;
 import com.example.drugapprovalsystem.repository.DrugRepository;
 import com.example.drugapprovalsystem.service.ServiceInterface.DrugService;
@@ -15,7 +16,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.yaml.snakeyaml.events.Event;
 
 import java.util.Optional;
 
@@ -50,22 +50,36 @@ public class DrugServiceImplement implements DrugService {
     }
 
     @Override
-    public Drug updateDrug(DrugRequestDTO drugRequestDTO) throws Exception {
-        if(drugRequestDTO.getId() == null) throw new DrugDoesNotExistException();
-        Optional<Drug> drugInDB = drugRepository.findById(drugRequestDTO.getId());
-        if (drugInDB == null) throw new ProductDoesNotExistException();
+    public Drug updateDrug(UpdateDrugRequestDTO updateDrugRequestDTO, Integer drugId) throws Exception {
+        Optional<Drug> drugInDB = drugRepository.findById(drugId);
+        if (drugInDB == null) throw new DrugDoesNotExistException();
 
         //Update Drug
-        if(drugRequestDTO.getType() != null) drugInDB.get().setType(drugRequestDTO.getType());
-        if(drugRequestDTO.getName() != null) drugInDB.get().setName(drugRequestDTO.getName());
-        if(drugRequestDTO.getState() != null) drugInDB.get().setState(drugRequestDTO.getState());
-        if(drugRequestDTO.getDescription() != null) drugInDB.get().setDescription(drugRequestDTO.getDescription());
-        if(drugRequestDTO.getSimpleDescription() != null) drugInDB.get().setSimpleDescription(drugRequestDTO.getSimpleDescription());
-        if(drugRequestDTO.getClinicalDescription() != null) drugInDB.get().setClinicalDescription(drugRequestDTO.getClinicalDescription());
-        if(drugRequestDTO.getApprovalStatus() != null) drugInDB.get().setApprovalStatus(drugRequestDTO.getApprovalStatus());
+        if(updateDrugRequestDTO.getType() != null) drugInDB.get().setType(updateDrugRequestDTO.getType());
+        if(updateDrugRequestDTO.getName() != null) drugInDB.get().setName(updateDrugRequestDTO.getName());
+        if(updateDrugRequestDTO.getState() != null) drugInDB.get().setState(updateDrugRequestDTO.getState());
+        if(updateDrugRequestDTO.getDescription() != null) drugInDB.get().setDescription(updateDrugRequestDTO.getDescription());
+        if(updateDrugRequestDTO.getSimpleDescription() != null) drugInDB.get().setSimpleDescription(updateDrugRequestDTO.getSimpleDescription());
+        if(updateDrugRequestDTO.getClinicalDescription() != null) drugInDB.get().setClinicalDescription(updateDrugRequestDTO.getClinicalDescription());
+        if(updateDrugRequestDTO.getApprovalStatus() != null) drugInDB.get().setApprovalStatus(updateDrugRequestDTO.getApprovalStatus());
 
         //Save
         return drugRepository.save(drugInDB.get());
+<<<<<<< Updated upstream
+=======
+
+    }
+
+    @Override
+    public void deleteDrug(Integer drugId) throws Exception {
+        Optional<Drug> optional = drugRepository.findById(drugId);
+        if(optional.isEmpty()) throw new DrugDoesNotExistException();
+        Drug drug = optional.get();
+        if(!drug.getIsActive()) throw new InvalidActionException();
+
+        drug.setIsActive(!drug.getIsActive());
+        drugRepository.save(drug);
+>>>>>>> Stashed changes
     }
 
 }
