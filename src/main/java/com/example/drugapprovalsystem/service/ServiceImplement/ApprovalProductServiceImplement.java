@@ -4,6 +4,7 @@ import com.example.drugapprovalsystem.entity.*;
 import com.example.drugapprovalsystem.exception.InvalidActionException;
 import com.example.drugapprovalsystem.exception.ProductDoesNotExistException;
 import com.example.drugapprovalsystem.model.DTO.product_request_dto.ApprovalProductDetailDTO;
+import com.example.drugapprovalsystem.model.DTO.product_request_dto.ProductRequestDTO;
 import com.example.drugapprovalsystem.model.DTO.product_response_dto.ApprovalProductDetailResponseDTO;
 import com.example.drugapprovalsystem.model.DTO.product_response_dto.ApprovalProductResponseDTO;
 import com.example.drugapprovalsystem.model.Mapper.AuthorityMapper;
@@ -59,8 +60,8 @@ public class ApprovalProductServiceImplement implements ApprovalProductService {
     }
 
     @Override
-    public ApprovalProductDetailResponseDTO createApprovalProduct(ApprovalProductDetailDTO approvalProductDetailDTO) throws Exception {
-        ApprovalProduct approvalProduct = ProductMapper.mapToApprovalProduct(approvalProductDetailDTO);
+    public ApprovalProductDetailResponseDTO createApprovalProduct(ProductRequestDTO productRequestDTO) throws Exception {
+        ApprovalProduct approvalProduct = ProductMapper.mapToApprovalProduct(productRequestDTO);
 
         //Optional DETAILS
         if (approvalProduct.getPharmacogenomic() != null)
@@ -83,12 +84,12 @@ public class ApprovalProductServiceImplement implements ApprovalProductService {
         List<Ingredient> ingredientList = null;
         List<Authority> authorityList = null;
         //SAVE INGREDIENT AND AUTHORITY LIST
-        ingredientList = approvalProductDetailDTO.getDrugIngredients()
+        ingredientList = productRequestDTO.getDrugIngredients()
                 .stream()
                 .map(ingredient -> IngredientMapper.mapToIngredient(ingredient, result.getId(), IS_APPROVAL_PRODUCT))
                 .toList();
 
-        authorityList = approvalProductDetailDTO.getAuthorities()
+        authorityList = productRequestDTO.getAuthorities()
                 .stream()
                 .map(authorityRequestDTO -> AuthorityMapper.mapToAuthority(authorityRequestDTO, result.getId(), IS_APPROVAL_PRODUCT))
                 .toList();
@@ -101,21 +102,21 @@ public class ApprovalProductServiceImplement implements ApprovalProductService {
     }
 
     @Override
-    public ApprovalProductDetailResponseDTO updateApprovalProduct(Integer id, ApprovalProductDetailDTO approvalProductDetailDTO) throws Exception {
-        approvalProductDetailDTO.setId(id);
-
-        if (approvalProductDetailDTO.getId() == null)
+    public ApprovalProductDetailResponseDTO updateApprovalProduct(Integer id, ProductRequestDTO productRequestDTO) throws Exception {
+        if (id == null)
             throw new ProductDoesNotExistException();
 
-        ApprovalProduct approvalProduct = ProductMapper.mapToApprovalProduct(approvalProductDetailDTO);
+        ApprovalProduct approvalProduct = ProductMapper.mapToApprovalProduct(productRequestDTO);
+        approvalProduct.setId(id);
 
-        Optional<ApprovalProduct> optional = approvalProductRepository.findById(approvalProductDetailDTO.getId());
+        Optional<ApprovalProduct> optional = approvalProductRepository.findById(id);
 
         if (optional.isEmpty())
             throw new ProductDoesNotExistException();
 
         ApprovalProduct approvalProductInDB = optional.get();
 
+        //GetID
         int labelId = approvalProductInDB.getLabeller() == null ? -1 : approvalProductInDB.getLabeller().getId(),
                 pharmacogenomicId = approvalProductInDB.getPharmacogenomic() == null ? -1 : approvalProductInDB.getPharmacogenomic().getId(),
                 productAllergyDetailId = approvalProductInDB.getProductAllergyDetails() == null ? -1 : approvalProductInDB.getProductAllergyDetails().getId(),
@@ -150,12 +151,12 @@ public class ApprovalProductServiceImplement implements ApprovalProductService {
         List<Authority> authorityList = null;
 
         //SAVE INGREDIENT AND AUTHORITY LIST
-        ingredientList = approvalProductDetailDTO.getDrugIngredients()
+        ingredientList = productRequestDTO.getDrugIngredients()
                     .stream()
                     .map(ingredient -> IngredientMapper.mapToIngredient(ingredient, result.getId(), IS_APPROVAL_PRODUCT))
                     .toList();
 
-        authorityList = approvalProductDetailDTO.getAuthorities()
+        authorityList = productRequestDTO.getAuthorities()
                     .stream()
                     .map(authorityRequestDTO -> AuthorityMapper.mapToAuthority(authorityRequestDTO, result.getId(), IS_APPROVAL_PRODUCT))
                     .toList();
@@ -175,8 +176,8 @@ public class ApprovalProductServiceImplement implements ApprovalProductService {
         if (labelId > -1)
             labellerRepository.deleteById(labelId);
 
-        ingredientRepository.saveAll(ingredientList);
-        authorityRepository.saveAll(authorityList);
+        ingredientList = ingredientRepository.saveAll(ingredientList);
+        authorityList = authorityRepository.saveAll(authorityList);
 
         return getApprovalProductDetail(id);
     }

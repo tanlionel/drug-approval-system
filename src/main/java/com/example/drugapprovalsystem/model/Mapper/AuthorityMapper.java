@@ -2,10 +2,11 @@ package com.example.drugapprovalsystem.model.Mapper;
 
 import com.example.drugapprovalsystem.entity.*;
 import com.example.drugapprovalsystem.model.DTO.AuthorityDTO;
+import com.example.drugapprovalsystem.model.DTO.product_request_dto.AuthorityRequestDTO;
 
 public class AuthorityMapper {
 
-    public static Authority mapToAuthority(AuthorityDTO auth, Integer productId, boolean isApprovalProduct) {
+    public static Authority mapToAuthority(AuthorityRequestDTO auth, Integer productId, boolean isApprovalProduct) {
         Authority authority = new Authority();
 
         authority.setCertificateName(auth.getCertificateName());
