@@ -65,8 +65,7 @@ public class DrugServiceImplement implements DrugService {
 
         //Save
         return drugRepository.save(drugInDB.get());
-<<<<<<< Updated upstream
-=======
+
 
     }
 
@@ -79,7 +78,6 @@ public class DrugServiceImplement implements DrugService {
 
         drug.setIsActive(!drug.getIsActive());
         drugRepository.save(drug);
->>>>>>> Stashed changes
     }
 
 }
