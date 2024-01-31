@@ -2,6 +2,7 @@ package com.example.drugapprovalsystem.controller;
 
 import com.example.drugapprovalsystem.common.Common;
 import com.example.drugapprovalsystem.model.DTO.product_request_dto.ApprovalProductDetailDTO;
+import com.example.drugapprovalsystem.model.DTO.product_request_dto.ProductRequestDTO;
 import com.example.drugapprovalsystem.service.ServiceInterface.ApprovalProductService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +30,8 @@ public class AdminProductController {
     }
 
     @PostMapping("/create-approval-product")
-    public ResponseEntity<?> createApprovalProduct(@RequestBody ApprovalProductDetailDTO dto) throws Exception{
-        System.out.println("TestController: RUN createApprovalProduct");
+    public ResponseEntity<?> createApprovalProduct(@RequestBody ProductRequestDTO dto) throws Exception{
+        //System.out.println("TestController: RUN createApprovalProduct");
 
         return ResponseEntity
                 .ok(approvalProductService.createApprovalProduct(dto));
@@ -38,7 +39,7 @@ public class AdminProductController {
 
     @PutMapping("/update-approval-product")
     public ResponseEntity<?> updateApprovalProductById(@RequestParam("id") Integer id,
-                                                       @RequestBody ApprovalProductDetailDTO approvalProductDetailDTO) throws Exception {
+                                                       @RequestBody ProductRequestDTO approvalProductDetailDTO) throws Exception {
 
         return ResponseEntity.ok(approvalProductService.updateApprovalProduct(id, approvalProductDetailDTO));
     }
@@ -46,7 +47,6 @@ public class AdminProductController {
     @DeleteMapping("/delete-approval-product")
     public void deleteApprovalProductById(@RequestParam("id") Integer id) throws Exception {
         approvalProductService.deleteApprovalProduct(id);
-
     }
 
     @GetMapping("/approval-product-detail")
