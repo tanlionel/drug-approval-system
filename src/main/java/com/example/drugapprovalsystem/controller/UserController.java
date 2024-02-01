@@ -15,7 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/admin/user-management")
 @AllArgsConstructor
 @CrossOrigin("*")
 public class UserController {
@@ -35,7 +35,7 @@ public class UserController {
                         .isActive(user.getIsActive())
                         .build());
     }
-    @GetMapping("get-pageable-users")
+    @GetMapping("users")
     public ResponseEntity<?> getUsersPageable(@RequestParam(required = false,defaultValue = "0") Integer pageNo,
                                               @RequestParam(required = false,defaultValue = "10") Integer pageSize,
                                               @RequestParam(required = false,defaultValue = "id") String sortField,
@@ -75,7 +75,7 @@ public class UserController {
                 .isActive(user.getIsActive())
                 .build());
     }
-    @PostMapping("/update-user")
+    @PutMapping("/user")
     public ResponseEntity<?> updateUser(@RequestBody UpdateUserRequestDTO updateUserRequestDTO, @RequestParam String email) throws UserDoesNotExistException {
         User user= userService.updateUser(updateUserRequestDTO,email);
         return ResponseEntity.ok(UserResponseDTO.builder()
