@@ -44,7 +44,7 @@ public class DrugServiceImplement implements DrugService {
     @Override
     public void createDrug(DrugRequestDTO drugRequestDTO) {
         Drug drug = DrugMapper.mapToDrug(drugRequestDTO);
-        drug.setIsActive(false);
+        drug.setIsActive(true);
         Drug result = drugRepository.save(drug);
 
     }

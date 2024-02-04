@@ -18,6 +18,7 @@ public class DrugMapper {
                 .simpleDescription(drug.getSimpleDescription())
                 .approvalStatus(drug.getApprovalStatus())
                 .clinicalDescription(drug.getClinicalDescription())
+                .isActive(drug.getIsActive())
                 .build();
 
     }

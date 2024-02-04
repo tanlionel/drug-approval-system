@@ -20,5 +20,6 @@ public class DrugResponseDTO {
     private String simpleDescription;
     private String clinicalDescription;
     private Integer approvalStatus;
+    private boolean isActive;
 
 }
