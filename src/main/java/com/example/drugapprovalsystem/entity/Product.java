@@ -2,16 +2,16 @@ package com.example.drugapprovalsystem.entity;
 
 import com.example.drugapprovalsystem.model.Mapper.ProductMapper;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Table(name = "product")
 public class Product {
     public Product(Integer id) {
@@ -36,6 +36,13 @@ public class Product {
     @Column(name = "prescription_name")
     private String prescriptionName;
 
+    @Column(name = "created_on")
+    private LocalDateTime createdOn;
+
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.DETACH)
+    @JoinColumn(name = "created_by")
+    private User createdBy;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "manufactor_id")
     private Manufactor manufactor;
@@ -56,4 +63,13 @@ public class Product {
     @JoinColumn(name = "product_allergy_details_id")
     private ProductAllergyDetail productAllergyDetails;
 
+    //USA
+    @Column(name = "is_approved_by_fda")
+    private boolean isApprovedByFDA;
+    //FRANCE
+    @Column(name = "is_approved_by_ansm")
+    private boolean isApprovedByANSM;
+
+    @Column(name = "is_active")
+    private Boolean isActive;
 }
