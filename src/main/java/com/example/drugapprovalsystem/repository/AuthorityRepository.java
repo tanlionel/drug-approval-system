@@ -13,5 +13,9 @@ public interface AuthorityRepository extends JpaRepository<Authority, Integer> {
     @Transactional
     @Modifying
     public void deleteByApprovalProductId(Integer approvalProductId);
+    @Transactional
+    @Modifying
+    public void deleteByProductId(Integer productId);
     public List<Authority> findByApprovalProductId(Integer approvalProductId);
+    public List<Authority> findByProductId(Integer productId);
 }

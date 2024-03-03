@@ -15,5 +15,10 @@ public interface IngredientRepository extends JpaRepository<Ingredient, Integer>
     @Modifying
     @Transactional
     public void deleteByApprovalProductId(@Param("approvalProductId") Integer approvalProductId);
+    @Modifying
+    @Transactional
+    public void deleteByProductId(@Param("productId") Integer approvalProductId);
     public List<Ingredient> findByApprovalProductId(Integer approvalProductId);
+
+    public List<Ingredient> findByProductId(Integer productId);
 }

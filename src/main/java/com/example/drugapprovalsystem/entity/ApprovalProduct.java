@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.web.bind.annotation.Mapping;
 
 import java.time.LocalDateTime;
 
@@ -64,6 +65,10 @@ public class ApprovalProduct {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "contraindication_id")
     private Contraindication contraindication;
+
+    @ManyToOne
+    @JoinColumn(name = "product_administration", referencedColumnName = "id")
+    private ProductAdministration productAdministration;
 
     @Column(name = "is_active")
     private Boolean isActive;

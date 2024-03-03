@@ -3,9 +3,8 @@ package com.example.drugapprovalsystem.service.ServiceImplement;
 import com.example.drugapprovalsystem.entity.*;
 import com.example.drugapprovalsystem.exception.InvalidActionException;
 import com.example.drugapprovalsystem.exception.ProductDoesNotExistException;
-import com.example.drugapprovalsystem.model.DTO.product_request_dto.ApprovalProductDetailDTO;
 import com.example.drugapprovalsystem.model.DTO.product_request_dto.ProductRequestDTO;
-import com.example.drugapprovalsystem.model.DTO.product_response_dto.ApprovalProductDetailResponseDTO;
+import com.example.drugapprovalsystem.model.DTO.product_response_dto.ProductDetailResponseDTO;
 import com.example.drugapprovalsystem.model.DTO.product_response_dto.ApprovalProductResponseDTO;
 import com.example.drugapprovalsystem.model.Mapper.AuthorityMapper;
 import com.example.drugapprovalsystem.model.Mapper.IngredientMapper;
@@ -60,7 +59,7 @@ public class ApprovalProductServiceImplement implements ApprovalProductService {
     }
 
     @Override
-    public ApprovalProductDetailResponseDTO createApprovalProduct(ProductRequestDTO productRequestDTO) throws Exception {
+    public ProductDetailResponseDTO createApprovalProduct(ProductRequestDTO productRequestDTO) throws Exception {
         ApprovalProduct approvalProduct = ProductMapper.mapToApprovalProduct(productRequestDTO);
 
         //Optional DETAILS
@@ -102,7 +101,7 @@ public class ApprovalProductServiceImplement implements ApprovalProductService {
     }
 
     @Override
-    public ApprovalProductDetailResponseDTO updateApprovalProduct(Integer id, ProductRequestDTO productRequestDTO) throws Exception {
+    public ProductDetailResponseDTO updateApprovalProduct(Integer id, ProductRequestDTO productRequestDTO) throws Exception {
         if (id == null)
             throw new ProductDoesNotExistException();
 
@@ -215,7 +214,7 @@ public class ApprovalProductServiceImplement implements ApprovalProductService {
     }
 
     @Override
-    public ApprovalProductDetailResponseDTO getApprovalProductDetail(Integer id) throws Exception {
+    public ProductDetailResponseDTO getApprovalProductDetail(Integer id) throws Exception {
         Optional<ApprovalProduct> optional = approvalProductRepository.findById(id);
 
         if (optional.isEmpty())
@@ -238,7 +237,7 @@ public class ApprovalProductServiceImplement implements ApprovalProductService {
         }
 
         return ProductMapper
-                .mapToApprovalProductDetaiResponseDTO(approvalProduct, ingredients, authorities);
+                .mapToProductDetaiResponseDTO(approvalProduct, ingredients, authorities);
     }
 
 }
