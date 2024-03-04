@@ -4,8 +4,10 @@ import com.example.drugapprovalsystem.common.Common;
 import com.example.drugapprovalsystem.entity.*;
 import com.example.drugapprovalsystem.model.DTO.*;
 import com.example.drugapprovalsystem.model.DTO.product_request_dto.*;
-import com.example.drugapprovalsystem.model.DTO.product_response_dto.ProductDetailResponseDTO;
+import com.example.drugapprovalsystem.model.DTO.product_response_dto.ApprovalProductDetailResponseDTO;
 import com.example.drugapprovalsystem.model.DTO.product_response_dto.ApprovalProductResponseDTO;
+import com.example.drugapprovalsystem.model.DTO.product_response_dto.ProductDetailResponseDTO;
+import com.example.drugapprovalsystem.model.DTO.product_response_dto.ProductResponseDTO;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -21,9 +23,31 @@ public class ProductMapper {
                 .company((a.getManufactor() == null) ? null : a.getManufactor().getCompany())
                 .category((a.getCategory() == null) ? null : a.getCategory().getTitle())
                 .image(a.getImage())
+                .productAdministration(
+                        a.getProductAdministration() == null ? null :
+                                ProductAdministrationDTO.builder()
+                                        .id(a.getProductAdministration().getId())
+                                        .name(a.getProductAdministration().getName())
+                                        .build()
+
+                )
                 .build();
     }
 
+    public static ProductResponseDTO mapToProductResponseDTO(Product a) {
+        return ProductResponseDTO.builder().id(a.getId())
+                .labeller((a.getLabeller() == null) ? null : a.getLabeller().getName())
+                .name(a.getName())
+                .route(a.getRoute())
+                .prescriptionName(a.getPrescriptionName())
+                .createdOn(a.getCreatedOn())
+                .company((a.getManufactor() == null) ? null : a.getManufactor().getCompany())
+                .category((a.getCategory() == null) ? null : a.getCategory().getTitle())
+                .image(a.getImage())
+                .isApprovedByANSM(a.isApprovedByANSM())
+                .isApprovedByFDA(a.isApprovedByFDA())
+                .build();
+    }
     public static Product mapToProduct(ProductRequestDTO a) {
         Product product = new Product();
 
@@ -51,13 +75,15 @@ public class ProductMapper {
                 .contraindication(a.getContraindication() == null ? null : Contraindication.builder()
                         .value(a.getContraindication().getValue())
                         .relationship(a.getContraindication().getRelationship()).build())
+                .isApprovedByANSM(a.isApprovedByANSM())
+                .isApprovedByFDA(a.isApprovedByFDA())
                 .isActive(Common.IS_ACTIVE).build();
 
         return product;
     }
 
-    public static ApprovalProduct mapToApprovalProduct(ProductRequestDTO a) {
-        ApprovalProduct approvalProduct = new ApprovalProduct();
+    public static ApprovalProduct mapToApprovalProduct(ApprovalProductRequestDTO a) {
+        ApprovalProduct approvalProduct;
 
         approvalProduct = ApprovalProduct.builder()
                 .name(a.getName())
@@ -83,76 +109,19 @@ public class ProductMapper {
                 .contraindication(a.getContraindication() == null ? null : Contraindication.builder()
                         .value(a.getContraindication().getValue())
                         .relationship(a.getContraindication().getRelationship()).build())
+                        .productAdministration(
+                                ProductAdministration.builder().id(a.getAdministrationId()).build()
+                        )
                 .isActive(Common.IS_ACTIVE).build();
 
         return approvalProduct;
     }
 
-    public static ApprovalProduct mapToApprovalProduct(ApprovalProductDetailDTO a) {
-        ApprovalProduct approvalProduct = new ApprovalProduct();
+    public static ApprovalProductDetailResponseDTO mapToApprovalProductDetaiResponseDTO(ApprovalProduct a,
+                                                                                        List<Ingredient> ingredients,
+                                                                                        List<Authority> authorities) {
 
-        approvalProduct = ApprovalProduct.builder()
-                .id(a.getId())
-                .name(a.getName())
-                .route(a.getRoute())
-                .prescriptionName(a.getPrescriptionName())
-                .createdOn(LocalDateTime.now())
-                .category(Category.builder().id(a.getCategoryId()).build())
-                .labeller(Labeller.builder().name(a.getLabeller()).build())
-                .manufactor((a.getManufactor() == null) ? null : Manufactor.builder().name(a.getManufactor().getName())
-                        .source(a.getManufactor().getSource())
-                        .score(a.getManufactor().getScore())
-                        .company(a.getManufactor().getCompany())
-                        .country(Country.builder().id(a.getManufactor().getCountryId()).build()).build())
-                .pharmacogenomic(a.getPharmacogenomic() == null ? null : Pharmacogenomic.builder()
-                        .asorption(a.getPharmacogenomic().getAsorption())
-                        .toxicity(a.getPharmacogenomic().getToxicity())
-                        .indication(a.getPharmacogenomic().getIndication())
-                                .mechanismOfAction(a.getPharmacogenomic().getMechanismOfAction())
-                                .pharmacodynamic(a.getPharmacogenomic().getPharmacodynamic()).build())
-                .productAllergyDetails(a.getProductAllergyDetail() == null ? null : ProductAllergyDetail.builder()
-                        .detail(a.getProductAllergyDetail().getDetail())
-                                .summary(a.getProductAllergyDetail().getSummary()).build())
-                .contraindication(a.getContraindication() == null ? null : Contraindication.builder()
-                        .value(a.getContraindication().getValue())
-                        .relationship(a.getContraindication().getRelationship()).build())
-                .isActive(Common.IS_ACTIVE).build();
-
-        return approvalProduct;
-//        approvalProduct.setId(a.getId());
-//        approvalProduct.setName(a.getName());
-//        approvalProduct.setRoute(a.getRoute());
-//        approvalProduct.setPrescriptionName(a.getPrescriptionName());
-//        approvalProduct.setCreatedOn(LocalDateTime.now());
-//        approvalProduct.setCategory(new Category(a.getCategoryId()));
-//        approvalProduct.setLabeller(new Labeller(null, a.getLabeller(), true));
-//
-//        if (a.getManufactor() != null)
-//            approvalProduct.setManufactor( new Manufactor(null, a.getManufactor().getName(),
-//                                            a.getManufactor().getCompany(), a.getManufactor().getScore(),
-//                                            a.getManufactor().getSource(), new Country(a.getManufactor().getCountryId())) );
-//
-//        if (a.getPharmacogenomic() != null)
-//            approvalProduct.setPharmacogenomic(new Pharmacogenomic(null, a.getPharmacogenomic().getIndication(),
-//                    a.getPharmacogenomic().getPharmacodynamic(), a.getPharmacogenomic().getMechanismOfAction(),
-//                    a.getPharmacogenomic().getAsorption(), a.getPharmacogenomic().getToxicity()));
-//
-//        if (a.getContraindication() != null)
-//            approvalProduct.setContraindication(new Contraindication(null, a.getContraindication().getRelationship(),
-//                                        a.getContraindication().getValue()));
-//
-//        if (a.getProductAllergyDetail() != null)
-//            approvalProduct.setProductAllergyDetails(new ProductAllergyDetail(null, a.getProductAllergyDetail().getDetail(),
-//                a.getProductAllergyDetail().getSummary()));
-//
-//        approvalProduct.setIsActive(Common.IS_ACTIVE);
-    }
-
-    public static ProductDetailResponseDTO mapToProductDetaiResponseDTO(ApprovalProduct a,
-                                                                        List<Ingredient> ingredients,
-                                                                        List<Authority> authorities) {
-
-        return ProductDetailResponseDTO.builder()
+        return ApprovalProductDetailResponseDTO.builder()
                 .id(a.getId())
                 .route(a.getRoute())
                 .name(a.getName())
@@ -191,6 +160,13 @@ public class ProductMapper {
                 .authorities((authorities == null) ? null : authorities.stream()
                                         .map(AuthorityMapper::mapToAuthorityDTO).toList())
                 .image(a.getImage())
+                .productAdministrationDTO(
+                        a.getProductAdministration() == null ? null :
+                                ProductAdministrationDTO.builder()
+                                        .id(a.getProductAdministration().getId())
+                                        .name(a.getProductAdministration().getName())
+                                        .build()
+                )
                 .build();
     }
 
@@ -237,6 +213,8 @@ public class ProductMapper {
                 .authorities((authorities == null) ? null : authorities.stream()
                         .map(AuthorityMapper::mapToAuthorityDTO).toList())
                 .image(a.getImage())
+                .isApprovedByANSM(a.isApprovedByANSM())
+                .isApprovedByFDA(a.isApprovedByFDA())
                 .build();
     }
 }

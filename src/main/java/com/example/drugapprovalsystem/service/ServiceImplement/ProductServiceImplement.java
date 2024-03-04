@@ -1,11 +1,12 @@
 package com.example.drugapprovalsystem.service.ServiceImplement;
 
-import com.example.drugapprovalsystem.entity.ApprovalProduct;
 import com.example.drugapprovalsystem.entity.Authority;
 import com.example.drugapprovalsystem.entity.Ingredient;
 import com.example.drugapprovalsystem.entity.Product;
 import com.example.drugapprovalsystem.exception.ProductDoesNotExistException;
+import com.example.drugapprovalsystem.model.DTO.product_request_dto.ApprovalProductRequestDTO;
 import com.example.drugapprovalsystem.model.DTO.product_request_dto.ProductRequestDTO;
+import com.example.drugapprovalsystem.model.DTO.product_response_dto.ApprovalProductDetailResponseDTO;
 import com.example.drugapprovalsystem.model.DTO.product_response_dto.ProductDetailResponseDTO;
 import com.example.drugapprovalsystem.model.Mapper.AuthorityMapper;
 import com.example.drugapprovalsystem.model.Mapper.IngredientMapper;

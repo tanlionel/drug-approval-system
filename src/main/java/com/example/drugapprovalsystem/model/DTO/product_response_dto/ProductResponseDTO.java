@@ -1,6 +1,5 @@
 package com.example.drugapprovalsystem.model.DTO.product_response_dto;
 
-import com.example.drugapprovalsystem.entity.ProductAdministration;
 import com.example.drugapprovalsystem.model.DTO.ProductAdministrationDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
@@ -13,7 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ApprovalProductResponseDTO {
+public class ProductResponseDTO {
     private Integer id;
     private String labeller;
     private String name;
@@ -26,5 +25,6 @@ public class ApprovalProductResponseDTO {
     private String company;
     private String category;
     private String image;
-    private ProductAdministrationDTO productAdministration;
+    private boolean isApprovedByFDA;
+    private boolean isApprovedByANSM;
 }
