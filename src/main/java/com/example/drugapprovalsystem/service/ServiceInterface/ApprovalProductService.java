@@ -1,5 +1,6 @@
 package com.example.drugapprovalsystem.service.ServiceInterface;
 
+import com.example.drugapprovalsystem.exception.ProductDoesNotExistException;
 import com.example.drugapprovalsystem.model.DTO.product_request_dto.ProductRequestDTO;
 import com.example.drugapprovalsystem.model.DTO.product_response_dto.ProductDetailResponseDTO;
 import com.example.drugapprovalsystem.model.DTO.product_response_dto.ApprovalProductResponseDTO;
@@ -15,4 +16,5 @@ public interface ApprovalProductService {
     public void deleteApprovalProduct(Integer id) throws Exception;
     public void activeApproveProduct(Integer id) throws Exception;
     public ProductDetailResponseDTO getApprovalProductDetail(Integer id) throws Exception;
+    ApprovalProductResponseDTO uploadImage(Integer approvalProductID, String imageLink) throws ProductDoesNotExistException;
 }

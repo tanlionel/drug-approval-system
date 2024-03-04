@@ -20,6 +20,7 @@ public class ProductMapper {
                 .createdOn(a.getCreatedOn())
                 .company((a.getManufactor() == null) ? null : a.getManufactor().getCompany())
                 .category((a.getCategory() == null) ? null : a.getCategory().getTitle())
+                .image(a.getImage())
                 .build();
     }
 
@@ -189,6 +190,7 @@ public class ProductMapper {
                                         .map(IngredientMapper::mapToDrugIngredientsResponseDTO).toList())
                 .authorities((authorities == null) ? null : authorities.stream()
                                         .map(AuthorityMapper::mapToAuthorityDTO).toList())
+                .image(a.getImage())
                 .build();
     }
 
@@ -234,6 +236,7 @@ public class ProductMapper {
                         .map(IngredientMapper::mapToDrugIngredientsResponseDTO).toList())
                 .authorities((authorities == null) ? null : authorities.stream()
                         .map(AuthorityMapper::mapToAuthorityDTO).toList())
+                .image(a.getImage())
                 .build();
     }
 }

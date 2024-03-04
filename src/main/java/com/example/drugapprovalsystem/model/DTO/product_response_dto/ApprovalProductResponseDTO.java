@@ -21,4 +21,5 @@ public class ApprovalProductResponseDTO {
     private LocalDateTime createdOn;
     private String company;
     private String category;
+    private String image;
 }
