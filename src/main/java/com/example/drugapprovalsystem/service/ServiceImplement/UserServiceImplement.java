@@ -138,4 +138,12 @@ public class UserServiceImplement implements UserService {
 
         return null;
     }
+
+    @Override
+    public UserResponseDTO uploadAvatar(String userEmail, String userImage) throws UserDoesNotExistException {
+        User user = userRepository.findByEmail(userEmail);
+        if (user==null) throw new UserDoesNotExistException();
+        user.setAvatar(userImage);
+        return UserMapper.mapToUserResponseDTO(userRepository.save(user));
+    }
 }

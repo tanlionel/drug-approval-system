@@ -24,4 +24,5 @@ public class ProductDetailResponseDTO {
     private PharmacogenomicDTO pharmacogenomic;
     private ProductAllergyDetailDTO productAllergyDetail;
     private ContraindicationDTO contraindication;
+    private String image;
 }

@@ -240,4 +240,12 @@ public class ApprovalProductServiceImplement implements ApprovalProductService {
                 .mapToProductDetaiResponseDTO(approvalProduct, ingredients, authorities);
     }
 
+    @Override
+    public ApprovalProductResponseDTO uploadImage(Integer approvalProductID, String imageLink) throws ProductDoesNotExistException {
+        Optional<ApprovalProduct> approvalProduct = approvalProductRepository.findById(approvalProductID);
+        if (!approvalProduct.isPresent()) throw new ProductDoesNotExistException();
+        approvalProduct.get().setImage(imageLink);
+        return ProductMapper.mapToApprovalProductResponseDTO(approvalProductRepository.save(approvalProduct.get()));
+    }
+
 }

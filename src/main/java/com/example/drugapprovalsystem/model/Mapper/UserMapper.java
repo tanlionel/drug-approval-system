@@ -14,6 +14,7 @@ public class UserMapper {
                 .username(user.getUsername())
                 .fullname(user.getFullname())
                 .isActive(user.getIsActive())
+                .avatar(user.getAvatar())
                 .build();
     }
 }

@@ -35,8 +35,6 @@ public class AdminProductController {
 
     @PostMapping("/approval-products/create")
     public ResponseEntity<?> createApprovalProduct(@RequestBody ProductRequestDTO dto) throws Exception{
-        //System.out.println("TestController: RUN createApprovalProduct");
-
         return ResponseEntity
                 .ok(approvalProductService.createApprovalProduct(dto));
     }
@@ -44,7 +42,6 @@ public class AdminProductController {
     @PutMapping("/approval-product/update")
     public ResponseEntity<?> updateApprovalProductById(@RequestParam("id") Integer id,
                                                        @RequestBody ProductRequestDTO approvalProductDetailDTO) throws Exception {
-
         return ResponseEntity.ok(approvalProductService.updateApprovalProduct(id, approvalProductDetailDTO));
     }
 

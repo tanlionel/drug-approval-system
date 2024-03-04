@@ -72,4 +72,7 @@ public class ApprovalProduct {
 
     @Column(name = "is_active")
     private Boolean isActive;
+
+    @Column(name = "image", length = 300)
+    private String image;
 }

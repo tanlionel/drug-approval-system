@@ -38,7 +38,7 @@ public class User implements UserDetails {
     @Column(name = "day_of_birth")
     private LocalDate dayOfBirth;
 
-    @Column(name = "avatar", length = 45)
+    @Column(name = "avatar", length = 300)
     private String avatar;
 
     @Column(name = "gender")

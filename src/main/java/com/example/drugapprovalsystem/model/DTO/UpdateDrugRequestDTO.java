@@ -19,4 +19,5 @@ public class UpdateDrugRequestDTO {
     private String clinicalDescription;
     private Integer approvalStatus;
     private boolean isActive;
+
 }
