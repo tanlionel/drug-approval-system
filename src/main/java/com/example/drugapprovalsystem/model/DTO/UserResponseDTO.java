@@ -21,4 +21,5 @@ public class UserResponseDTO {
     private Integer gender;
     private String roleName;
     private String isActive;
+    private String avatar;
 }

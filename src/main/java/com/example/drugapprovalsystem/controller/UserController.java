@@ -33,6 +33,7 @@ public class UserController {
                         .username(user.getUsername())
                         .fullname(user.getFullname())
                         .isActive(user.getIsActive())
+                        .avatar(user.getAvatar())
                         .build());
     }
     @GetMapping("users")
@@ -59,6 +60,7 @@ public class UserController {
                 .username(user.getUsername())
                 .fullname(user.getFullname())
                 .isActive(user.getIsActive())
+                .avatar(user.getAvatar())
                 .build());
     }
     @PostMapping("/deactivate-user")
@@ -73,6 +75,7 @@ public class UserController {
                 .username(user.getUsername())
                 .fullname(user.getFullname())
                 .isActive(user.getIsActive())
+                .avatar(user.getAvatar())
                 .build());
     }
     @PutMapping("/user")
@@ -87,6 +90,7 @@ public class UserController {
                 .username(user.getUsername())
                 .fullname(user.getFullname())
                 .isActive(user.getIsActive())
+                .avatar(user.getAvatar())
                 .build());
     }
 }

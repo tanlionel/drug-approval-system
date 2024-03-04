@@ -17,4 +17,5 @@ public interface UserService {
     User deactivateUser(String email) throws UserDoesNotExistException, UserAlreadyDeactivateException;
     User updateUser(UpdateUserRequestDTO updateUserRequestDTO,String email) throws UserDoesNotExistException;
     User getLoginUser();
+    UserResponseDTO uploadAvatar(String userEmail, String userImage) throws UserDoesNotExistException;
 }
