@@ -4,10 +4,12 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @Entity
-@Table(name = "orders")
+@Table(name = "profiles")
 public class ProfileProduct {
     @Id
     @Column(name = "id", nullable = false)
@@ -23,5 +25,9 @@ public class ProfileProduct {
 
     @Column(name = "status")
     private Integer status;
+
+    @Column(name = "created_on")
+    private LocalDateTime createdOn;
+
 
 }

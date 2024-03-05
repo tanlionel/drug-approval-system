@@ -4,10 +4,12 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @Entity
-@Table(name = "order_detail")
+@Table(name = "profiles_detail")
 public class ProfileProductDetail {
     @Id
     @Column(name = "id", nullable = false)
@@ -15,7 +17,7 @@ public class ProfileProductDetail {
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_id")
+    @JoinColumn(name = "profiles_id")
     private ProfileProduct profileProduct;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -24,4 +26,7 @@ public class ProfileProductDetail {
 
     @Column(name = "status")
     private Integer status;
+
+    @Column(name = "created_on")
+    private LocalDateTime createdOn;
 }
