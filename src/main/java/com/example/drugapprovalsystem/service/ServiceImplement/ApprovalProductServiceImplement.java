@@ -53,7 +53,7 @@ public class ApprovalProductServiceImplement implements ApprovalProductService {
     public Page<ApprovalProductResponseDTO> getPageableApprovalProductByFDA(int pageNo, int pageSize, String sortField, String sortOrder, String search) {
         Pageable pageable = pageableService.getPageableWithSort(pageNo, pageSize, sortField, sortOrder);
 
-        Page<ApprovalProduct> page = approvalProductRepository.findAllByNameContainingAndProductAdministrationId(pageable, search, ProductAdministrationEnum.FDA.ordinal());
+        Page<ApprovalProduct> page = approvalProductRepository.findAllByNameContainingAndProductAdministrationId(pageable, search, 1);
 
         return page.map(ProductMapper::mapToApprovalProductResponseDTO);
     }
@@ -62,7 +62,7 @@ public class ApprovalProductServiceImplement implements ApprovalProductService {
     public Page<ApprovalProductResponseDTO> getPageableApprovalProductByANSM(int pageNo, int pageSize, String sortField, String sortOrder, String search) {
         Pageable pageable = pageableService.getPageableWithSort(pageNo, pageSize, sortField, sortOrder);
 
-        Page<ApprovalProduct> page = approvalProductRepository.findAllByNameContainingAndProductAdministrationId(pageable, search, ProductAdministrationEnum.ANSM.ordinal());
+        Page<ApprovalProduct> page = approvalProductRepository.findAllByNameContainingAndProductAdministrationId(pageable, search, 2);
 
         return page.map(ProductMapper::mapToApprovalProductResponseDTO);
     }
@@ -71,7 +71,7 @@ public class ApprovalProductServiceImplement implements ApprovalProductService {
     public Page<ApprovalProductResponseDTO> getPageableApprovalProductByDAV(int pageNo, int pageSize, String sortField, String sortOrder, String search) {
         Pageable pageable = pageableService.getPageableWithSort(pageNo, pageSize, sortField, sortOrder);
 
-        Page<ApprovalProduct> page = approvalProductRepository.findAllByNameContainingAndProductAdministrationId(pageable, search, ProductAdministrationEnum.DAV.ordinal());
+        Page<ApprovalProduct> page = approvalProductRepository.findAllByNameContainingAndProductAdministrationId(pageable, search,3);
 
         return page.map(ProductMapper::mapToApprovalProductResponseDTO);
     }
