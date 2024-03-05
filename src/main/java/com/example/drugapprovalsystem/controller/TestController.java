@@ -1,8 +1,6 @@
 package com.example.drugapprovalsystem.controller;
 
-import com.example.drugapprovalsystem.common.Common;
-import com.example.drugapprovalsystem.model.DTO.DrugRequestDTO;
-import com.example.drugapprovalsystem.model.DTO.product_request_dto.ApprovalProductDetailDTO;
+import com.example.drugapprovalsystem.model.DTO.product_request_dto.ApprovalProductRequestDTO;
 import com.example.drugapprovalsystem.model.DTO.product_request_dto.ProductRequestDTO;
 import com.example.drugapprovalsystem.service.ServiceInterface.*;
 import org.springframework.beans.factory.annotation.Autowired;

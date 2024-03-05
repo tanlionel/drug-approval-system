@@ -2,6 +2,7 @@ package com.example.drugapprovalsystem.model.DTO.product_response_dto;
 
 import com.example.drugapprovalsystem.model.DTO.*;
 import lombok.*;
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ProductDetailResponseDTO {
+public class ApprovalProductDetailResponseDTO {
     private Integer id;
     private String labeller;
     private String name;
@@ -25,6 +26,5 @@ public class ProductDetailResponseDTO {
     private ProductAllergyDetailDTO productAllergyDetail;
     private ContraindicationDTO contraindication;
     private String image;
-    private boolean isApprovedByFDA;
-    private boolean isApprovedByANSM;
+    private ProductAdministrationDTO productAdministrationDTO;
 }

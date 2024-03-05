@@ -1,9 +1,6 @@
 package com.example.drugapprovalsystem.model.DTO.product_request_dto;
 
-import com.example.drugapprovalsystem.model.DTO.ContraindicationDTO;
-import com.example.drugapprovalsystem.model.DTO.DrugIngredientsDTO;
-import com.example.drugapprovalsystem.model.DTO.PharmacogenomicDTO;
-import com.example.drugapprovalsystem.model.DTO.ProductAllergyDetailDTO;
+import com.example.drugapprovalsystem.model.DTO.*;
 import lombok.*;
 
 import java.util.List;
@@ -14,7 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ProductRequestDTO {
+public class ApprovalProductRequestDTO {
     private String labeller;
     private String name;
     private String route;
@@ -26,6 +23,5 @@ public class ProductRequestDTO {
     private PharmacogenomicDTO pharmacogenomic;
     private ProductAllergyDetailDTO productAllergyDetail;
     private ContraindicationDTO contraindication;
-    private boolean isApprovedByFDA;
-    private boolean isApprovedByANSM;
+    private Integer administrationId;
 }
