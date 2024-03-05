@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Table(name = "profiles_detail")
-public class ProfileProductDetail {
+public class ProfileDetail {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,14 +18,14 @@ public class ProfileProductDetail {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "profiles_id")
-    private ProfileProduct profileProduct;
+    private Profile profile;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
     @Column(name = "status")
-    private Integer status;
+    private String status;
 
     @Column(name = "created_on")
     private LocalDateTime createdOn;

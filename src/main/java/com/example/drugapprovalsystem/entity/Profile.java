@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Table(name = "profiles")
-public class ProfileProduct {
+public class Profile {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,11 +23,19 @@ public class ProfileProduct {
     @JoinColumn(name = "created_by")
     private User createdBy;
 
-    @Column(name = "status")
-    private Integer status;
-
     @Column(name = "created_on")
     private LocalDateTime createdOn;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @Column(name = "updated_by")
+    private User updatedBy;
 
+    @Column(name = "updated_on")
+    private LocalDateTime updatedOn;
+
+    @Column(name = "status")
+    private String status;
+
+    @Column(name = "is_active")
+    private Boolean isActive;
 }
