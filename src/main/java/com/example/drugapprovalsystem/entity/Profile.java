@@ -27,7 +27,7 @@ public class Profile {
     private LocalDateTime createdOn;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @Column(name = "updated_by")
+    @JoinColumn(name = "user", referencedColumnName = "id")
     private User updatedBy;
 
     @Column(name = "updated_on")
