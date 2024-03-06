@@ -10,5 +10,5 @@ public interface ProfileProductService {
 
     public Profile createProfile(ProfileRequestStepOneDTO profileRequestStepOneDTO) throws Exception;
 
-    public ProfileDetail createProfileDetail(ProfileRequestStepTwoDTO profileRequestStepTwoDTO) throws Exception;
+    public void createProfileDetail(ProfileRequestStepTwoDTO profileRequestStepTwoDTO) throws Exception;
 }

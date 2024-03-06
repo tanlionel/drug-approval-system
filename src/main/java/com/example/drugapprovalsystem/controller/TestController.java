@@ -54,8 +54,7 @@ public class TestController {
     }
 
     @PostMapping("/test/profile-product-detail/create")
-    public ResponseEntity<?> createProfileDetail(@RequestBody ProfileRequestStepTwoDTO profileRequestStepTwoDTO) throws Exception {
-        return ResponseEntity
-                .ok(profileProductService.createProfileDetail(profileRequestStepTwoDTO));
+    public void createProfileDetail(@RequestBody ProfileRequestStepTwoDTO profileRequestStepTwoDTO) throws Exception {
+        profileProductService.createProfileDetail(profileRequestStepTwoDTO);
     }
 }
