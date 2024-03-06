@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class ProfileRequestStepTwoDTO {
-    private Integer profileId;
+    private int profileId;
     private List<ProductRequestDTO> productList;
     private String status;
 }
