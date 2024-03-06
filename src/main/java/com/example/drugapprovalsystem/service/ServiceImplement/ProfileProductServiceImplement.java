@@ -34,6 +34,7 @@ public class ProfileProductServiceImplement implements ProfileProductService {
     ProfileDetailRepository profileDetailRepository;
     @Autowired
     ProductRepository productRepository;
+
     @Autowired
     ProductService productService;
     @Autowired
@@ -58,18 +59,14 @@ public class ProfileProductServiceImplement implements ProfileProductService {
         List<Product> list = productRequestDTOList.stream().map(ProductMapper::mapToProduct).toList();
         List<Product> productAfterSave = productRepository.saveAll(list);
 
-//        for (ProductRequestDTO productRequestDTO : profileRequestStepTwoDTO.getProductList()) {
-//            ProductDetailResponseDTO productResponseDTO = productService.createProduct(productRequestDTO);
-//
-//            ProfileDetail profileDetail = ProfileDetail.builder().createdOn(LocalDateTime.now())
-//                    .product(Product.builder().id(productResponseDTO.getId()).build())
-//                    .profile(Profile.builder().id(profileId).build())
-//                    .status(profileRequestStepTwoDTO.getStatus())
-//                    .build();
-//
-//            profileDetailRepository.save(profileDetail);
-//        }
-    }
+        List<ProfileDetail> profileDetailList = productAfterSave.stream().map(product -> ProfileDetail.builder()
+                .product(product)
+                .profile(Profile.builder().id(profileId).build())
+                .createdOn(LocalDateTime.now())
+                .build())
+                .toList();
 
+        List<ProfileDetail> profileDetailListSave = profileDetailRepository.saveAll(profileDetailList);
+    }
 
 }
