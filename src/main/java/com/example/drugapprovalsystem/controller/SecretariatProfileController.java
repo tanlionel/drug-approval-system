@@ -1,6 +1,7 @@
 package com.example.drugapprovalsystem.controller;
 
 import com.example.drugapprovalsystem.model.DTO.profile_request_dto.ProfileRequestStepOneDTO;
+import com.example.drugapprovalsystem.model.DTO.profile_request_dto.ProfileRequestStepTwoDTO;
 import com.example.drugapprovalsystem.service.ServiceInterface.ProfileProductService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,10 @@ public class SecretariatProfileController {
     public ResponseEntity<?> createProfile(@RequestBody ProfileRequestStepOneDTO profileRequestStepOneDTO) throws Exception {
         return ResponseEntity
                 .ok(profileProductService.createProfile(profileRequestStepOneDTO));
+    }
+    @PostMapping("/profile-product/create-step-two")
+    public void createProfileDetail(@RequestBody ProfileRequestStepTwoDTO profileRequestStepTwoDTO) throws Exception {
+        profileProductService.createProfileDetail(profileRequestStepTwoDTO);
     }
 
     @PutMapping("/profile-product/update-step-one")
