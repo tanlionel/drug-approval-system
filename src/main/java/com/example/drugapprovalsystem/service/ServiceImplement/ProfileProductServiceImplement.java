@@ -1,5 +1,6 @@
 package com.example.drugapprovalsystem.service.ServiceImplement;
 
+import com.amazonaws.services.simpleworkflow.flow.core.TryCatch;
 import com.example.drugapprovalsystem.entity.Product;
 import com.example.drugapprovalsystem.entity.Profile;
 import com.example.drugapprovalsystem.entity.ProfileDetail;
@@ -56,17 +57,25 @@ public class ProfileProductServiceImplement implements ProfileProductService {
         Integer profileId = profileRequestStepTwoDTO.getProfileId();
         List<ProductRequestDTO> productRequestDTOList = profileRequestStepTwoDTO.getProductList();
 
-        List<Product> list = productRequestDTOList.stream().map(ProductMapper::mapToProduct).toList();
-        List<Product> productAfterSave = productRepository.saveAll(list);
 
-        List<ProfileDetail> profileDetailList = productAfterSave.stream().map(product -> ProfileDetail.builder()
-                .product(product)
+        List<ProductDetailResponseDTO> productDetailResponseDTOList = productRequestDTOList.stream().map(p -> {
+            try {
+                return productService.createProduct(p);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }).toList();
+
+        List<ProfileDetail> profileDetailList = productDetailResponseDTOList.stream().map(p -> ProfileDetail.builder()
                 .profile(Profile.builder().id(profileId).build())
+                .product(Product.builder().id(p.getId()).build())
+                .status(profileRequestStepTwoDTO.getStatus())
                 .createdOn(LocalDateTime.now())
-                .build())
-                .toList();
+                .build()
+        ).toList();
 
-        List<ProfileDetail> profileDetailListSave = profileDetailRepository.saveAll(profileDetailList);
+        profileDetailRepository.saveAll(profileDetailList);
+
     }
 
 }
