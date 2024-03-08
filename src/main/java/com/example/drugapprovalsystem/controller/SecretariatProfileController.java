@@ -17,8 +17,15 @@ public class SecretariatProfileController {
     @Autowired
     ProfileProductService profileProductService;
 
+    @GetMapping("/profile-product")
+    public ResponseEntity<?> getProfilesPageable(@RequestParam(value = "pageNo", defaultValue = "0") int pageNo,
+                                                 @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+                                                 @RequestParam(value = "search", defaultValue = "") String search) {
 
-    @PostMapping("/profileproduct/create")
+        return ResponseEntity
+                .ok(profileProductService.getAllProfilesPageable(pageNo, pageSize, search));
+    }
+    @PostMapping("/profile-product/create-step-one")
     public ResponseEntity<?> createProfile(@RequestBody ProfileRequestStepOneDTO profileRequestStepOneDTO) throws Exception {
         return ResponseEntity
                 .ok(profileProductService.createProfile(profileRequestStepOneDTO));

@@ -8,5 +8,4 @@ public interface PageableService {
     public Pageable getPageableWithSort(int pageNo, int pageSize, String sortField, String sortBy);
 
     public Pageable getPageable(int pageNo, int pageSize);
-
 }

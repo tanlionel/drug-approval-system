@@ -9,21 +9,26 @@ import com.example.drugapprovalsystem.model.DTO.product_response_dto.ProductDeta
 import com.example.drugapprovalsystem.model.DTO.product_response_dto.ProductResponseDTO;
 import com.example.drugapprovalsystem.model.DTO.profile_request_dto.ProfileRequestStepOneDTO;
 import com.example.drugapprovalsystem.model.DTO.profile_request_dto.ProfileRequestStepTwoDTO;
+import com.example.drugapprovalsystem.model.DTO.profile_response_dto.ProfileResponseDTO;
 import com.example.drugapprovalsystem.model.Mapper.ProductMapper;
 import com.example.drugapprovalsystem.model.Mapper.ProfileMapper;
 import com.example.drugapprovalsystem.repository.ProductRepository;
 import com.example.drugapprovalsystem.repository.ProfileDetailRepository;
 import com.example.drugapprovalsystem.repository.ProfileProductRepository;
+import com.example.drugapprovalsystem.service.ServiceInterface.PageableService;
 import com.example.drugapprovalsystem.service.ServiceInterface.ProductService;
 import com.example.drugapprovalsystem.service.ServiceInterface.ProfileProductService;
 import com.example.drugapprovalsystem.service.ServiceInterface.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 @RequiredArgsConstructor
 @Service
@@ -35,11 +40,12 @@ public class ProfileProductServiceImplement implements ProfileProductService {
     ProfileDetailRepository profileDetailRepository;
     @Autowired
     ProductRepository productRepository;
-
     @Autowired
     ProductService productService;
     @Autowired
     UserService userService;
+    @Autowired
+    PageableService pageableService;
 
     @Override
     public Profile createProfile(ProfileRequestStepOneDTO profileRequestStepOneDTO) throws Exception {
@@ -76,6 +82,25 @@ public class ProfileProductServiceImplement implements ProfileProductService {
 
         profileDetailRepository.saveAll(profileDetailList);
 
+    }
+
+    @Override
+    public List<ProfileResponseDTO> getAllProfilesPageable(int pageIndex, int pageSize, String searchKeyword) {
+        Pageable pageable = pageableService.getPageable(pageIndex, pageSize);
+
+        List<ProfileResponseDTO> profileResponseDTOList =
+                profileProductRepository.findAllByTitleContaining(pageable, searchKeyword)
+                        .stream().map(p -> ProfileResponseDTO.builder()
+                                        .title(p.getTitle())
+                                        .profileId(p.getId())
+                                        .createdBy((p.getCreatedBy() != null) ? p.getCreatedBy().getUsername() : null)
+                                        .updatedBy((p.getUpdatedBy() == null) ? null : p.getUpdatedBy().getUsername())
+                                        .updatedOn(p.getUpdatedOn())
+                                        .createdOn(p.getCreatedOn())
+                                        .status(p.getStatus()).build()
+                                ).toList();
+
+        return profileResponseDTOList;
     }
 
 }
