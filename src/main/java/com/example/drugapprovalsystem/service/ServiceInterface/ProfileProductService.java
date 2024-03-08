@@ -16,4 +16,6 @@ public interface ProfileProductService {
     public void createProfileDetail(ProfileRequestStepTwoDTO profileRequestStepTwoDTO) throws Exception;
 
     public List<ProfileResponseDTO> getAllProfilesPageable(int pageIndex, int pageSize, String searchKeyword);
+
+    public Profile updateProfileDetail(int profileId, ProfileRequestStepOneDTO profileRequestStepOneDTO) throws Exception;
 }

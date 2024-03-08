@@ -35,5 +35,13 @@ public class AdminProfileController {
                .ok(profileProductService.createProfile(profileRequestStepOneDTO));
     }
 
+    @PutMapping("/profile-product/update-step-one")
+    public ResponseEntity<?> updateProfileStepOne(@RequestParam int profileId,
+                                                  @RequestBody ProfileRequestStepOneDTO profileRequestStepOneDTO) throws Exception{
 
+        return ResponseEntity.ok(
+                profileProductService.updateProfileDetail(profileId, profileRequestStepOneDTO)
+        );
+
+    }
 }
