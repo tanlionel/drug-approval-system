@@ -22,10 +22,10 @@ public class Profile {
     private String title;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "created_by")
+    @JoinColumn(name = "created_by", updatable = false)
     private User createdBy;
 
-    @Column(name = "created_on")
+    @Column(name = "created_on", updatable = false)
     private LocalDateTime createdOn;
 
     @ManyToOne(fetch = FetchType.LAZY)

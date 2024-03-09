@@ -20,6 +20,7 @@ public class Message {
     public static final String msgUserAlreadyActive = "User already active!";
     public static final String msgUserAlreadyDeactivate = "User already deactivate!";
     public static final String msgProductDoesNotExist = "Product does not exist!";
+    public static final String msgProfileDoesNotExist = "Profile does not exist!";
     public static final String msgDrugDoesNotExist = "Drug does not exist!";
     public static final String msgInvalidAction = "Invalid action!";
 }

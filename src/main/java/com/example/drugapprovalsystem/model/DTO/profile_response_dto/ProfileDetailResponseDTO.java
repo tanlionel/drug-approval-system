@@ -11,9 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class ProfileDetailResponseDTO {
-
     private ProfileResponseDTO profileInformation;
 
     List<ProfileProductDTO> profileDetailList;
-
 }

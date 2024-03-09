@@ -5,6 +5,7 @@ import com.example.drugapprovalsystem.entity.Profile;
 import com.example.drugapprovalsystem.model.DTO.DrugRequestDTO;
 import com.example.drugapprovalsystem.model.DTO.profile_request_dto.ProfileRequestStepOneDTO;
 import com.example.drugapprovalsystem.model.DTO.profile_request_dto.ProfileRequestStepTwoDTO;
+import com.example.drugapprovalsystem.model.DTO.profile_request_dto.ProfileRequestStepTwoUpdateDTO;
 import com.example.drugapprovalsystem.repository.ProfileProductRepository;
 import com.example.drugapprovalsystem.service.ServiceInterface.ProfileProductService;
 import lombok.AllArgsConstructor;
@@ -30,6 +31,13 @@ public class AdminProfileController {
                 .ok(profileProductService.getAllProfilesPageable(pageNo, pageSize, search));
     }
 
+    @GetMapping("/profile-product-details")
+    public ResponseEntity<?> getProfileDetails(@RequestParam("id") int id) throws Exception {
+
+        return ResponseEntity
+                .ok(profileProductService.getProfileDetails(id));
+    }
+
     @PostMapping("/profile-product/create-step-one")
     public ResponseEntity<?> createProfile(@RequestBody ProfileRequestStepOneDTO profileRequestStepOneDTO) throws Exception {
        return ResponseEntity
@@ -49,5 +57,12 @@ public class AdminProfileController {
     @PostMapping("/profile-product/create-step-two")
     public void createProfileDetail(@RequestBody ProfileRequestStepTwoDTO profileRequestStepTwoDTO) throws Exception {
         profileProductService.createProfileDetail(profileRequestStepTwoDTO);
+    }
+
+    @PutMapping("/profile-product/update-step-two")
+    public void updateProfileStepTwo(@RequestBody ProfileRequestStepTwoUpdateDTO profileRequestStepTwoUpdateDTO) throws Exception{
+
+        profileProductService.updateProfileDetail(profileRequestStepTwoUpdateDTO);
+
     }
 }

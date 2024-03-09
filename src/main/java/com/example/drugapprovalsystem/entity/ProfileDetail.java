@@ -29,6 +29,9 @@ public class ProfileDetail {
     @Column(name = "status")
     private String status;
 
-    @Column(name = "created_on")
+    @Column(name = "created_on", updatable = false)
     private LocalDateTime createdOn;
+
+    @Column(name = "is_active")
+    private boolean isActive;
 }

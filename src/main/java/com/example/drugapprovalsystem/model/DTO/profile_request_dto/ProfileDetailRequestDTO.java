@@ -2,9 +2,6 @@ package com.example.drugapprovalsystem.model.DTO.profile_request_dto;
 
 import com.example.drugapprovalsystem.model.DTO.product_request_dto.ProductRequestDTO;
 import lombok.*;
-import org.springframework.data.util.Pair;
-
-import java.util.List;
 
 @Data
 @Getter
@@ -12,8 +9,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ProfileRequestStepTwoUpdateDTO {
-    private int profileId;
-    private List<ProfileDetailRequestDTO> productDetailList;
+public class ProfileDetailRequestDTO {
+    private int profileDetailId;
+    private int productId;
+    private ProductRequestDTO product;
     private String status;
 }
