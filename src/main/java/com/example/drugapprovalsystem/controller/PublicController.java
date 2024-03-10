@@ -24,7 +24,7 @@ public class PublicController {
     CountryService countryService;
 
     //get all approval product api
-    @GetMapping("/approval-product-management/approval-products")
+    @GetMapping("/approval-products")
     public ResponseEntity<?> getApprovalProductWithPageable(@RequestParam(value = "pageNo", defaultValue = "0") int pageNo,
                                                             @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
                                                             @RequestParam(value = "sortField", defaultValue = "id") String sortField,
@@ -35,7 +35,7 @@ public class PublicController {
                 .ok(approvalProductService.getPageableApprovalProduct(pageNo, pageSize, sortField, sortOrder, search));
     }
 
-    @GetMapping("/approval-product-management/approval-product-detail")
+    @GetMapping("/approval-product-detail")
     public ResponseEntity<?> getApprovalProductById(@RequestParam Integer id) throws Exception {
         return ResponseEntity
                 .ok(approvalProductService.getApprovalProductDetail(id));

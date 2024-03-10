@@ -58,7 +58,6 @@ public class SecretariatProfileController {
     public void updateProfileStepTwo(@RequestBody ProfileRequestStepTwoUpdateDTO profileRequestStepTwoUpdateDTO) throws Exception{
 
         profileProductService.updateProfileDetail(profileRequestStepTwoUpdateDTO);
-
     }
 
 }

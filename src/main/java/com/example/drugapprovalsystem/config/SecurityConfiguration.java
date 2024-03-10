@@ -35,6 +35,8 @@ public class SecurityConfiguration {
                                 .permitAll()
                                 .requestMatchers("/api/test/**")
                                 .permitAll()
+                                .requestMatchers("/public/**")
+                                .permitAll()
                                 .anyRequest()
                                 .authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

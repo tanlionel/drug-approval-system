@@ -84,6 +84,7 @@ public class ProfileProductServiceImplement implements ProfileProductService {
                 .product(Product.builder().id(p.getId()).build())
                 .status(profileRequestStepTwoDTO.getStatus())
                 .createdOn(LocalDateTime.now())
+                .isActive(Common.IS_ACTIVE)
                 .build()
         ).toList();
 
@@ -205,7 +206,6 @@ public class ProfileProductServiceImplement implements ProfileProductService {
         ).toList();
 
         profileDetailRepository.saveAll(profileDetailList);
-
     }
 
 }
