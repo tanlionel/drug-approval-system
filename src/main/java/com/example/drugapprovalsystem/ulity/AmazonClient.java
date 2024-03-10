@@ -24,9 +24,9 @@ public class AmazonClient {
 
     private  String endpointUrl = "https://s3.ap-northeast-1.amazonaws.com";
 
-    private  String bucketName ="nguyentan-bucket";
-    private String accessKey="AKIA5P4XWIJG7BJC74QK";
-    private String secretKey="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";
+    private  String bucketName ="nguyentan";
+    private String accessKey="AKIA5NNFKZNMU32LSMY3";
+    private String secretKey="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";
 
     @PostConstruct
     private void initializeAmazon() {
