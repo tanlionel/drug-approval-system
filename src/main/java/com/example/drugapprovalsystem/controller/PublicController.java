@@ -24,6 +24,38 @@ public class PublicController {
     CountryService countryService;
 
     //get all approval product api
+    @GetMapping("/approval-products-FDA")
+    public ResponseEntity<?> getApprovalProductWithPageableByFDA(@RequestParam(value = "pageNo", defaultValue = "0") int pageNo,
+                                                                 @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+                                                                 @RequestParam(value = "sortField", defaultValue = "id") String sortField,
+                                                                 @RequestParam(value = "sortOrder", defaultValue = Common.SORT_ASC) String sortOrder,
+                                                                 @RequestParam(value = "search", defaultValue = "") String search) {
+
+        return ResponseEntity
+                .ok(approvalProductService.getPageableApprovalProductByFDA(pageNo, pageSize, sortField, sortOrder, search));
+    }
+    @GetMapping("/approval-products-ANSM")
+    public ResponseEntity<?> getApprovalProductWithPageableByANSM(@RequestParam(value = "pageNo", defaultValue = "0") int pageNo,
+                                                                  @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+                                                                  @RequestParam(value = "sortField", defaultValue = "id") String sortField,
+                                                                  @RequestParam(value = "sortOrder", defaultValue = Common.SORT_ASC) String sortOrder,
+                                                                  @RequestParam(value = "search", defaultValue = "") String search) {
+
+        return ResponseEntity
+                .ok(approvalProductService.getPageableApprovalProductByANSM(pageNo, pageSize, sortField, sortOrder, search));
+    }
+
+    @GetMapping("/approval-products-DAV")
+    public ResponseEntity<?> getApprovalProductWithPageableByDAV(@RequestParam(value = "pageNo", defaultValue = "0") int pageNo,
+                                                                 @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+                                                                 @RequestParam(value = "sortField", defaultValue = "id") String sortField,
+                                                                 @RequestParam(value = "sortOrder", defaultValue = Common.SORT_ASC) String sortOrder,
+                                                                 @RequestParam(value = "search", defaultValue = "") String search) {
+
+        return ResponseEntity
+                .ok(approvalProductService.getPageableApprovalProductByDAV(pageNo, pageSize, sortField, sortOrder, search));
+    }
+
     @GetMapping("/approval-products")
     public ResponseEntity<?> getApprovalProductWithPageable(@RequestParam(value = "pageNo", defaultValue = "0") int pageNo,
                                                             @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
