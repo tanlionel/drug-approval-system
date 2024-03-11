@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Notification of New Information</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .header {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        .content {
+            padding: 20px;
+        }
+        .footer {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div th:fragment="header" class="header">
+    <h1>Notification: New Information Added</h1>
+</div>
+
+<div th:fragment="content" class="content" th:utext="${content}">
+    <p>Additional message: <span th:text="${tesText}">Default message if additionalMessage is not provided</span></p>
+
+    <p>System notification to admin, please log in to the pharmacy system to view prescription management.</p>
+</div>
+<img th:src="${image}" alt="System Notification Image" style="max-width: 100%;">
+<p>Additional message: <span th:text="${tesText}">Default message if additionalMessage is not provided</span></p>
+
+<div th:fragment="footer" class="footer">
+    <p>Thank you for using our system.</p>
+    <p>Please check the new information and perform any necessary actions.</p>
+</div>
+
+</body>
+</html>
