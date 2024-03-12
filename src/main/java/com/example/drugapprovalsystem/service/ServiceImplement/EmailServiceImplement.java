@@ -39,7 +39,7 @@ public class EmailServiceImplement implements EmailService {
             mimeMessageHelper.setFrom(fromEmail);
             mimeMessageHelper.setTo(to);
 
-            String subject = "test";
+            String subject = "NOTIFICATION FROM DRUG APPROVAL SYSTEM!";
             mimeMessageHelper.setSubject(subject);
             mimeMessageHelper.setText(thymeleafService.createContent("email-template.html",variables),true);
 
