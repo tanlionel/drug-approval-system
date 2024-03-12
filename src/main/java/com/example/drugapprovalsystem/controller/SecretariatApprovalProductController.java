@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 public class SecretariatApprovalProductController {
     @Autowired
     ApprovalProductService approvalProductService;
-    @GetMapping("/approval-product")
+    @GetMapping("/approval-products")
     public ResponseEntity<?> getApprovalProductWithPageable(@RequestParam(value = "pageNo", defaultValue = "0") int pageNo,
                                                             @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
                                                             @RequestParam(value = "sortField", defaultValue = "id") String sortField,
@@ -25,7 +25,7 @@ public class SecretariatApprovalProductController {
                 .ok(approvalProductService.getPageableApprovalProduct(pageNo, pageSize, sortField, sortOrder, search));
     }
 
-    @GetMapping("/approval-products-FDA/")
+    @GetMapping("/approval-products/FDA")
     public ResponseEntity<?> getApprovalProductWithPageableByFDA(@RequestParam(value = "pageNo", defaultValue = "0") int pageNo,
                                                                  @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
                                                                  @RequestParam(value = "sortField", defaultValue = "id") String sortField,
@@ -35,7 +35,7 @@ public class SecretariatApprovalProductController {
         return ResponseEntity
                 .ok(approvalProductService.getPageableApprovalProductByFDA(pageNo, pageSize, sortField, sortOrder, search));
     }
-    @GetMapping("/approval-products-ANSM/")
+    @GetMapping("/approval-products/ANSM")
     public ResponseEntity<?> getApprovalProductWithPageableByANSM(@RequestParam(value = "pageNo", defaultValue = "0") int pageNo,
                                                                   @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
                                                                   @RequestParam(value = "sortField", defaultValue = "id") String sortField,
@@ -46,7 +46,7 @@ public class SecretariatApprovalProductController {
                 .ok(approvalProductService.getPageableApprovalProductByANSM(pageNo, pageSize, sortField, sortOrder, search));
     }
 
-    @GetMapping("/approval-products-DAV/")
+    @GetMapping("/approval-products/DAV")
     public ResponseEntity<?> getApprovalProductWithPageableByDAV(@RequestParam(value = "pageNo", defaultValue = "0") int pageNo,
                                                                  @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
                                                                  @RequestParam(value = "sortField", defaultValue = "id") String sortField,
@@ -57,7 +57,7 @@ public class SecretariatApprovalProductController {
                 .ok(approvalProductService.getPageableApprovalProductByDAV(pageNo, pageSize, sortField, sortOrder, search));
     }
 
-    @GetMapping("/approval-product-detail")
+    @GetMapping("/approval-products-detail")
     public ResponseEntity<?> getApprovalProductById(@RequestParam Integer id) throws Exception {
         return ResponseEntity.ok(approvalProductService.getApprovalProductDetail(id));
     }

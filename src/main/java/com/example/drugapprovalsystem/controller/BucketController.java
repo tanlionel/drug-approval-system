@@ -38,7 +38,7 @@ public class BucketController {
         UserResponseDTO user = userService.uploadAvatar(email,this.amazonClient.uploadFile(file));
         return ResponseEntity.ok(user);
     }
-    @PostMapping("/approval-product")
+    @PostMapping("/approval-products")
     public ResponseEntity<?> uploadApprovalProductAvatar(@RequestPart(value = "file") MultipartFile file, @RequestParam Integer ApprovalProductID) throws ProductDoesNotExistException {
         ApprovalProductResponseDTO approvalProductResponseDTO = approvalProductService.uploadImage(ApprovalProductID,this.amazonClient.uploadFile(file));
         return ResponseEntity.ok(approvalProductResponseDTO);
