@@ -19,11 +19,15 @@ import java.time.LocalDateTime;
 public class ProfileResponseDTO {
     private int profileId;
     private String title;
+
     @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd HH:mm:ss.SSS")
     private String createdBy;
+
     @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd HH:mm:ss.SSS")
     private LocalDateTime createdOn;
+
     private String updatedBy;
+
     @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd HH:mm:ss.SSS")
     private LocalDateTime updatedOn;
     private String status;
