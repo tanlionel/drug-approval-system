@@ -134,15 +134,13 @@
     </div>
 </div>
 
-<div th:fragment="content" class="content" th:utext="${content}">
-    <p>Additional message: <span th:text="${tesText}">Default message if additionalMessage is not provided</span></p>
-
-    <p>System notification to admin, please log in to the pharmacy system to view prescription management.</p>
+<div class="content">
+    <H2>System notification to admin, please log in to the pharmacy system to view prescription management.</H2>
 </div>
 
 <div class="content">
     <img th:src="${image}" alt="System Notification Image" style="max-width: 100%;">
-    <p>Additional message: <span th:text="${tesText}">Default message if additionalMessage is not provided</span></p>
+    <H3>Additional message: <span th:text="${tesText}">Default message if additionalMessage is not provided</span></H3>
 </div>
 
 <div class="footer">
