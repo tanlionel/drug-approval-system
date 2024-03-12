@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.*;
 public class AdminProductController {
     @Autowired
     ProductService productService;
-    @PostMapping("/product/create")
+    @PostMapping("/products")
     public ResponseEntity<?> createProduct(@RequestBody ProductRequestDTO productRequestDTO) throws Exception {
         return ResponseEntity.ok(productService.createProduct(productRequestDTO));
     }
 
-    @GetMapping("/product-detail")
+    @GetMapping("/products")
     public ResponseEntity<?> getProductById(@RequestParam Integer id) throws  Exception {
         return ResponseEntity
                 .ok(productService.getProductDetail(id));

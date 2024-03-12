@@ -22,7 +22,7 @@ public class AdminProfileController {
     @Autowired
     ProfileProductService profileProductService;
 
-    @GetMapping("/profile-product")
+    @GetMapping("/profile-products")
     public ResponseEntity<?> getProfilesPageable(@RequestParam(value = "pageNo", defaultValue = "0") int pageNo,
                                                  @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
                                                  @RequestParam(value = "search", defaultValue = "") String search) {
@@ -31,20 +31,20 @@ public class AdminProfileController {
                 .ok(profileProductService.getAllProfilesPageable(pageNo, pageSize, search));
     }
 
-    @GetMapping("/profile-product-details")
+    @GetMapping("/profile-products-details")
     public ResponseEntity<?> getProfileDetails(@RequestParam("id") int id) throws Exception {
 
         return ResponseEntity
                 .ok(profileProductService.getProfileDetails(id));
     }
 
-    @PostMapping("/profile-product/create-step-one")
+    @PostMapping("/profile-products/step-one")
     public ResponseEntity<?> createProfile(@RequestBody ProfileRequestStepOneDTO profileRequestStepOneDTO) throws Exception {
        return ResponseEntity
                .ok(profileProductService.createProfile(profileRequestStepOneDTO));
     }
 
-    @PutMapping("/profile-product/update-step-one")
+    @PutMapping("/profile-products/step-one")
     public ResponseEntity<?> updateProfileStepOne(@RequestParam int profileId,
                                                   @RequestBody ProfileRequestStepOneDTO profileRequestStepOneDTO) throws Exception{
 
@@ -54,12 +54,12 @@ public class AdminProfileController {
 
     }
 
-    @PostMapping("/profile-product/create-step-two")
+    @PostMapping("/profile-products/step-two")
     public void createProfileDetail(@RequestBody ProfileRequestStepTwoDTO profileRequestStepTwoDTO) throws Exception {
         profileProductService.createProfileDetail(profileRequestStepTwoDTO);
     }
 
-    @PutMapping("/profile-product/update-step-two")
+    @PutMapping("/profile-products/step-two")
     public void updateProfileStepTwo(@RequestBody ProfileRequestStepTwoUpdateDTO profileRequestStepTwoUpdateDTO) throws Exception{
 
         profileProductService.updateProfileDetail(profileRequestStepTwoUpdateDTO);

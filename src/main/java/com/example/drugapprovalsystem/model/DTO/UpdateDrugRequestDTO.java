@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateDrugRequestDTO {
-
     private String type;
     private String name;
     private String state;

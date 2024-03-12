@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 @Table(name = "profiles")
 public class Profile {
     @Id
@@ -21,14 +22,14 @@ public class Profile {
     @Column(name = "title")
     private String title;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "created_by", updatable = false)
     private User createdBy;
 
     @Column(name = "created_on", updatable = false)
     private LocalDateTime createdOn;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "user", referencedColumnName = "id")
     private User updatedBy;
 

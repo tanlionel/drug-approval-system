@@ -15,13 +15,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/admin/user-management")
+@RequestMapping("/admin")
 @AllArgsConstructor
 @CrossOrigin("*")
 public class UserController {
     private final UserService userService;
 
-    @GetMapping("/find-by-email")
+    @GetMapping("/users/email")
     public ResponseEntity<?> getUserByEmail(@RequestParam String email) throws UserDoesNotExistException, InvalidateException {
         User user = userService.getUserByEmail(email);
         return ResponseEntity.ok(UserResponseDTO.builder()
@@ -36,7 +36,7 @@ public class UserController {
                         .avatar(user.getAvatar())
                         .build());
     }
-    @GetMapping("users")
+    @GetMapping("/users")
     public ResponseEntity<?> getUsersPageable(@RequestParam(required = false,defaultValue = "0") Integer pageNo,
                                               @RequestParam(required = false,defaultValue = "10") Integer pageSize,
                                               @RequestParam(required = false,defaultValue = "id") String sortField,
@@ -48,7 +48,7 @@ public class UserController {
         return ResponseEntity.ok(userService.getUserPageable(pageNo,pageSize,sortField,sortOrder,roleName,status,gender,search));
     }
 
-    @PostMapping("/active-user")
+    @PostMapping("/users/activate")
     public ResponseEntity<?> activeUser(@RequestParam String email) throws UserDoesNotExistException, UserAlreadyActiveException {
         User user = userService.activateUser(email);
         return ResponseEntity.ok(UserResponseDTO.builder()
@@ -63,7 +63,7 @@ public class UserController {
                 .avatar(user.getAvatar())
                 .build());
     }
-    @PostMapping("/deactivate-user")
+    @PostMapping("/users/deactivate")
     public ResponseEntity<?> deactivateUser(@RequestParam String email) throws UserDoesNotExistException, UserAlreadyDeactivateException {
         User user = userService.deactivateUser(email);
         return ResponseEntity.ok(UserResponseDTO.builder()
@@ -78,7 +78,7 @@ public class UserController {
                 .avatar(user.getAvatar())
                 .build());
     }
-    @PutMapping("/user")
+    @PutMapping("/users")
     public ResponseEntity<?> updateUser(@RequestBody UpdateUserRequestDTO updateUserRequestDTO, @RequestParam String email) throws UserDoesNotExistException {
         User user= userService.updateUser(updateUserRequestDTO,email);
         return ResponseEntity.ok(UserResponseDTO.builder()
@@ -93,4 +93,6 @@ public class UserController {
                 .avatar(user.getAvatar())
                 .build());
     }
+
+
 }

@@ -69,7 +69,6 @@ public class ProfileProductServiceImplement implements ProfileProductService {
 
         profile.setCreatedBy(userService.getLoginUser());
         profile.setUpdatedBy(userService.getLoginUser());
-        profile.setImage(profile.getImage());
 
         Profile result = profileProductRepository.save(profile);
         return result;
@@ -223,6 +222,14 @@ public class ProfileProductServiceImplement implements ProfileProductService {
         ).toList();
 
         profileDetailRepository.saveAll(profileDetailList);
+    }
+
+    @Override
+    public Profile uploadImage(int profileId, String s) throws ProfileDoesNotExistException {
+        Profile profile = profileProductRepository.findByIdAndIsActive(profileId,Common.IS_ACTIVE);
+        if (profile == null) throw new ProfileDoesNotExistException();
+        profile.setImage(s);
+        return profileProductRepository.save(profile);
     }
 
 }

@@ -18,18 +18,18 @@ public class SecretariatProductController {
     @Autowired
     ProductService productService;
 
-    @PostMapping("/product/create")
+    @PostMapping("/products")
     public ResponseEntity<?> createProduct(@RequestBody ProductRequestDTO productRequestDTO) throws Exception {
         return ResponseEntity.ok(productService.createProduct(productRequestDTO));
     }
 
-    @GetMapping("/product-detail")
+    @GetMapping("/products-detail")
     public ResponseEntity<?> getProductById(@RequestParam Integer id) throws  Exception {
         return ResponseEntity
                 .ok(productService.getProductDetail(id));
     }
 
-    @PutMapping("/product/update")
+    @PutMapping("/products")
     public ResponseEntity<?> updateProductById(@RequestParam("id") Integer id,
                                                        @RequestBody ProductRequestDTO productDetailDTO) throws Exception {
 

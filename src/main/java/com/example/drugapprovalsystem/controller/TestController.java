@@ -24,37 +24,5 @@ public class TestController {
         return "Hello from secure";
     }
 
-    @PostMapping("/test/product/create")
-    public ResponseEntity<?> createProduct(@RequestBody ProductRequestDTO productRequestDTO) throws Exception {
-        return ResponseEntity.ok(productService.createProduct(productRequestDTO));
-    }
 
-    @GetMapping("/test/product-detail")
-    public ResponseEntity<?> getProductById(@RequestParam Integer id) throws  Exception {
-        return ResponseEntity
-                .ok(productService.getProductDetail(id));
-    }
-
-    @PutMapping("/test/product/update")
-    public ResponseEntity<?> updateProductById(@RequestParam("id") Integer id,
-                                               @RequestBody ProductRequestDTO productDetailDTO) throws Exception {
-
-        return ResponseEntity.ok(productService.updateProduct(id, productDetailDTO));
-    }
-
-    @Autowired
-    ProfileProductService profileProductService;
-
-
-    @PostMapping("/test/profile-product/create")
-    public ResponseEntity<?> createProfile(@RequestBody ProfileRequestStepOneDTO profileRequestStepOneDTO) throws Exception {
-        System.out.println("Access create profile");
-        return ResponseEntity
-                .ok(profileProductService.createProfile(profileRequestStepOneDTO));
-    }
-
-    @PostMapping("/test/profile-product-detail/create")
-    public void createProfileDetail(@RequestBody ProfileRequestStepTwoDTO profileRequestStepTwoDTO) throws Exception {
-        profileProductService.createProfileDetail(profileRequestStepTwoDTO);
-    }
 }
