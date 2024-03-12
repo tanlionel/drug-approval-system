@@ -25,5 +25,5 @@ public interface ProfileProductService {
     //For step 2
     public void updateProfileDetail(ProfileRequestStepTwoUpdateDTO profileRequestStepTwoUpdateDTO) throws Exception;
 
-    Profile uploadImage(Integer profileId, String s) throws ProfileDoesNotExistException;
+    Profile uploadImage(int profileId, String s) throws ProfileDoesNotExistException;
 }

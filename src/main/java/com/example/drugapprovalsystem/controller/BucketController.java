@@ -18,14 +18,14 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping("/api/storage/")
+@RequestMapping("/api/storage")
 public class BucketController {
     @Autowired
     public UserService userService;
     @Autowired
     public ApprovalProductService approvalProductService;
     @Autowired
-    public ProfileProductService profileProductService;
+    ProfileProductService profileProductService;
 
     private AmazonClient amazonClient;
 
@@ -49,11 +49,10 @@ public class BucketController {
         return ResponseEntity.ok(approvalProductResponseDTO);
     }
     @PostMapping("/profile-products")
-    public ResponseEntity<?> uploadProfileProduct(@RequestPart(value = "file") MultipartFile file, @RequestParam Integer profileId) throws ProfileDoesNotExistException {
-        Profile profile = profileProductService.uploadImage(profileId,this.amazonClient.uploadFile(file));
+    public ResponseEntity<?> uploadProfileProduct(@RequestPart(value = "file") MultipartFile file, @RequestParam int profileId) throws ProfileDoesNotExistException {
+        Profile profile = profileProductService.uploadImage(profileId, this.amazonClient.uploadFile(file));
         return ResponseEntity.ok(profile);
     }
-
 
 }
 
