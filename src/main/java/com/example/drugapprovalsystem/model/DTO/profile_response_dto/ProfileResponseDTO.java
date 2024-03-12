@@ -23,4 +23,5 @@ public class ProfileResponseDTO {
     private String updatedBy;
     private LocalDateTime updatedOn;
     private String status;
+    private String imageURL;
 }

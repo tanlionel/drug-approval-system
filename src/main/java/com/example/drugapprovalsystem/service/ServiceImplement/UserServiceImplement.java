@@ -22,6 +22,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -33,6 +34,7 @@ public class UserServiceImplement implements UserService {
     private static final String ACTIVE = "Active";
     private static final String DEACTIVATE = "Deactivate";
     private static final String SORT_ASC = "asc";
+    private static final int DEFAULT_PASSWORD_LENGTH = 7;
 
     @Override
     public User getUserByEmail(String Email) throws UserDoesNotExistException, InvalidateException {
@@ -54,7 +56,18 @@ public class UserServiceImplement implements UserService {
 
         return loginUser;
     }
+    private String generatePassword(int length) {
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        StringBuilder sb = new StringBuilder();
+        Random random = new Random();
 
+        for (int i = 0; i < length; i++) {
+            int index = random.nextInt(characters.length());
+            sb.append(characters.charAt(index));
+        }
+
+        return sb.toString();
+    }
     @Override
     public User registerUser(RegisterRequestDTO registerUser) throws RoleDoesNotExistException, UserAlreadyExistsException {
 
@@ -66,7 +79,7 @@ public class UserServiceImplement implements UserService {
 
         User user = User.builder()
                 .email(registerUser.getEmail())
-                .password(passwordEncoder.encode(DEFAULT_PASSWORD))
+                .password(passwordEncoder.encode(generatePassword(DEFAULT_PASSWORD_LENGTH)))
                 .role(role)
                 .gender(registerUser.getGender())
                 .dayOfBirth(registerUser.getDob())

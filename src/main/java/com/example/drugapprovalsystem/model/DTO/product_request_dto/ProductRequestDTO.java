@@ -5,6 +5,7 @@ import com.example.drugapprovalsystem.model.DTO.DrugIngredientsDTO;
 import com.example.drugapprovalsystem.model.DTO.PharmacogenomicDTO;
 import com.example.drugapprovalsystem.model.DTO.ProductAllergyDetailDTO;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -26,6 +27,7 @@ public class ProductRequestDTO {
     private PharmacogenomicDTO pharmacogenomic;
     private ProductAllergyDetailDTO productAllergyDetail;
     private ContraindicationDTO contraindication;
+    private String imageURL;
     private boolean isApprovedByFDA;
     private boolean isApprovedByANSM;
 }
