@@ -15,7 +15,7 @@ public class SecretariatDrugController {
 
     @Autowired
     DrugService drugService;
-    @GetMapping("/drug")
+    @GetMapping("/drugs")
     public ResponseEntity<?> getDrugPageable(@RequestParam(defaultValue = "0") int pageNo,
                                              @RequestParam(defaultValue = "10") int pageSize,
                                              @RequestParam(defaultValue = "id") String sortField,

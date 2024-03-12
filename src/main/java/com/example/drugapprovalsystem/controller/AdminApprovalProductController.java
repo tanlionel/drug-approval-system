@@ -17,7 +17,7 @@ public class AdminApprovalProductController {
     ApprovalProductService approvalProductService;
 
     // ============== Approval product =======================
-    @GetMapping("/approval-products-FDA")
+    @GetMapping("/approval-products/FDA")
     public ResponseEntity<?> getApprovalProductWithPageableByFDA(@RequestParam(value = "pageNo", defaultValue = "0") int pageNo,
                                                             @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
                                                             @RequestParam(value = "sortField", defaultValue = "id") String sortField,
@@ -27,7 +27,7 @@ public class AdminApprovalProductController {
         return ResponseEntity
                 .ok(approvalProductService.getPageableApprovalProductByFDA(pageNo, pageSize, sortField, sortOrder, search));
     }
-    @GetMapping("/approval-products-ANSM")
+    @GetMapping("/approval-products/ANSM")
     public ResponseEntity<?> getApprovalProductWithPageableByANSM(@RequestParam(value = "pageNo", defaultValue = "0") int pageNo,
                                                                  @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
                                                                  @RequestParam(value = "sortField", defaultValue = "id") String sortField,
@@ -38,7 +38,7 @@ public class AdminApprovalProductController {
                 .ok(approvalProductService.getPageableApprovalProductByANSM(pageNo, pageSize, sortField, sortOrder, search));
     }
 
-    @GetMapping("/approval-products-DAV")
+    @GetMapping("/approval-products/DAV")
     public ResponseEntity<?> getApprovalProductWithPageableByDAV(@RequestParam(value = "pageNo", defaultValue = "0") int pageNo,
                                                                  @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
                                                                  @RequestParam(value = "sortField", defaultValue = "id") String sortField,
@@ -60,24 +60,24 @@ public class AdminApprovalProductController {
                 .ok(approvalProductService.getPageableApprovalProduct(pageNo, pageSize, sortField, sortOrder, search));
     }
 
-    @PostMapping("/approval-products/create")
+    @PostMapping("/approval-products")
     public ResponseEntity<?> createApprovalProduct(@RequestBody ApprovalProductRequestDTO dto) throws Exception{
         return ResponseEntity
                 .ok(approvalProductService.createApprovalProduct(dto));
     }
 
-    @PutMapping("/approval-product/update")
+    @PutMapping("/approval-products")
     public ResponseEntity<?> updateApprovalProductById(@RequestParam("id") Integer id,
                                                        @RequestBody ApprovalProductRequestDTO approvalProductDetailDTO) throws Exception {
         return ResponseEntity.ok(approvalProductService.updateApprovalProduct(id, approvalProductDetailDTO));
     }
 
-    @DeleteMapping("/approval-product/delete")
+    @DeleteMapping("/approval-products")
     public void deleteApprovalProductById(@RequestParam("id") Integer id) throws Exception {
         approvalProductService.deleteApprovalProduct(id);
     }
 
-    @GetMapping("/approval-product-detail")
+    @GetMapping("/approval-products-detail")
     public ResponseEntity<?> getApprovalProductById(@RequestParam Integer id) throws Exception {
         return ResponseEntity
                 .ok(approvalProductService.getApprovalProductDetail(id));
