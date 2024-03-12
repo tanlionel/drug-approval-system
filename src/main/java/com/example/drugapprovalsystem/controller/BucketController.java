@@ -1,12 +1,15 @@
 package com.example.drugapprovalsystem.controller;
 
 import com.example.drugapprovalsystem.entity.ApprovalProduct;
+import com.example.drugapprovalsystem.entity.Profile;
 import com.example.drugapprovalsystem.entity.User;
 import com.example.drugapprovalsystem.exception.ProductDoesNotExistException;
+import com.example.drugapprovalsystem.exception.ProfileDoesNotExistException;
 import com.example.drugapprovalsystem.exception.UserDoesNotExistException;
 import com.example.drugapprovalsystem.model.DTO.UserResponseDTO;
 import com.example.drugapprovalsystem.model.DTO.product_response_dto.ApprovalProductResponseDTO;
 import com.example.drugapprovalsystem.service.ServiceInterface.ApprovalProductService;
+import com.example.drugapprovalsystem.service.ServiceInterface.ProfileProductService;
 import com.example.drugapprovalsystem.service.ServiceInterface.UserService;
 import com.example.drugapprovalsystem.ulity.AmazonClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,8 @@ public class BucketController {
     public UserService userService;
     @Autowired
     public ApprovalProductService approvalProductService;
+    @Autowired
+    public ProfileProductService profileProductService;
 
     private AmazonClient amazonClient;
 
@@ -43,5 +48,12 @@ public class BucketController {
         ApprovalProductResponseDTO approvalProductResponseDTO = approvalProductService.uploadImage(ApprovalProductID,this.amazonClient.uploadFile(file));
         return ResponseEntity.ok(approvalProductResponseDTO);
     }
+    @PostMapping("/profile-products")
+    public ResponseEntity<?> uploadProfileProduct(@RequestPart(value = "file") MultipartFile file, @RequestParam Integer profileId) throws ProfileDoesNotExistException {
+        Profile profile = profileProductService.uploadImage(profileId,this.amazonClient.uploadFile(file));
+        return ResponseEntity.ok(profile);
+    }
+
+
 }
 

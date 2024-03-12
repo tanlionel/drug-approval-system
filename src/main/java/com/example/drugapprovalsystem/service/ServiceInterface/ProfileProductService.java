@@ -2,6 +2,7 @@ package com.example.drugapprovalsystem.service.ServiceInterface;
 
 import com.example.drugapprovalsystem.entity.Profile;
 import com.example.drugapprovalsystem.entity.ProfileDetail;
+import com.example.drugapprovalsystem.exception.ProfileDoesNotExistException;
 import com.example.drugapprovalsystem.model.DTO.profile_request_dto.ProfileRequestStepOneDTO;
 import com.example.drugapprovalsystem.model.DTO.profile_request_dto.ProfileRequestStepTwoDTO;
 import com.example.drugapprovalsystem.model.DTO.profile_request_dto.ProfileRequestStepTwoUpdateDTO;
@@ -23,4 +24,6 @@ public interface ProfileProductService {
 
     //For step 2
     public void updateProfileDetail(ProfileRequestStepTwoUpdateDTO profileRequestStepTwoUpdateDTO) throws Exception;
+
+    Profile uploadImage(Integer profileId, String s) throws ProfileDoesNotExistException;
 }
