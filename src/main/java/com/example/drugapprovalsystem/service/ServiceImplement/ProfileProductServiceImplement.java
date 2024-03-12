@@ -209,11 +209,10 @@ public class ProfileProductServiceImplement implements ProfileProductService {
     }
 
     @Override
-    public Profile uploadImage(Integer profileId, String s) throws ProfileDoesNotExistException {
+    public Profile uploadImage(int profileId, String s) throws ProfileDoesNotExistException {
         Profile profile = profileProductRepository.findByIdAndIsActive(profileId,Common.IS_ACTIVE);
         if (profile == null) throw new ProfileDoesNotExistException();
         profile.setImage(s);
-
         return profileProductRepository.save(profile);
     }
 

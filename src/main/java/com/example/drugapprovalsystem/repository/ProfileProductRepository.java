@@ -12,5 +12,5 @@ public interface ProfileProductRepository extends JpaRepository<Profile, Integer
 
     public List<Profile> findAllByTitleContainingAndIsActive(Pageable pageable, String title, boolean isActive);
 
-    public Profile findByIdAndIsActive(Integer id, boolean isActive);
+    public Profile findByIdAndIsActive(int id, boolean isActive);
 }
