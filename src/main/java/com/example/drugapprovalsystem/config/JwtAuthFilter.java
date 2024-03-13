@@ -24,10 +24,8 @@ import java.io.IOException;
 public class JwtAuthFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final UserService userService;
-
     private static final String HEADER = "Authorization";
     private static final String SUB_STRING = "Bearer ";
-
     @Override
     protected void doFilterInternal(
             @NonNull HttpServletRequest request,

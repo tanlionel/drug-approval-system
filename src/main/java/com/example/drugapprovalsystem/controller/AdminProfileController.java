@@ -6,12 +6,15 @@ import com.example.drugapprovalsystem.model.DTO.DrugRequestDTO;
 import com.example.drugapprovalsystem.model.DTO.profile_request_dto.ProfileRequestStepOneDTO;
 import com.example.drugapprovalsystem.model.DTO.profile_request_dto.ProfileRequestStepTwoDTO;
 import com.example.drugapprovalsystem.model.DTO.profile_request_dto.ProfileRequestStepTwoUpdateDTO;
+import com.example.drugapprovalsystem.model.DTO.profile_request_dto.ProfileSubmitRequestDTO;
 import com.example.drugapprovalsystem.repository.ProfileProductRepository;
 import com.example.drugapprovalsystem.service.ServiceInterface.ProfileProductService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/admin")
@@ -63,6 +66,14 @@ public class AdminProfileController {
     public void updateProfileStepTwo(@RequestBody ProfileRequestStepTwoUpdateDTO profileRequestStepTwoUpdateDTO) throws Exception{
 
         profileProductService.updateProfileDetail(profileRequestStepTwoUpdateDTO);
+
+    }
+
+    @PostMapping("profile-products/submit")
+    public ResponseEntity<?> submitProfile(@RequestParam int profileId, @RequestBody List<ProfileSubmitRequestDTO> submitRequestDTO) throws Exception {
+
+        return ResponseEntity.ok(
+                profileProductService.submitProfile(profileId, submitRequestDTO));
 
     }
 }

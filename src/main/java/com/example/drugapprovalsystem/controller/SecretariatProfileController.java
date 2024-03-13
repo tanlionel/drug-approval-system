@@ -60,4 +60,9 @@ public class SecretariatProfileController {
         profileProductService.updateProfileDetail(profileRequestStepTwoUpdateDTO);
     }
 
+    @PostMapping("/profile-products/processing")
+    public ResponseEntity<?> processProfile(@RequestParam int profileId) throws Exception {
+        return ResponseEntity.ok(
+                profileProductService.processingProfile(profileId));
+    }
 }
