@@ -15,6 +15,10 @@ import java.util.List;
 public interface ProfileProductRepository extends JpaRepository<Profile, Integer> {
     public Page<Profile> findAllByTitleContainingAndIsActive(Pageable pageable, String title, boolean isActive);
     public Profile findByIdAndIsActive(int id, boolean isActive);
+    public Page<Profile> findAllByTitleContainingAndIsActiveAndCreatedById(Pageable pageable,
+                                                                           String title,
+                                                                           boolean isActive,
+                                                                           int createdById);
     @Modifying
     @Transactional
     @Query("UPDATE Profile p SET p.status = :status WHERE p.id = :profileId")

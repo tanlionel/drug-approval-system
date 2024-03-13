@@ -93,13 +93,31 @@ public class ProfileProductServiceImplement implements ProfileProductService {
     @Override
     public Page<ProfileResponseDTO> getAllProfilesPageable(int pageIndex,
                                                            int pageSize,
-                                                           String searchKeyword) {
+                                                           String searchKeyword) throws Exception{
+        User loginUser = userService.getLoginUser();
+        int role = 1;
+        if (loginUser == null)
+            throw new Exception("NO LOGIN USER");
+
+        role = loginUser.getRole().getId();
 
         Pageable pageable = pageableService.getPageable(pageIndex, pageSize);
 
-        Page<Profile> profilePage = profileProductRepository.findAllByTitleContainingAndIsActive(pageable,
-                searchKeyword,
-                Common.IS_ACTIVE);
+        Page<Profile> profilePage;
+
+        //if role == secretariat
+        if (role == 2) {
+            profilePage = profileProductRepository.findAllByTitleContainingAndIsActiveAndCreatedById(pageable,
+                    searchKeyword,
+                    Common.IS_ACTIVE,
+                    loginUser.getId());
+        }
+        else {
+            profilePage = profileProductRepository.findAllByTitleContainingAndIsActive(pageable,
+                    searchKeyword,
+                    Common.IS_ACTIVE);
+        }
+
 
         Page<ProfileResponseDTO> resultPage = new PageImpl<ProfileResponseDTO>(profilePage
                 .stream().map(p -> ProfileResponseDTO.builder()
@@ -116,6 +134,7 @@ public class ProfileProductServiceImplement implements ProfileProductService {
 
         return resultPage;
     }
+
 
     @Override
     public ProfileDetailResponseDTO getProfileDetails(int profileId) throws Exception {
@@ -255,7 +274,7 @@ public class ProfileProductServiceImplement implements ProfileProductService {
     public ProfileDetailResponseDTO submitProfile(int profileId, List<ProfileSubmitRequestDTO> submitRequestDTO) throws Exception {
         for (ProfileSubmitRequestDTO s : submitRequestDTO) {
 
-                profileDetailRepository.updateProfileDetailStatusById(s.getProfileId(),
+                profileDetailRepository.updateProfileDetailStatusById(s.getProfileDetailId(),
                         s.getStatus() == null ? PROFILE_DETAIL_REJECTED_BY_ADMIN : s.getStatus());
 
         }

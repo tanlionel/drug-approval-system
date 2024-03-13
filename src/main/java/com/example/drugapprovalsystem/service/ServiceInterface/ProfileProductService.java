@@ -14,8 +14,8 @@ public interface ProfileProductService {
     public Profile createProfile(ProfileRequestStepOneDTO profileRequestStepOneDTO) throws Exception;
 
     public void createProfileDetail(ProfileRequestStepTwoDTO profileRequestStepTwoDTO) throws Exception;
-    public Page<ProfileResponseDTO> getAllProfilesPageable(int pageIndex, int pageSize, String searchKeyword);
-    public ProfileDetailResponseDTO getProfileDetails(int profileId) throws Exception;
+    public Page<ProfileResponseDTO> getAllProfilesPageable(int pageIndex, int pageSize, String searchKeyword) throws Exception;
+   public ProfileDetailResponseDTO getProfileDetails(int profileId) throws Exception;
     public Profile updateProfileDetail(int profileId, ProfileRequestStepOneDTO profileRequestStepOneDTO) throws Exception;
     //For step 2
     public void updateProfileDetail(ProfileRequestStepTwoUpdateDTO profileRequestStepTwoUpdateDTO) throws Exception;
