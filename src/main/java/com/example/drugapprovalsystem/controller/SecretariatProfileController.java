@@ -22,7 +22,7 @@ public class SecretariatProfileController {
     @GetMapping("/profile-products")
     public ResponseEntity<?> getProfilesPageable(@RequestParam(value = "pageNo", defaultValue = "0") int pageNo,
                                                  @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
-                                                 @RequestParam(value = "search", defaultValue = "") String search) {
+                                                 @RequestParam(value = "search", defaultValue = "") String search) throws Exception {
 
         return ResponseEntity
                 .ok(profileProductService.getAllProfilesPageable(pageNo, pageSize, search));

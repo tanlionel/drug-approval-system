@@ -9,6 +9,6 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 public class ProfileSubmitRequestDTO {
-    private int profileId;
+    private int profileDetailId;
     private String status;
 }
