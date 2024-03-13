@@ -18,6 +18,19 @@ public interface ProfileDetailRepository extends JpaRepository<ProfileDetail, In
     void updateActiveProfileDetailNotInIdListByProfileId(@Param("isActive") boolean isActive,
                                                      @Param("idList") List<Integer> idList,
                                                      @Param("profileId") int profileId);
+    @Transactional
+    @Modifying
+    @Query("UPDATE ProfileDetail p " +
+            "SET p.status = :status " +
+            "WHERE p.id = :id")
+    void updateProfileDetailStatusById(int id, String status);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE ProfileDetail p " +
+            "SET p.status = :status " +
+            "WHERE p.profile.id = :profileId")
+    void updateProfileDetailStatusByProfileId(String status, int profileId);
 
     public List<ProfileDetail> findAllByProfileIdAndIsActive(int profileId, boolean isActive);
 

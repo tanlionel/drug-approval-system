@@ -1,7 +1,5 @@
 package com.example.drugapprovalsystem.service.ServiceImplement;
 
-import com.amazonaws.services.alexaforbusiness.AmazonAlexaForBusiness;
-import com.amazonaws.services.simpleworkflow.flow.core.TryCatch;
 import com.example.drugapprovalsystem.common.Common;
 import com.example.drugapprovalsystem.entity.Product;
 import com.example.drugapprovalsystem.entity.Profile;
@@ -10,11 +8,7 @@ import com.example.drugapprovalsystem.entity.User;
 import com.example.drugapprovalsystem.exception.ProfileDoesNotExistException;
 import com.example.drugapprovalsystem.model.DTO.product_request_dto.ProductRequestDTO;
 import com.example.drugapprovalsystem.model.DTO.product_response_dto.ProductDetailResponseDTO;
-import com.example.drugapprovalsystem.model.DTO.product_response_dto.ProductResponseDTO;
-import com.example.drugapprovalsystem.model.DTO.profile_request_dto.ProfileDetailRequestDTO;
-import com.example.drugapprovalsystem.model.DTO.profile_request_dto.ProfileRequestStepOneDTO;
-import com.example.drugapprovalsystem.model.DTO.profile_request_dto.ProfileRequestStepTwoDTO;
-import com.example.drugapprovalsystem.model.DTO.profile_request_dto.ProfileRequestStepTwoUpdateDTO;
+import com.example.drugapprovalsystem.model.DTO.profile_request_dto.*;
 import com.example.drugapprovalsystem.model.DTO.profile_response_dto.ProfileDetailResponseDTO;
 import com.example.drugapprovalsystem.model.DTO.profile_response_dto.ProfileProductDTO;
 import com.example.drugapprovalsystem.model.DTO.profile_response_dto.ProfileResponseDTO;
@@ -27,21 +21,15 @@ import com.example.drugapprovalsystem.service.ServiceInterface.PageableService;
 import com.example.drugapprovalsystem.service.ServiceInterface.ProductService;
 import com.example.drugapprovalsystem.service.ServiceInterface.ProfileProductService;
 import com.example.drugapprovalsystem.service.ServiceInterface.UserService;
-import com.example.drugapprovalsystem.ulity.AmazonClient;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-
-import static java.util.stream.Collectors.toList;
 
 @RequiredArgsConstructor
 @Service
@@ -58,11 +46,13 @@ public class ProfileProductServiceImplement implements ProfileProductService {
     UserService userService;
     @Autowired
     PageableService pageableService;
-    AmazonClient amazonClient;
-    @Autowired
-    ProfileProductServiceImplement (AmazonClient amazonClient) {
-        this.amazonClient = amazonClient;
-    }
+    //STATUS
+    private final String PROFILE_PROCESSING = "PROCESSING";
+    private final String PROFILE_DETAIL_APPROVED_BY_SYSTEM = "APPROVED BY SYSTEM";
+    private final String PROFILE_DETAIL_REJECTED_BY_SYSTEM = "REJECTED BY SYSTEM";
+    private final String PROFILE_CLOSED = "CLOSED";
+    private final String PROFILE_DETAIL_REJECTED_BY_ADMIN = "REJECTED";
+    private final String PROFILE_DETAIL_APPROVED_BY_ADMIN = "APPROVED";
     @Override
     public Profile createProfile(ProfileRequestStepOneDTO profileRequestStepOneDTO) throws Exception {
         Profile profile = ProfileMapper.mapToProfile(profileRequestStepOneDTO);
@@ -230,6 +220,48 @@ public class ProfileProductServiceImplement implements ProfileProductService {
         if (profile == null) throw new ProfileDoesNotExistException();
         profile.setImage(s);
         return profileProductRepository.save(profile);
+    }
+
+    @Override
+    public ProfileDetailResponseDTO processingProfile(int profileId) throws Exception {
+        List<ProfileDetail> profileDetails = profileDetailRepository
+                .findAllByProfileIdAndIsActive(profileId, Common.IS_ACTIVE);
+
+        boolean flag = false;
+
+        for (ProfileDetail p : profileDetails) {
+            Product product = p.getProduct();
+
+            if (product != null && product.isApprovedByANSM() && product.isApprovedByFDA()) {
+                flag = true;
+
+                profileDetailRepository.updateProfileDetailStatusById(p.getId(),
+                        PROFILE_DETAIL_APPROVED_BY_SYSTEM);
+            }
+            else {
+                profileDetailRepository.updateProfileDetailStatusById(p.getId(),
+                                    PROFILE_DETAIL_REJECTED_BY_SYSTEM);
+            }
+        }
+
+        //If there is no product to approve ==> Profile is closed without submit
+        profileProductRepository.updateProfileStatus(profileId,
+                flag ? PROFILE_PROCESSING : PROFILE_CLOSED);
+
+        return getProfileDetails(profileId);
+    }
+
+    @Override
+    public ProfileDetailResponseDTO submitProfile(int profileId, List<ProfileSubmitRequestDTO> submitRequestDTO) throws Exception {
+        for (ProfileSubmitRequestDTO s : submitRequestDTO) {
+
+                profileDetailRepository.updateProfileDetailStatusById(s.getProfileId(),
+                        s.getStatus() == null ? PROFILE_DETAIL_REJECTED_BY_ADMIN : s.getStatus());
+
+        }
+
+        profileProductRepository.updateProfileStatus(profileId, PROFILE_CLOSED);
+        return getProfileDetails(profileId);
     }
 
 }

@@ -62,7 +62,6 @@ public class Product {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_allergy_details_id")
     private ProductAllergyDetail productAllergyDetails;
-
     //USA
     @Column(name = "is_approved_by_fda")
     private boolean isApprovedByFDA;
