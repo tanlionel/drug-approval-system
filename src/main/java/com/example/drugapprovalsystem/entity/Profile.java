@@ -36,12 +36,12 @@ public class Profile {
     @Column(name = "updated_on")
     private LocalDateTime updatedOn;
 
+    @Column(name = "image", length = 300)
+    private String image;
+
     @Column(name = "status")
     private String status;
 
     @Column(name = "is_active")
     private Boolean isActive;
-
-    @Column(name = "image", length = 300)
-    private String image;
 }

@@ -15,6 +15,7 @@ import com.example.drugapprovalsystem.repository.*;
 import com.example.drugapprovalsystem.service.ServiceInterface.PageableService;
 import com.example.drugapprovalsystem.service.ServiceInterface.ProductService;
 import com.example.drugapprovalsystem.service.ServiceInterface.UserService;
+import com.example.drugapprovalsystem.ulity.AmazonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,10 +46,14 @@ public class ProductServiceImplement implements ProductService {
     PharmacogenomicRepository pharmacogenomicRepository;
     @Autowired
     ProductRepository productRepository;
+    AmazonClient amazonClient;
+    @Autowired
+    ProductServiceImplement (AmazonClient amazonClient) {
+        this.amazonClient = amazonClient;
+    }
     @Override
     public ProductDetailResponseDTO createProduct(ProductRequestDTO productRequestDTO) throws Exception {
         Product product = ProductMapper.mapToProduct(productRequestDTO);
-
         //Optional DETAILS
         if (product.getPharmacogenomic() != null)
             product.setPharmacogenomic(pharmacogenomicRepository.save(product.getPharmacogenomic()));

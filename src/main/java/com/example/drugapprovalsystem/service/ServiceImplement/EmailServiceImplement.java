@@ -50,4 +50,28 @@ public class EmailServiceImplement implements EmailService {
         }
         return ResponseEntity.ok("Successfully");
     }
+
+    @Override
+    public ResponseEntity<?> sendMail(String to, String content, String tesText) {
+        try {
+            Map<String,Object> variables = new HashMap<>();
+            variables.put("content", content);
+            variables.put("image","https://scontent.fsgn2-7.fna.fbcdn.net/v/t1.15752-9/423766235_753744409817858_5189640851690714550_n.png?_nc_cat=100&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeGtS-ftZZC4qzXjA1wPmafYfS1NQKsSmKV9LU1AqxKYpUsUx5CgeGANTBlUTVQb9aA1u1_h3xtfEeqUpg44dpk8&_nc_ohc=51-sv17wB0cAX_r9sce&_nc_ht=scontent.fsgn2-7.fna&oh=03_AdQIoEjg_HcN3XSDe02WNvw8Rnhs14Sss4u4CktpgAwE-w&oe=66179DE4");
+            variables.put("tesText", tesText);
+            MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage,true);
+            mimeMessageHelper.setFrom(fromEmail);
+            mimeMessageHelper.setTo(to);
+
+            String subject = "NOTIFICATION FROM DRUG APPROVAL SYSTEM!";
+            mimeMessageHelper.setSubject(subject);
+            mimeMessageHelper.setText(thymeleafService.createContent("email-template.html",variables),true);
+
+            javaMailSender.send(mimeMessage);
+
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+        return ResponseEntity.ok("Successfully");
+    }
 }

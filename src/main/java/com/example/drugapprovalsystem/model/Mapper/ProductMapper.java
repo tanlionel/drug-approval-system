@@ -46,6 +46,7 @@ public class ProductMapper {
                 .image(a.getImage())
                 .isApprovedByANSM(a.isApprovedByANSM())
                 .isApprovedByFDA(a.isApprovedByFDA())
+                .image(a.getImage())
                 .build();
     }
     public static Product mapToProduct(ProductRequestDTO a) {
@@ -75,6 +76,7 @@ public class ProductMapper {
                 .contraindication(a.getContraindication() == null ? null : Contraindication.builder()
                         .value(a.getContraindication().getValue())
                         .relationship(a.getContraindication().getRelationship()).build())
+                .image(a.getImageURL())
                 .isApprovedByANSM(a.isApprovedByANSM())
                 .isApprovedByFDA(a.isApprovedByFDA())
                 .isActive(Common.IS_ACTIVE).build();

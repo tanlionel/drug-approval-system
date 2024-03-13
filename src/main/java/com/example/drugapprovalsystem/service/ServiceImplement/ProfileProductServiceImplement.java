@@ -1,5 +1,6 @@
 package com.example.drugapprovalsystem.service.ServiceImplement;
 
+import com.amazonaws.services.alexaforbusiness.AmazonAlexaForBusiness;
 import com.amazonaws.services.simpleworkflow.flow.core.TryCatch;
 import com.example.drugapprovalsystem.common.Common;
 import com.example.drugapprovalsystem.entity.Product;
@@ -26,9 +27,13 @@ import com.example.drugapprovalsystem.service.ServiceInterface.PageableService;
 import com.example.drugapprovalsystem.service.ServiceInterface.ProductService;
 import com.example.drugapprovalsystem.service.ServiceInterface.ProfileProductService;
 import com.example.drugapprovalsystem.service.ServiceInterface.UserService;
+import com.example.drugapprovalsystem.ulity.AmazonClient;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -53,23 +58,26 @@ public class ProfileProductServiceImplement implements ProfileProductService {
     UserService userService;
     @Autowired
     PageableService pageableService;
-
+    AmazonClient amazonClient;
+    @Autowired
+    ProfileProductServiceImplement (AmazonClient amazonClient) {
+        this.amazonClient = amazonClient;
+    }
     @Override
     public Profile createProfile(ProfileRequestStepOneDTO profileRequestStepOneDTO) throws Exception {
-
         Profile profile = ProfileMapper.mapToProfile(profileRequestStepOneDTO);
+
         profile.setCreatedBy(userService.getLoginUser());
-        profile.setCreatedBy(userService.getLoginUser());
+        profile.setUpdatedBy(userService.getLoginUser());
+
         Profile result = profileProductRepository.save(profile);
         return result;
-
     }
 
     @Override
     public void createProfileDetail(ProfileRequestStepTwoDTO profileRequestStepTwoDTO) throws Exception {
         Integer profileId = profileRequestStepTwoDTO.getProfileId();
         List<ProductRequestDTO> productRequestDTOList = profileRequestStepTwoDTO.getProductList();
-
 
         List<ProductDetailResponseDTO> productDetailResponseDTOList = productRequestDTOList.stream().map(p -> {
             try {
@@ -93,24 +101,30 @@ public class ProfileProductServiceImplement implements ProfileProductService {
     }
 
     @Override
-    public List<ProfileResponseDTO> getAllProfilesPageable(int pageIndex, int pageSize, String searchKeyword) {
+    public Page<ProfileResponseDTO> getAllProfilesPageable(int pageIndex,
+                                                           int pageSize,
+                                                           String searchKeyword) {
+
         Pageable pageable = pageableService.getPageable(pageIndex, pageSize);
 
-        List<ProfileResponseDTO> profileResponseDTOList =
-                profileProductRepository.findAllByTitleContainingAndIsActive(pageable,
-                                searchKeyword,
-                                Common.IS_ACTIVE)
-                        .stream().map(p -> ProfileResponseDTO.builder()
-                                        .title(p.getTitle())
-                                        .profileId(p.getId())
-                                        .createdBy((p.getCreatedBy() != null) ? p.getCreatedBy().getUsername() : null)
-                                        .updatedBy((p.getUpdatedBy() == null) ? null : p.getUpdatedBy().getUsername())
-                                        .updatedOn(p.getUpdatedOn())
-                                        .createdOn(p.getCreatedOn())
-                                        .status(p.getStatus()).build()
-                                ).toList();
+        Page<Profile> profilePage = profileProductRepository.findAllByTitleContainingAndIsActive(pageable,
+                searchKeyword,
+                Common.IS_ACTIVE);
 
-        return profileResponseDTOList;
+        Page<ProfileResponseDTO> resultPage = new PageImpl<ProfileResponseDTO>(profilePage
+                .stream().map(p -> ProfileResponseDTO.builder()
+                        .title(p.getTitle())
+                        .profileId(p.getId())
+                        .createdBy((p.getCreatedBy() != null) ? p.getCreatedBy().getUsername() : null)
+                        .updatedBy((p.getUpdatedBy() == null) ? null : p.getUpdatedBy().getUsername())
+                        .updatedOn(p.getUpdatedOn())
+                        .createdOn(p.getCreatedOn())
+                        .status(p.getStatus())
+                        .imageURL(p.getImage())
+                        .build()
+                ).toList(), pageable, profilePage.getTotalElements());
+
+        return resultPage;
     }
 
     @Override
@@ -129,6 +143,7 @@ public class ProfileProductServiceImplement implements ProfileProductService {
                 .updatedOn(profile.getUpdatedOn())
                 .createdOn(profile.getCreatedOn())
                 .createdBy(profile.getCreatedBy() == null ? null : profile.getCreatedBy().getUsername())
+                .imageURL(profile.getImage())
                 .status(profile.getStatus()).build();
 
         List<ProfileProductDTO> profileDetailList;
@@ -163,6 +178,7 @@ public class ProfileProductServiceImplement implements ProfileProductService {
                 .updatedBy(loginUser)
                 .updatedOn(LocalDateTime.now())
                 .title(profileRequestStepOneDTO.getTitle())
+                .image(profileRequestStepOneDTO.getImageURL())
                 .isActive(true)
                 .build();
 

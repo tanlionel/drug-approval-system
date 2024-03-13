@@ -22,6 +22,7 @@ public class ProfileMapper {
                 .createdOn(LocalDateTime.now())
                 .updatedOn(LocalDateTime.now())
                 .status(p.getStatus())
+                .image(p.getImageURL())
                 .isActive(Common.IS_ACTIVE)
                 .build();
 

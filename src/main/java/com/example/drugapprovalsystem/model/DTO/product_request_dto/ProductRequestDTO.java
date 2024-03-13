@@ -27,6 +27,7 @@ public class ProductRequestDTO {
     private PharmacogenomicDTO pharmacogenomic;
     private ProductAllergyDetailDTO productAllergyDetail;
     private ContraindicationDTO contraindication;
+    private String imageURL;
     private boolean isApprovedByFDA;
     private boolean isApprovedByANSM;
     private MultipartFile file;

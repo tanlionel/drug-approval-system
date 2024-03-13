@@ -1,5 +1,6 @@
 package com.example.drugapprovalsystem.service.ServiceImplement;
 
+import com.example.drugapprovalsystem.common.Common;
 import com.example.drugapprovalsystem.entity.Role;
 import com.example.drugapprovalsystem.entity.User;
 import com.example.drugapprovalsystem.exception.*;
@@ -9,6 +10,7 @@ import com.example.drugapprovalsystem.model.DTO.UserResponseDTO;
 import com.example.drugapprovalsystem.model.Mapper.UserMapper;
 import com.example.drugapprovalsystem.repository.RoleRepository;
 import com.example.drugapprovalsystem.repository.UserRepository;
+import com.example.drugapprovalsystem.service.ServiceInterface.EmailService;
 import com.example.drugapprovalsystem.service.ServiceInterface.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +18,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -29,10 +33,21 @@ public class UserServiceImplement implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
+    @Autowired
+    private EmailService emailService;
     private static final String DEFAULT_PASSWORD = "123456";
     private static final String ACTIVE = "Active";
     private static final String DEACTIVATE = "Deactivate";
     private static final String SORT_ASC = "asc";
+    private static final int DEFAULT_PASSWORD_LENGTH = 7;
+
+    //BACKGROUND SEND NOTIFICATION
+    @Async
+    void sendNotification(String email, String password) {
+        emailService.sendMail(email,
+                Common.REGISTER_NOTIFICATION_CONTENT,
+                String.format(Common.REGISTER_NOTIFICATION_TES_TEXT, email, password));
+    }
 
     @Override
     public User getUserByEmail(String Email) throws UserDoesNotExistException, InvalidateException {
@@ -54,19 +69,35 @@ public class UserServiceImplement implements UserService {
 
         return loginUser;
     }
+    private String generatePassword(int length) {
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        StringBuilder sb = new StringBuilder();
+        Random random = new Random();
 
+        for (int i = 0; i < length; i++) {
+            int index = random.nextInt(characters.length());
+            sb.append(characters.charAt(index));
+        }
+
+        return sb.toString();
+    }
     @Override
     public User registerUser(RegisterRequestDTO registerUser) throws RoleDoesNotExistException, UserAlreadyExistsException {
+//        User existUser = userRepository.findByEmail(registerUser.getEmail());
+//
+        boolean isExistUser = userRepository.findByEmail(registerUser.getEmail()) != null;
+//        ||userRepository.findByUsername(registerUser.getUsername()) != null;
 
-        User existUser = userRepository.findByEmail(registerUser.getEmail());
         Optional<Role> existRole = roleRepository.findById(registerUser.getRoleID());
         if (existRole.isEmpty()) throw new RoleDoesNotExistException();
         Role role = existRole.get();
-        if (existUser != null) throw new UserAlreadyExistsException();
+        if (isExistUser) throw new UserAlreadyExistsException();
+
+        String passwordGenerated = generatePassword(DEFAULT_PASSWORD_LENGTH);
 
         User user = User.builder()
                 .email(registerUser.getEmail())
-                .password(passwordEncoder.encode(DEFAULT_PASSWORD))
+                .password(passwordEncoder.encode(passwordGenerated))
                 .role(role)
                 .gender(registerUser.getGender())
                 .dayOfBirth(registerUser.getDob())
@@ -75,7 +106,12 @@ public class UserServiceImplement implements UserService {
                 .username(registerUser.getUsername())
                 .build();
 
-        userRepository.save(user);
+        User result = userRepository.save(user);
+
+        sendNotification(result.getEmail(), passwordGenerated);
+
+        System.out.println("Register user module: " + "Send mail successfully!");
+
         return user;
     }
 
