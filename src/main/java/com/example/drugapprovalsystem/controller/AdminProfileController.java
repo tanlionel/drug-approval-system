@@ -57,14 +57,15 @@ public class AdminProfileController {
     }
 
     @PostMapping("/profile-products/step-two")
-    public void createProfileDetail(@RequestBody ProfileRequestStepTwoDTO profileRequestStepTwoDTO) throws Exception {
-        profileProductService.createProfileDetail(profileRequestStepTwoDTO);
+    public ResponseEntity<?> createProfileDetail(@RequestBody ProfileRequestStepTwoDTO profileRequestStepTwoDTO) throws Exception {
+        return ResponseEntity.ok(
+                profileProductService.createProfileDetail(profileRequestStepTwoDTO));
     }
 
     @PutMapping("/profile-products/step-two")
-    public void updateProfileStepTwo(@RequestBody ProfileRequestStepTwoUpdateDTO profileRequestStepTwoUpdateDTO) throws Exception{
-
-        profileProductService.updateProfileDetail(profileRequestStepTwoUpdateDTO);
+    public ResponseEntity<?> updateProfileStepTwo(@RequestBody ProfileRequestStepTwoUpdateDTO profileRequestStepTwoUpdateDTO) throws Exception{
+        return ResponseEntity.ok(
+                profileProductService.updateProfileDetail(profileRequestStepTwoUpdateDTO));
 
     }
 

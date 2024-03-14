@@ -1,10 +1,7 @@
 package com.example.drugapprovalsystem.service.ServiceImplement;
 
 import com.example.drugapprovalsystem.common.Common;
-import com.example.drugapprovalsystem.entity.Product;
-import com.example.drugapprovalsystem.entity.Profile;
-import com.example.drugapprovalsystem.entity.ProfileDetail;
-import com.example.drugapprovalsystem.entity.User;
+import com.example.drugapprovalsystem.entity.*;
 import com.example.drugapprovalsystem.exception.ProfileDoesNotExistException;
 import com.example.drugapprovalsystem.model.DTO.product_request_dto.ProductRequestDTO;
 import com.example.drugapprovalsystem.model.DTO.product_response_dto.ProductDetailResponseDTO;
@@ -14,9 +11,7 @@ import com.example.drugapprovalsystem.model.DTO.profile_response_dto.ProfileProd
 import com.example.drugapprovalsystem.model.DTO.profile_response_dto.ProfileResponseDTO;
 import com.example.drugapprovalsystem.model.Mapper.ProductMapper;
 import com.example.drugapprovalsystem.model.Mapper.ProfileMapper;
-import com.example.drugapprovalsystem.repository.ProductRepository;
-import com.example.drugapprovalsystem.repository.ProfileDetailRepository;
-import com.example.drugapprovalsystem.repository.ProfileProductRepository;
+import com.example.drugapprovalsystem.repository.*;
 import com.example.drugapprovalsystem.service.ServiceInterface.PageableService;
 import com.example.drugapprovalsystem.service.ServiceInterface.ProductService;
 import com.example.drugapprovalsystem.service.ServiceInterface.ProfileProductService;
@@ -46,6 +41,10 @@ public class ProfileProductServiceImplement implements ProfileProductService {
     UserService userService;
     @Autowired
     PageableService pageableService;
+    @Autowired
+    IngredientRepository ingredientRepository;
+    @Autowired
+    AuthorityRepository authorityRepository;
     //STATUS
     private final String PROFILE_PROCESSING = "PROCESSING";
     private final String PROFILE_DETAIL_APPROVED_BY_SYSTEM = "APPROVED BY SYSTEM";
@@ -65,7 +64,7 @@ public class ProfileProductServiceImplement implements ProfileProductService {
     }
 
     @Override
-    public void createProfileDetail(ProfileRequestStepTwoDTO profileRequestStepTwoDTO) throws Exception {
+    public ProfileDetailResponseDTO createProfileDetail(ProfileRequestStepTwoDTO profileRequestStepTwoDTO) throws Exception {
         Integer profileId = profileRequestStepTwoDTO.getProfileId();
         List<ProductRequestDTO> productRequestDTOList = profileRequestStepTwoDTO.getProductList();
 
@@ -88,6 +87,7 @@ public class ProfileProductServiceImplement implements ProfileProductService {
 
         profileDetailRepository.saveAll(profileDetailList);
 
+        return getProfileDetails(profileId);
     }
 
     @Override
@@ -162,7 +162,8 @@ public class ProfileProductServiceImplement implements ProfileProductService {
                     .stream().map(p -> ProfileProductDTO.builder()
                             .profileDetailId(p.getId())
                             .productResponseDTO(
-                                    (p.getProduct() == null ? null : ProductMapper.mapToProductResponseDTO(p.getProduct()))
+                                    (p.getProduct() == null ? null : ProductMapper.mapToProductDetaiResponseDTO(p.getProduct(),
+                                            ingredientRepository.findByProductId(p.getId()), authorityRepository.findByProductId(p.getId())))
                             )
                             .status(p.getStatus())
                                     .build()
@@ -195,7 +196,7 @@ public class ProfileProductServiceImplement implements ProfileProductService {
     }
 
     @Override
-    public void updateProfileDetail(ProfileRequestStepTwoUpdateDTO profileRequestStepTwoUpdateDTO) throws Exception {
+    public ProfileDetailResponseDTO updateProfileDetail(ProfileRequestStepTwoUpdateDTO profileRequestStepTwoUpdateDTO) throws Exception {
 
         int profileId = profileRequestStepTwoUpdateDTO.getProfileId();
 
@@ -231,6 +232,7 @@ public class ProfileProductServiceImplement implements ProfileProductService {
         ).toList();
 
         profileDetailRepository.saveAll(profileDetailList);
+        return getProfileDetails(profileId);
     }
 
     @Override

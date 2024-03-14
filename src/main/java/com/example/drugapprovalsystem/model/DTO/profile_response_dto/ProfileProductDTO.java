@@ -13,7 +13,7 @@ import lombok.*;
 public class ProfileProductDTO {
     private int profileDetailId;
 
-    private ProductResponseDTO productResponseDTO;
+    private ProductDetailResponseDTO productResponseDTO;
 
     private String status;
 }

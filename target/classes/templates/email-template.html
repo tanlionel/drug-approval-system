@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .navbar {
+            background-color: rgb(21, 101, 192); /* RGB (21, 101, 192) */
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 30px;
+            margin-right: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: yellow;
+        }
+
+
+
+        .search-form input {
+            border: none;
+            padding: 8px;
+            width: 200px;
+        }
+
+        .language-selector {
+            display: flex;
+            align-items: center;
+        }
+
+        .language-selector button {
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .language-selector img {
+            width: 20px;
+            margin-right: 5px;
+        }
+
+        .content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .footer {
+            background-color: rgb(231, 231, 231); /* RGB (231, 231, 231) */
+            color: black; /* Updated to black text */
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .footer-logo img {
+            width: 80px;
+            margin-top: 10px;
+        }
+
+        .footer-logo span {
+            display: block;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .footer-links h3 {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .footer-links ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 5px;
+        }
+
+        .copyright {
+            margin-top: 20px;
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="navbar">
+    <div class="logo">
+        <a>
+            <img src="https://scontent.fsgn2-3.fna.fbcdn.net/v/t1.15752-9/418648029_877581930742855_729982652163965586_n.png?_nc_cat=107&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeERbh6XXOC7Wg2ALQtYCtZysYDI5Gx-loOxgMjkbH6Wg79_nZQf_agLLyHR0xthHuZwqvdb-LfLjK0V02_k3_tM&_nc_ohc=OQjUwvHh_WgAX-bgsKD&_nc_ht=scontent.fsgn2-3.fna&oh=03_AdSjCRHAnyH1UGLx6PDWnZJeVAas2CmIiQ2LheG6PDyVng&oe=661791C3" alt="Logo">
+            <span class="font-medium">DRUG APPROVAL</span>
+        </a>
+    </div>
+
+    <div class="nav-links">
+        <div class="language-selector">
+            <button>
+                <i>Language</i>
+            </button>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/225px-Flag_of_Vietnam.svg.png" alt="Language">
+        </div>
+    </div>
+</div>
+
+<div class="content">
+    <H2><span th:text="${content}" style="color: red">Default message if additionalMessage is not provided</span></H2>
+</div>
+
+<div class="content">
+    <img th:src="${image}" alt="System Notification Image" style="max-width: 100%;">
+    <H2>Additional message: <span th:text="${tesText}">Default message if additionalMessage is not provided</span></H2>
+</div>
+
+<div class="footer">
+    <div class="footer-logo">
+        <a >
+            <img src="https://scontent.fsgn2-3.fna.fbcdn.net/v/t1.15752-9/418648029_877581930742855_729982652163965586_n.png?_nc_cat=107&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeERbh6XXOC7Wg2ALQtYCtZysYDI5Gx-loOxgMjkbH6Wg79_nZQf_agLLyHR0xthHuZwqvdb-LfLjK0V02_k3_tM&_nc_ohc=OQjUwvHh_WgAX-bgsKD&_nc_ht=scontent.fsgn2-3.fna&oh=03_AdSjCRHAnyH1UGLx6PDWnZJeVAas2CmIiQ2LheG6PDyVng&oe=661791C3" alt="Logo">
+            <span class="text-blue-950 text-xl font-bold">DRUG APPROVAL</span>
+            <br>
+            <span class="font-medium text-gray-700">Technology</span>
+        </a>
+    </div>
+
+    <div class="footer-links">
+        <div>
+            <h3>Products</h3>
+            <ul>
+                <li>Clinical API</li>
+                <li>Clinical Drug Datasets</li>
+                <li>Academic Drug Datasets</li>
+            </ul>
+        </div>
+
+        <div>
+            <h3>Products</h3>
+            <ul>
+                <li>Clinical API</li>
+                <li>Clinical Drug Datasets</li>
+                <li>Academic Drug Datasets</li>
+            </ul>
+        </div>
+
+        <div>
+            <h3>Products</h3>
+            <ul>
+                <li>Clinical API</li>
+                <li>Clinical Drug Datasets</li>
+                <li>Academic Drug Datasets</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="copyright">
+        <p>© OMx Personal Health Analytics, Inc. 2023</p>
+    </div>
+</div>
+
+</body>
+</html>
