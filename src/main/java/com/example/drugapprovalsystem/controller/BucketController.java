@@ -48,11 +48,7 @@ public class BucketController {
         ApprovalProductResponseDTO approvalProductResponseDTO = approvalProductService.uploadImage(ApprovalProductID,this.amazonClient.uploadFile(file));
         return ResponseEntity.ok(approvalProductResponseDTO);
     }
-    @PostMapping("/profile-products")
-    public ResponseEntity<?> uploadProfileProduct(@RequestPart(value = "file") MultipartFile file, @RequestParam int profileId) throws ProfileDoesNotExistException {
-        Profile profile = profileProductService.uploadImage(profileId, this.amazonClient.uploadFile(file));
-        return ResponseEntity.ok(profile);
-    }
+
 
 }
 
