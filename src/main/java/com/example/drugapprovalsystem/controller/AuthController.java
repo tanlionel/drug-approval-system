@@ -1,9 +1,7 @@
 package com.example.drugapprovalsystem.controller;
 
 import com.example.drugapprovalsystem.entity.User;
-import com.example.drugapprovalsystem.model.DTO.LoginRequestDTO;
-import com.example.drugapprovalsystem.model.DTO.RegisterRequestDTO;
-import com.example.drugapprovalsystem.model.DTO.ResponseObjectDTO;
+import com.example.drugapprovalsystem.model.DTO.*;
 import com.example.drugapprovalsystem.model.Message;
 import com.example.drugapprovalsystem.service.ServiceInterface.JwtService;
 import com.example.drugapprovalsystem.service.ServiceInterface.UserService;
@@ -42,6 +40,21 @@ public class AuthController {
 
         userService.registerUser(registeredUser);
         return ResponseEntity.status(HttpStatus.OK).body(Message.msgSuccess);
+    }
+    @PostMapping("/users")
+    public ResponseEntity<?> changePassword(@RequestBody ChangePasswordRequestDTO changePasswordRequestDTO, @RequestParam String email) throws Exception {
+        User user = userService.changePassword(changePasswordRequestDTO, email);
+        return ResponseEntity.ok(UserResponseDTO.builder()
+                .id(user.getId())
+                .email(user.getEmail())
+                .dayOfBirth(user.getDayOfBirth())
+                .gender(user.getGender())
+                .roleName(user.getRole().getName())
+                .username(user.getUsername())
+                .fullname(user.getFullname())
+                .isActive(user.getIsActive())
+                .avatar(user.getAvatar())
+                .build());
     }
 
 }
