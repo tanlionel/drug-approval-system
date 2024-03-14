@@ -135,12 +135,12 @@
 </div>
 
 <div class="content">
-    <H2>System notification , please log in to the pharmacy system to view prescription management.</H2>
+    <H2><span th:text="${content}" style="color: red">Default message if additionalMessage is not provided</span></H2>
 </div>
 
 <div class="content">
     <img th:src="${image}" alt="System Notification Image" style="max-width: 100%;">
-    <H3>Additional message: <span th:text="${tesText}">Default message if additionalMessage is not provided</span></H3>
+    <H2>Additional message: <span th:text="${tesText}">Default message if additionalMessage is not provided</span></H2>
 </div>
 
 <div class="footer">

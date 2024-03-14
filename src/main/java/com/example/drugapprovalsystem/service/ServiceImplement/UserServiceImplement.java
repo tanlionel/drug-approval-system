@@ -25,6 +25,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
@@ -200,6 +201,30 @@ public class UserServiceImplement implements UserService {
 
         user.setPassword(passwordEncoder.encode(newPassword));
         return userRepository.save(user);
+    }
+
+    @Override
+    public List<UserResponseDTO> getAdmin(String email) {
+        if (email==null){
+            return userRepository.findUserByRoleNameAndIsActive(Common.ADMIN,ACTIVE).stream().map(UserMapper::mapToUserResponseDTO).toList();
+        }
+        return userRepository.findUserByRoleNameAndIsActiveAndEmailContaining(Common.ADMIN,ACTIVE,email).stream().map(UserMapper::mapToUserResponseDTO).toList();
+    }
+
+    @Override
+    public List<UserResponseDTO> getSecretary(String email) {
+        if (email==null){
+            return userRepository.findUserByRoleNameAndIsActive(Common.SECRETARY,ACTIVE).stream().map(UserMapper::mapToUserResponseDTO).toList();
+        }
+        return userRepository.findUserByRoleNameAndIsActiveAndEmailContaining(Common.SECRETARY,ACTIVE,email).stream().map(UserMapper::mapToUserResponseDTO).toList();
+    }
+
+    @Override
+    public List<UserResponseDTO> getUser(String email) {
+        if (email==null){
+            return userRepository.findUserByIsActive(ACTIVE).stream().map(UserMapper::mapToUserResponseDTO).toList();
+        }
+        return userRepository.findUserByIsActiveAndEmailContaining(ACTIVE,email).stream().map(UserMapper::mapToUserResponseDTO).toList();
     }
 
 }
