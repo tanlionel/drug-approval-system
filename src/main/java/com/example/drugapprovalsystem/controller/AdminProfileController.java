@@ -54,7 +54,6 @@ public class AdminProfileController {
         return ResponseEntity.ok(
                 profileProductService.updateProfileDetail(profileId, profileRequestStepOneDTO)
         );
-
     }
 
     @PostMapping("/profile-products/step-two")
@@ -69,11 +68,16 @@ public class AdminProfileController {
 
     }
 
-    @PostMapping("profile-products/submit")
+    @PostMapping("profile-products/submission")
     public ResponseEntity<?> submitProfile(@RequestParam int profileId, @RequestBody List<ProfileSubmitRequestDTO> submitRequestDTO) throws Exception {
 
         return ResponseEntity.ok(
                 profileProductService.submitProfile(profileId, submitRequestDTO));
 
+    }
+    @PostMapping("/profile-products/process")
+    public ResponseEntity<?> processProfile(@RequestParam int profileId) throws Exception {
+        return ResponseEntity.ok(
+                profileProductService.processingProfile(profileId));
     }
 }

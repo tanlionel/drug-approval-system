@@ -8,6 +8,8 @@ import com.example.drugapprovalsystem.model.DTO.UpdateUserRequestDTO;
 import com.example.drugapprovalsystem.model.DTO.UserResponseDTO;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 
 public interface UserService {
     User getUserByEmail(String Email) throws UserDoesNotExistException, InvalidateException;
@@ -20,4 +22,7 @@ public interface UserService {
     User getLoginUser();
     UserResponseDTO uploadAvatar(String userEmail, String userImage) throws UserDoesNotExistException;
     User changePassword(ChangePasswordRequestDTO changePasswordRequestDTO, String email) throws Exception;
+    List<UserResponseDTO> getAdmin(String email);
+    List<UserResponseDTO> getSecretary(String email);
+    List<UserResponseDTO> getUser(String email);
 }
