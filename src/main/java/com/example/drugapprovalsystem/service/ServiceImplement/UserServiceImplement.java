@@ -4,6 +4,7 @@ import com.example.drugapprovalsystem.common.Common;
 import com.example.drugapprovalsystem.entity.Role;
 import com.example.drugapprovalsystem.entity.User;
 import com.example.drugapprovalsystem.exception.*;
+import com.example.drugapprovalsystem.model.DTO.ChangePasswordRequestDTO;
 import com.example.drugapprovalsystem.model.DTO.RegisterRequestDTO;
 import com.example.drugapprovalsystem.model.DTO.UpdateUserRequestDTO;
 import com.example.drugapprovalsystem.model.DTO.UserResponseDTO;
@@ -182,4 +183,23 @@ public class UserServiceImplement implements UserService {
         user.setAvatar(userImage);
         return UserMapper.mapToUserResponseDTO(userRepository.save(user));
     }
+
+    @Override
+    public User changePassword(ChangePasswordRequestDTO changePasswordRequestDTO, String email) throws Exception {
+        User user=userRepository.findByEmail(email);
+        if (user == null) {
+            throw new UserDoesNotExistException();
+        }
+
+        String currentPassword = changePasswordRequestDTO.getCurrentPassword();
+        String newPassword = changePasswordRequestDTO.getNewPassword();
+
+        if (!passwordEncoder.matches(currentPassword, user.getPassword())) {
+            throw new InvalidateException();
+        }
+
+        user.setPassword(passwordEncoder.encode(newPassword));
+        return userRepository.save(user);
+    }
+
 }

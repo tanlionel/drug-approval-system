@@ -5,6 +5,7 @@ import com.example.drugapprovalsystem.exception.InvalidateException;
 import com.example.drugapprovalsystem.exception.UserAlreadyActiveException;
 import com.example.drugapprovalsystem.exception.UserAlreadyDeactivateException;
 import com.example.drugapprovalsystem.exception.UserDoesNotExistException;
+import com.example.drugapprovalsystem.model.DTO.ChangePasswordRequestDTO;
 import com.example.drugapprovalsystem.model.DTO.UpdateUserRequestDTO;
 import com.example.drugapprovalsystem.model.DTO.UserResponseDTO;
 import com.example.drugapprovalsystem.service.ServiceInterface.UserService;
@@ -94,5 +95,20 @@ public class UserController {
                 .build());
     }
 
+    @PostMapping("/users/changepassword")
+    public ResponseEntity<?> changePassword(@RequestBody ChangePasswordRequestDTO changePasswordRequestDTO, @RequestParam String email) throws Exception {
+        User user = userService.changePassword(changePasswordRequestDTO, email);
+        return ResponseEntity.ok(UserResponseDTO.builder()
+                .id(user.getId())
+                .email(user.getEmail())
+                .dayOfBirth(user.getDayOfBirth())
+                .gender(user.getGender())
+                .roleName(user.getRole().getName())
+                .username(user.getUsername())
+                .fullname(user.getFullname())
+                .isActive(user.getIsActive())
+                .avatar(user.getAvatar())
+                .build());
+    }
 
 }

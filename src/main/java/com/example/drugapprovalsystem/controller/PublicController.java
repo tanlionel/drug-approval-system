@@ -1,11 +1,15 @@
 package com.example.drugapprovalsystem.controller;
 
 import com.example.drugapprovalsystem.common.Common;
+import com.example.drugapprovalsystem.entity.User;
 import com.example.drugapprovalsystem.enums.UserRole;
+import com.example.drugapprovalsystem.model.DTO.ChangePasswordRequestDTO;
+import com.example.drugapprovalsystem.model.DTO.UserResponseDTO;
 import com.example.drugapprovalsystem.model.DTO.product_request_dto.ApprovalProductDetailDTO;
 import com.example.drugapprovalsystem.service.ServiceInterface.ApprovalProductService;
 import com.example.drugapprovalsystem.service.ServiceInterface.CategoryService;
 import com.example.drugapprovalsystem.service.ServiceInterface.CountryService;
+import com.example.drugapprovalsystem.service.ServiceInterface.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +26,8 @@ public class PublicController {
     CategoryService categoryService;
     @Autowired
     CountryService countryService;
+    @Autowired
+    UserService userService;
 
     //get all approval product api
     @GetMapping("/approval-products/FDA")
@@ -83,6 +89,22 @@ public class PublicController {
     @GetMapping("/countries")
     public ResponseEntity<?> getAllCountry(@RequestParam(defaultValue = "") String search) {
         return ResponseEntity.ok(countryService.getAllCountryByName(search));
+    }
+
+    @PostMapping("/users/changepassword")
+    public ResponseEntity<?> changePassword(@RequestBody ChangePasswordRequestDTO changePasswordRequestDTO, @RequestParam String email) throws Exception {
+        User user = userService.changePassword(changePasswordRequestDTO, email);
+        return ResponseEntity.ok(UserResponseDTO.builder()
+                .id(user.getId())
+                .email(user.getEmail())
+                .dayOfBirth(user.getDayOfBirth())
+                .gender(user.getGender())
+                .roleName(user.getRole().getName())
+                .username(user.getUsername())
+                .fullname(user.getFullname())
+                .isActive(user.getIsActive())
+                .avatar(user.getAvatar())
+                .build());
     }
 
 }

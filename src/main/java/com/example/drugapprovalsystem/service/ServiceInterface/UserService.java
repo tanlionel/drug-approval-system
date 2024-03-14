@@ -2,6 +2,7 @@ package com.example.drugapprovalsystem.service.ServiceInterface;
 
 import com.example.drugapprovalsystem.entity.User;
 import com.example.drugapprovalsystem.exception.*;
+import com.example.drugapprovalsystem.model.DTO.ChangePasswordRequestDTO;
 import com.example.drugapprovalsystem.model.DTO.RegisterRequestDTO;
 import com.example.drugapprovalsystem.model.DTO.UpdateUserRequestDTO;
 import com.example.drugapprovalsystem.model.DTO.UserResponseDTO;
@@ -18,4 +19,5 @@ public interface UserService {
     User updateUser(UpdateUserRequestDTO updateUserRequestDTO,String email) throws UserDoesNotExistException;
     User getLoginUser();
     UserResponseDTO uploadAvatar(String userEmail, String userImage) throws UserDoesNotExistException;
+    User changePassword(ChangePasswordRequestDTO changePasswordRequestDTO, String email) throws Exception;
 }
