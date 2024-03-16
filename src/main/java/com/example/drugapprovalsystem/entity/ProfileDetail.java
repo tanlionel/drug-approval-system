@@ -1,5 +1,6 @@
 package com.example.drugapprovalsystem.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,6 +30,7 @@ public class ProfileDetail {
     @Column(name = "status")
     private String status;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd HH:mm:ss.SSS")
     @Column(name = "created_on", updatable = false)
     private LocalDateTime createdOn;
 

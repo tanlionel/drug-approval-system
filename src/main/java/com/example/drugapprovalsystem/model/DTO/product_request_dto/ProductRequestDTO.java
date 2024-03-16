@@ -30,5 +30,4 @@ public class ProductRequestDTO {
     private String imageURL;
     private boolean isApprovedByFDA;
     private boolean isApprovedByANSM;
-    private MultipartFile file;
 }

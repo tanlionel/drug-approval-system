@@ -1,6 +1,7 @@
 package com.example.drugapprovalsystem.entity;
 
 import com.example.drugapprovalsystem.enums.UserRole;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -35,6 +36,7 @@ public class User implements UserDetails {
     @Column(name = "fullname", length = 150)
     private String fullname;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd")
     @Column(name = "day_of_birth")
     private LocalDate dayOfBirth;
 
