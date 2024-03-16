@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ProfileSubmitRequestDTO {
+public class ProfileDetailSubmitRequestDTO {
     private int profileDetailId;
     private String status;
 }

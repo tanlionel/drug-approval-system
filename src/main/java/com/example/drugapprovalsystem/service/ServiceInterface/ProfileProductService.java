@@ -19,7 +19,8 @@ public interface ProfileProductService {
     public Profile updateProfileDetail(int profileId, ProfileRequestStepOneDTO profileRequestStepOneDTO) throws Exception;
     //For step 2
     public ProfileDetailResponseDTO updateProfileDetail(ProfileRequestStepTwoUpdateDTO profileRequestStepTwoUpdateDTO) throws Exception;
+    public ProfileDetailResponseDTO createOrUpdateProfileDetail(ProfileRequestStepTwoUpdateDTO profileRequestStepTwoUpdateDTO) throws Exception;
     Profile uploadImage(int profileId, String s) throws ProfileDoesNotExistException;
     ProfileDetailResponseDTO processingProfile(int profileId) throws Exception;
-    ProfileDetailResponseDTO submitProfile(int profileId, List<ProfileSubmitRequestDTO> submitRequestDTO) throws Exception;
+    ProfileDetailResponseDTO submitProfile(int profileId, List<ProfileDetailSubmitRequestDTO> submitRequestDTO) throws Exception;
 }

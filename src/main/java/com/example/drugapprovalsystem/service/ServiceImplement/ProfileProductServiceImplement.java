@@ -86,6 +86,7 @@ public class ProfileProductServiceImplement implements ProfileProductService {
         ).toList();
 
         profileDetailRepository.saveAll(profileDetailList);
+        profileProductRepository.updateProfileStatus(profileId, profileRequestStepTwoDTO.getStatus());
 
         return getProfileDetails(profileId);
     }
@@ -134,7 +135,6 @@ public class ProfileProductServiceImplement implements ProfileProductService {
 
         return resultPage;
     }
-
 
     @Override
     public ProfileDetailResponseDTO getProfileDetails(int profileId) throws Exception {
@@ -197,20 +197,24 @@ public class ProfileProductServiceImplement implements ProfileProductService {
 
     @Override
     public ProfileDetailResponseDTO updateProfileDetail(ProfileRequestStepTwoUpdateDTO profileRequestStepTwoUpdateDTO) throws Exception {
-
         int profileId = profileRequestStepTwoUpdateDTO.getProfileId();
 
         //Deactive the deleted valued of profile detail
-        List<Integer> profileDetailIdList = profileRequestStepTwoUpdateDTO.getProductDetailList()
-                .stream()
-                .map(p -> p.getProfileDetailId())
-                .toList();
+        if (profileRequestStepTwoUpdateDTO.getProductDetailList() != null
+                && !profileRequestStepTwoUpdateDTO.getProductDetailList().isEmpty()
+        ) {
 
-        profileDetailRepository.updateActiveProfileDetailNotInIdListByProfileId(
-                !Common.IS_ACTIVE,
-                profileDetailIdList,
-                profileId
-        );
+            List<Integer> profileDetailIdList = profileRequestStepTwoUpdateDTO.getProductDetailList()
+                    .stream()
+                    .map(ProfileDetailRequestDTO::getProfileDetailId)
+                    .toList();
+
+            profileDetailRepository.updateActiveProfileDetailNotInIdListByProfileId(
+                    !Common.IS_ACTIVE,
+                    profileDetailIdList,
+                    profileId
+            );
+        }
 
         List<ProductDetailResponseDTO> productDetailResponseDTOList = profileRequestStepTwoUpdateDTO.getProductDetailList().stream().map(p -> {
             try {
@@ -222,17 +226,27 @@ public class ProfileProductServiceImplement implements ProfileProductService {
             }
         }).toList();
 
-        List<ProfileDetail> profileDetailList = profileRequestStepTwoUpdateDTO.getProductDetailList().stream().map(p -> ProfileDetail.builder()
-                .id(p.getProfileDetailId())
-                .profile(Profile.builder().id(profileId).build())
-                .product(Product.builder().id(p.getProductId()).build())
-                .status(p.getStatus())
-                .isActive(Common.IS_ACTIVE)
-                .build()
+        List<ProfileDetail> profileDetailList = profileRequestStepTwoUpdateDTO.getProductDetailList().stream().map(p -> {
+                    return ProfileDetail.builder()
+                            .id(p.getProfileDetailId())
+                            .profile(Profile.builder().id(profileId).build())
+                            .product(Product.builder().id(p.getProductId()).build())
+                            .status(p.getStatus())
+                            .isActive(Common.IS_ACTIVE)
+                            .build();
+                }
         ).toList();
 
         profileDetailRepository.saveAll(profileDetailList);
+        profileProductRepository.updateProfileStatus(profileId, profileRequestStepTwoUpdateDTO.getStatus());
+
         return getProfileDetails(profileId);
+    }
+
+    //CHECK
+    @Override
+    public ProfileDetailResponseDTO createOrUpdateProfileDetail(ProfileRequestStepTwoUpdateDTO profileRequestStepTwoUpdateDTO) throws Exception {
+        return updateProfileDetail(profileRequestStepTwoUpdateDTO);
     }
 
     @Override
@@ -273,8 +287,8 @@ public class ProfileProductServiceImplement implements ProfileProductService {
     }
 
     @Override
-    public ProfileDetailResponseDTO submitProfile(int profileId, List<ProfileSubmitRequestDTO> submitRequestDTO) throws Exception {
-        for (ProfileSubmitRequestDTO s : submitRequestDTO) {
+    public ProfileDetailResponseDTO submitProfile(int profileId, List<ProfileDetailSubmitRequestDTO> submitRequestDTO) throws Exception {
+        for (ProfileDetailSubmitRequestDTO s : submitRequestDTO) {
 
                 profileDetailRepository.updateProfileDetailStatusById(s.getProfileDetailId(),
                         s.getStatus() == null ? PROFILE_DETAIL_REJECTED_BY_ADMIN : s.getStatus());

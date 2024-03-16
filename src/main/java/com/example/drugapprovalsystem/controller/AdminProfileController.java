@@ -1,13 +1,9 @@
 package com.example.drugapprovalsystem.controller;
 
-import com.example.drugapprovalsystem.common.Common;
-import com.example.drugapprovalsystem.entity.Profile;
-import com.example.drugapprovalsystem.model.DTO.DrugRequestDTO;
 import com.example.drugapprovalsystem.model.DTO.profile_request_dto.ProfileRequestStepOneDTO;
 import com.example.drugapprovalsystem.model.DTO.profile_request_dto.ProfileRequestStepTwoDTO;
 import com.example.drugapprovalsystem.model.DTO.profile_request_dto.ProfileRequestStepTwoUpdateDTO;
-import com.example.drugapprovalsystem.model.DTO.profile_request_dto.ProfileSubmitRequestDTO;
-import com.example.drugapprovalsystem.repository.ProfileProductRepository;
+import com.example.drugapprovalsystem.model.DTO.profile_request_dto.ProfileDetailSubmitRequestDTO;
 import com.example.drugapprovalsystem.service.ServiceInterface.ProfileProductService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +43,13 @@ public class AdminProfileController {
                .ok(profileProductService.createProfile(profileRequestStepOneDTO));
     }
 
+    @PostMapping("/profile-products/create-or-update-step-two")
+    public ResponseEntity<?> createOrUpdate(@RequestBody ProfileRequestStepTwoUpdateDTO dto) throws Exception {
+
+        return ResponseEntity
+                .ok(profileProductService.createOrUpdateProfileDetail(dto));
+
+    }
     @PutMapping("/profile-products/step-one")
     public ResponseEntity<?> updateProfileStepOne(@RequestParam int profileId,
                                                   @RequestBody ProfileRequestStepOneDTO profileRequestStepOneDTO) throws Exception{
@@ -70,7 +73,7 @@ public class AdminProfileController {
     }
 
     @PostMapping("profile-products/submission")
-    public ResponseEntity<?> submitProfile(@RequestParam int profileId, @RequestBody List<ProfileSubmitRequestDTO> submitRequestDTO) throws Exception {
+    public ResponseEntity<?> submitProfile(@RequestParam int profileId, @RequestBody List<ProfileDetailSubmitRequestDTO> submitRequestDTO) throws Exception {
 
         return ResponseEntity.ok(
                 profileProductService.submitProfile(profileId, submitRequestDTO));
