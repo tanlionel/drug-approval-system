@@ -11,7 +11,7 @@ import lombok.*;
 @Builder
 public class ProfileDetailRequestDTO {
     private int profileDetailId;
-    private int productId;
+    private Integer productId;
     private ProductRequestDTO product;
     private String status;
 }

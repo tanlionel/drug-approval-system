@@ -20,6 +20,7 @@ public interface ProfileProductService {
     //For step 2
     public ProfileDetailResponseDTO updateProfileDetail(ProfileRequestStepTwoUpdateDTO profileRequestStepTwoUpdateDTO) throws Exception;
     public ProfileDetailResponseDTO createOrUpdateProfileDetail(ProfileRequestStepTwoUpdateDTO profileRequestStepTwoUpdateDTO) throws Exception;
+    public ProfileRequestStepTwoUpdateDTO getProfileDetailForUpdate(int profileId) throws Exception;
     Profile uploadImage(int profileId, String s) throws ProfileDoesNotExistException;
     ProfileDetailResponseDTO processingProfile(int profileId) throws Exception;
     ProfileDetailResponseDTO submitProfile(int profileId, List<ProfileDetailSubmitRequestDTO> submitRequestDTO) throws Exception;

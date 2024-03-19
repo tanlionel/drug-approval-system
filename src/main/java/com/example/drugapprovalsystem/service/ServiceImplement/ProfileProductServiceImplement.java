@@ -200,11 +200,11 @@ public class ProfileProductServiceImplement implements ProfileProductService {
         int profileId = profileRequestStepTwoUpdateDTO.getProfileId();
 
         //Deactive the deleted valued of profile detail
-        if (profileRequestStepTwoUpdateDTO.getProductDetailList() != null
-                && !profileRequestStepTwoUpdateDTO.getProductDetailList().isEmpty()
+        if (profileRequestStepTwoUpdateDTO.getProfileDetailList() != null
+                && !profileRequestStepTwoUpdateDTO.getProfileDetailList().isEmpty()
         ) {
 
-            List<Integer> profileDetailIdList = profileRequestStepTwoUpdateDTO.getProductDetailList()
+            List<Integer> profileDetailIdList = profileRequestStepTwoUpdateDTO.getProfileDetailList()
                     .stream()
                     .map(ProfileDetailRequestDTO::getProfileDetailId)
                     .toList();
@@ -216,7 +216,7 @@ public class ProfileProductServiceImplement implements ProfileProductService {
             );
         }
 
-        List<ProductDetailResponseDTO> productDetailResponseDTOList = profileRequestStepTwoUpdateDTO.getProductDetailList().stream().map(p -> {
+        List<ProductDetailResponseDTO> productDetailResponseDTOList = profileRequestStepTwoUpdateDTO.getProfileDetailList().stream().map(p -> {
             try {
                 return productService.updateProduct(
                         p.getProductId(), p.getProduct()
@@ -226,7 +226,7 @@ public class ProfileProductServiceImplement implements ProfileProductService {
             }
         }).toList();
 
-        List<ProfileDetail> profileDetailList = profileRequestStepTwoUpdateDTO.getProductDetailList().stream().map(p -> {
+        List<ProfileDetail> profileDetailList = profileRequestStepTwoUpdateDTO.getProfileDetailList().stream().map(p -> {
                     return ProfileDetail.builder()
                             .id(p.getProfileDetailId())
                             .profile(Profile.builder().id(profileId).build())
@@ -247,6 +247,30 @@ public class ProfileProductServiceImplement implements ProfileProductService {
     @Override
     public ProfileDetailResponseDTO createOrUpdateProfileDetail(ProfileRequestStepTwoUpdateDTO profileRequestStepTwoUpdateDTO) throws Exception {
         return updateProfileDetail(profileRequestStepTwoUpdateDTO);
+    }
+
+    @Override
+    public ProfileRequestStepTwoUpdateDTO getProfileDetailForUpdate(int profileId) throws Exception {
+        ProfileDetailResponseDTO dto = getProfileDetails(profileId);
+        ProfileRequestStepTwoUpdateDTO result;
+
+        if (dto != null) {
+
+            result = ProfileRequestStepTwoUpdateDTO.builder()
+                    .profileId(profileId)
+                    .status(dto.getProfileInformation().getStatus())
+                    .profileDetailList (
+                            (dto.getProfileDetailList() == null) ? null :
+                                    dto.getProfileDetailList().stream()
+                                            .map(ProfileMapper::mapToProfileDetailRequestDTO)
+                                            .toList()
+                    )
+                    .build();
+
+            return result;
+        }
+
+        return null;
     }
 
     @Override

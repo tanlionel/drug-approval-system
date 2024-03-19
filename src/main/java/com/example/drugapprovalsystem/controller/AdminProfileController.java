@@ -36,6 +36,12 @@ public class AdminProfileController {
         return ResponseEntity
                 .ok(profileProductService.getProfileDetails(id));
     }
+    @GetMapping("/profile-products-details-update-step-two")
+    public ResponseEntity<?> getProfileDetailsForUpdate(@RequestParam("profileId") int profileId) throws Exception {
+        return ResponseEntity.ok(
+            profileProductService.getProfileDetailForUpdate(profileId)
+        );
+    }
 
     @PostMapping("/profile-products/step-one")
     public ResponseEntity<?> createProfile(@RequestBody ProfileRequestStepOneDTO profileRequestStepOneDTO) throws Exception {
