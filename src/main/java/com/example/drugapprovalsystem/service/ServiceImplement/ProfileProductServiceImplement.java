@@ -163,7 +163,7 @@ public class ProfileProductServiceImplement implements ProfileProductService {
                             .profileDetailId(p.getId())
                             .productResponseDTO(
                                     (p.getProduct() == null ? null : ProductMapper.mapToProductDetaiResponseDTO(p.getProduct(),
-                                            ingredientRepository.findByProductId(p.getId()), authorityRepository.findByProductId(p.getId())))
+                                            ingredientRepository.findByProductId(p.getProduct().getId()), authorityRepository.findByProductId(p.getProduct().getId())))
                             )
                             .status(p.getStatus())
                                     .build()
