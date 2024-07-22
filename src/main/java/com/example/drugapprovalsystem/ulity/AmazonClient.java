@@ -20,10 +20,10 @@ import java.util.Date;
 public class AmazonClient {
 
     private  AmazonS3 s3client;
-    private  String endpointUrl = "https://s3.ap-northeast-1.amazonaws.com";
-    private  String bucketName ="nguyentan";
-    private String accessKey="AKIA5NNFKZNMU32LSMY3";
-    private String secretKey="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";
+    private  String endpointUrl = "";
+    private  String bucketName ="";
+    private String accessKey="";
+    private String secretKey="";
 
     @PostConstruct
     private void initializeAmazon() {
